@@ -5,13 +5,13 @@ USAGE:
     cd "/Users/parkerdewey/Desktop/Claude Skills/Golf Print Club/seo-toolkit"
     python3 deploy.py sections/section-poster-bundle.liquid templates/page.poster-bundle.json ...
 
-Paths are relative to the theme root ("../theme").
+Paths are relative to the repo root (now two levels up).
 Reads creds from .env (copy .env.template to .env and fill in once Shopify is set up).
 """
 import json, urllib.request, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-THEME_ROOT = os.path.abspath(os.path.join(HERE, '..', 'theme'))
+THEME_ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 
 ENV = {}
 env_path = os.path.join(HERE, '.env')

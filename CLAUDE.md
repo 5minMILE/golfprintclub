@@ -2,8 +2,8 @@
 
 Owner: Parker Dewey
 Business: DTC golf poster brand (parallel experiment to Run Culture)
-Status: Pre-launch. Folder scaffolded 2026-06-30.
-Shopify: not yet set up
+Status: Pre-launch. Repo restructured 2026-06-30 for Shopify GitHub integration.
+Shopify: GitHub integration target. Once Shopify store is connected, pushes to main auto-sync.
 
 ## Why this brand exists
 
@@ -23,19 +23,11 @@ If the running posters show ROAS > 1.5x on a winning creative in the next 5-7 da
 Golf Print Club/
 ├── CLAUDE.md                 — this file
 ├── README.md                 — what's here, what's next
-├── theme/                    — Shopify theme files (custom only, not a full theme)
-│   ├── sections/
-│   │   ├── section-wf-hero.liquid       — slideshow hero (cross-fade, 2 slides)
-│   │   └── section-poster-bundle.liquid — bundle landing page section
-│   └── templates/
-│       ├── index.json                   — homepage (golf hero + bundle CTA)
-│       ├── page.poster-bundle.json      — /pages/buy-2-get-1-free
-│       └── product.poster.json          — golf poster product template
-├── seo-toolkit/
-│   ├── deploy.py                        — copy of the RNCLTR deploy script
-│   └── .env.template                    — fill in once Shopify is created
-├── designs/posters/                     — Higgsfield-generated artwork lands here
-└── Knowledge Base/                      — brand docs, supplier info (TBD)
+├── assets/  config/  layout/  locales/  sections/  snippets/  templates/  ← Shopify theme structure at root
+├── _meta/                    — non-theme files (Shopify ignores)
+│   ├── seo-toolkit/          — legacy deploy script (kept for reference)
+│   ├── designs/              — Higgsfield poster artwork (TBD)
+│   └── Knowledge Base/       — brand docs, supplier info (TBD)
 ```
 
 ## How to brief a new Claude session
