@@ -15,6 +15,7 @@
         "slide_1": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/hf_20260630_185539_f6c8d7d5-47e3-4d3d-ba54-e93c5cd0895d.png",
             "alt_text": "Golf Print Club poster mockup"
           }
         },
@@ -30,12 +31,12 @@
         "slide_2"
       ],
       "settings": {
-        "autoplay": true,
-        "autoplay_interval": 6,
-        "subtitle": "Original hand-printed golf posters. Made for players who care about how the office looks. Pick any 3, the cheapest is on us.",
         "heading": "Wall Art For Golfers Who Actually Play",
+        "subtitle": "Original hand-printed golf posters. Made for players who care about how the office looks. Pick any 3, the cheapest is on us.",
         "button_text": "Shop Posters",
-        "button_link": "shopify://collections/golf-posters"
+        "button_link": "shopify://collections/golf-posters",
+        "autoplay": true,
+        "autoplay_interval": 6
       }
     },
     "collection_tabs": {
@@ -77,6 +78,7 @@
     "bundle_banner": {
       "type": "section-wf-lifestyle-banner",
       "settings": {
+        "promo_text": "Buy 2 Shorts, Get 1 Free",
         "heading": "Buy Two Posters, Get One Free",
         "button_text": "Build Your Bundle",
         "button_link": "shopify://pages/buy-2-get-1-free"
@@ -135,7 +137,12 @@
         "f5"
       ],
       "settings": {
+        "eyebrow": "Got questions?",
         "heading": "Quick Questions",
+        "subheading": "Quick answers to the things golfers ask us most.",
+        "cta_text": "Browse the full FAQ",
+        "cta_link": "",
+        "bg_color": "#fbfbfb",
         "padding_top": 80,
         "padding_bottom": 80
       }
