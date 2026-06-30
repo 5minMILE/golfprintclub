@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -16,14 +25,17 @@
           }
         }
       },
-      "block_order": ["slide_1", "slide_2"],
+      "block_order": [
+        "slide_1",
+        "slide_2"
+      ],
       "settings": {
-        "heading": "Wall Art For Golfers Who Actually Play",
-        "subtitle": "Original hand-printed golf posters. Made for players who care about how the office looks. Pick any 3, the cheapest is on us.",
-        "button_text": "Shop Posters",
-        "button_link": "shopify://collections/golf-posters",
         "autoplay": true,
-        "autoplay_interval": 6
+        "autoplay_interval": 6,
+        "subtitle": "Original hand-printed golf posters. Made for players who care about how the office looks. Pick any 3, the cheapest is on us.",
+        "heading": "Wall Art For Golfers Who Actually Play",
+        "button_text": "Shop Posters",
+        "button_link": "shopify://collections/golf-posters"
       }
     },
     "collection_tabs": {
@@ -51,7 +63,11 @@
           }
         }
       },
-      "block_order": ["tab_best", "tab_new", "tab_all"],
+      "block_order": [
+        "tab_best",
+        "tab_new",
+        "tab_all"
+      ],
       "settings": {
         "products_per_tab": 8,
         "padding_top": 64,
@@ -61,24 +77,15 @@
     "bundle_banner": {
       "type": "section-wf-lifestyle-banner",
       "settings": {
-        "image_position": "right",
-        "eyebrow": "Limited Time Offer",
         "heading": "Buy Two Posters, Get One Free",
-        "subheading": "Three originals on 200gsm museum-grade paper. Made to order in the US. Ships in 5 days for $7 flat. Bundle savings apply automatically at checkout.",
         "button_text": "Build Your Bundle",
-        "button_link": "shopify://pages/buy-2-get-1-free",
-        "padding_top": 80,
-        "padding_bottom": 80
+        "button_link": "shopify://pages/buy-2-get-1-free"
       }
     },
     "poster_wheel": {
       "type": "section-wf-poster-wheel",
       "settings": {
-        "heading": "Pick Your Posters",
-        "subheading": "Browse every design. Each one hand-printed and made to order.",
-        "collection": "golf-posters",
-        "padding_top": 80,
-        "padding_bottom": 80
+        "collection": "golf-posters"
       }
     },
     "faq": {
@@ -120,7 +127,13 @@
           }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4", "f5"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ],
       "settings": {
         "heading": "Quick Questions",
         "padding_top": 80,
@@ -128,5 +141,11 @@
       }
     }
   },
-  "order": ["hero", "collection_tabs", "bundle_banner", "poster_wheel", "faq"]
+  "order": [
+    "hero",
+    "collection_tabs",
+    "bundle_banner",
+    "poster_wheel",
+    "faq"
+  ]
 }
