@@ -3,29 +3,25 @@
     "hero": {
       "type": "section-wf-hero",
       "blocks": {
-        "slide_hero": {
+        "slide_1": {
           "type": "slide",
           "settings": {
-            "subtitle": "Original hand-printed golf posters. Made for players who care about how the office looks. Pick any 3, the cheapest is on us.",
-            "heading": "Wall Art For Golfers Who Actually Play",
-            "button_text": "Shop Posters",
-            "button_link": "shopify://collections/golf-posters",
-            "alt_text": "Golf Print Club golf poster mockup"
+            "alt_text": "Golf Print Club poster mockup"
           }
         },
-        "slide_bundle": {
+        "slide_2": {
           "type": "slide",
           "settings": {
-            "subtitle": "Three originals on 200gsm museum-grade paper. Made to order in the US. Ships in 5 days. Buy 2, get the cheapest free.",
-            "heading": "Buy Two Posters, Get One Free",
-            "button_text": "Build Your Bundle",
-            "button_link": "shopify://pages/buy-2-get-1-free",
-            "alt_text": "Golf Print Club poster bundle"
+            "alt_text": "Golf Print Club poster on the wall"
           }
         }
       },
-      "block_order": ["slide_hero", "slide_bundle"],
+      "block_order": ["slide_1", "slide_2"],
       "settings": {
+        "heading": "Wall Art For Golfers Who Actually Play",
+        "subtitle": "Original hand-printed golf posters. Made for players who care about how the office looks. Pick any 3, the cheapest is on us.",
+        "button_text": "Shop Posters",
+        "button_link": "shopify://collections/golf-posters",
         "autoplay": true,
         "autoplay_interval": 6
       }

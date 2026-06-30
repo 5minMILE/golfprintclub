@@ -13,13 +13,8 @@
     position: relative;
     width: 100%;
     background: #ffffff;
-    padding: 32px 24px 48px;
+    padding: 0;
     box-sizing: border-box;
-  }
-  #WfHero--{{ section.id }} .wf-hero__inner {
-    max-width: 720px;
-    margin: 0 auto;
-    position: relative;
   }
   #WfHero--{{ section.id }} .wf-hero__stage {
     position: relative;
@@ -27,7 +22,6 @@
     aspect-ratio: 1 / 1;
     background: #f4f4f5;
     overflow: hidden;
-    border-radius: 6px;
   }
   #WfHero--{{ section.id }} .wf-hero__slide {
     position: absolute;
@@ -46,26 +40,44 @@
     display: block;
   }
 
-  #WfHero--{{ section.id }} .wf-hero__copy-stack {
-    position: relative;
-    margin-top: 32px;
-    min-height: 200px;
-  }
-  #WfHero--{{ section.id }} .wf-hero__copy {
+  #WfHero--{{ section.id }} .wf-hero__dots {
     position: absolute;
-    inset: 0;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 700ms ease;
-    pointer-events: none;
+    bottom: 16px;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    z-index: 3;
   }
-  #WfHero--{{ section.id }} .wf-hero__copy.is-active {
-    opacity: 1;
-    pointer-events: auto;
+  #WfHero--{{ section.id }} .wf-hero__dot {
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.5);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 200ms ease, width 200ms ease;
+  }
+  #WfHero--{{ section.id }} .wf-hero__dot.is-active {
+    background: #ffffff;
+    width: 40px;
+  }
+  #WfHero--{{ section.id }} .wf-hero__dot:hover { background: rgba(255,255,255,0.85); }
+
+  #WfHero--{{ section.id }} .wf-hero__copy {
+    padding: 28px 24px 36px;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
   }
   #WfHero--{{ section.id }} .wf-hero__heading {
     font-family: 'Montserrat', sans-serif;
-    font-size: 32px;
+    font-size: 26px;
     font-weight: 900;
     line-height: 1.08;
     letter-spacing: -0.01em;
@@ -98,52 +110,13 @@
   }
   #WfHero--{{ section.id }} .wf-hero__btn:hover { background: #1B5E20; }
 
-  #WfHero--{{ section.id }} .wf-hero__dots {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    padding: 0;
-    margin: 24px 0 0;
-    list-style: none;
-  }
-  #WfHero--{{ section.id }} .wf-hero__dot {
-    width: 28px;
-    height: 3px;
-    border-radius: 2px;
-    background: rgba(10,10,10,0.18);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: background 200ms ease, width 200ms ease;
-  }
-  #WfHero--{{ section.id }} .wf-hero__dot.is-active {
-    background: #0a0a0a;
-    width: 40px;
-  }
-  #WfHero--{{ section.id }} .wf-hero__dot:hover { background: rgba(10,10,10,0.5); }
-
-  @media (max-width: 749px) {
-    #WfHero--{{ section.id }} {
-      padding: 20px 16px 40px;
-    }
-    #WfHero--{{ section.id }} .wf-hero__inner {
-      max-width: 100%;
-    }
-    #WfHero--{{ section.id }} .wf-hero__heading {
-      font-size: 26px;
-    }
-    #WfHero--{{ section.id }} .wf-hero__subtitle {
-      font-size: 13.5px;
-    }
-    #WfHero--{{ section.id }} .wf-hero__copy-stack { min-height: 220px; }
-  }
   @media (min-width: 750px) {
     #WfHero--{{ section.id }} .wf-hero__heading { font-size: 42px; }
     #WfHero--{{ section.id }} .wf-hero__subtitle { font-size: 15px; }
+    #WfHero--{{ section.id }} .wf-hero__copy { padding: 40px 24px 56px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    #WfHero--{{ section.id }} .wf-hero__slide,
-    #WfHero--{{ section.id }} .wf-hero__copy { transition: none; }
+    #WfHero--{{ section.id }} .wf-hero__slide { transition: none; }
   }
 </style>
 
@@ -151,100 +124,58 @@
          data-wf-hero
          data-autoplay="{{ section.settings.autoplay | default: true }}"
          data-interval="{{ section.settings.autoplay_interval | default: 6 }}">
-  <div class="wf-hero__inner">
 
-    {%- comment -%} ----- IMAGE STAGE (square) ----- {%- endcomment -%}
-    <div class="wf-hero__stage">
-      {%- if has_blocks -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'slide' -%}
-            {%- assign idx = forloop.index0 -%}
-            {%- assign is_first = false -%}
-            {%- if forloop.first -%}{%- assign is_first = true -%}{%- endif -%}
-            <div class="wf-hero__slide{% if is_first %} is-active{% endif %}" data-slide-index="{{ idx }}" {{ block.shopify_attributes }}>
-              {%- if block.settings.image != blank -%}
-                {%- assign img = block.settings.image -%}
-                {%- assign max_w = img.width | at_most: 5760 -%}
-                <img
-                  src="{{ img | image_url: width: 1200, format: 'pjpg' }}"
-                  srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
-                          {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
-                          {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                          {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
-                          {{ img | image_url: width: 2000, format: 'pjpg' }} 2000w,
-                          {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
-                  sizes="(min-width: 750px) 720px, 100vw"
-                  alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}"
-                  width="{{ img.width }}"
-                  height="{{ img.height }}"
-                  loading="{% if is_first %}eager{% else %}lazy{% endif %}"
-                  {% if is_first %}fetchpriority="high"{% endif %}
-                  decoding="{% if is_first %}sync{% else %}async{% endif %}">
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      {%- elsif section.settings.image != blank -%}
-        {%- assign img = section.settings.image -%}
-        {%- assign max_w = img.width | at_most: 5760 -%}
-        <div class="wf-hero__slide is-active" data-slide-index="0">
-          <img
-            src="{{ img | image_url: width: 1200, format: 'pjpg' }}"
-            srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
-                    {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
-                    {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                    {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
-                    {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
-            sizes="(min-width: 750px) 720px, 100vw"
-            alt="{{ section.settings.heading | escape }}"
-            width="{{ img.width }}"
-            height="{{ img.height }}"
-            loading="eager"
-            fetchpriority="high"
-            decoding="sync">
-        </div>
-      {%- endif -%}
-    </div>
-
-    {%- comment -%} ----- COPY STACK (below image) ----- {%- endcomment -%}
-    <div class="wf-hero__copy-stack">
-      {%- if has_blocks -%}
-        {%- for block in section.blocks -%}
-          {%- if block.type == 'slide' -%}
-            {%- assign idx = forloop.index0 -%}
-            {%- assign is_first = false -%}
-            {%- if forloop.first -%}{%- assign is_first = true -%}{%- endif -%}
-            <div class="wf-hero__copy{% if is_first %} is-active{% endif %}" data-copy-index="{{ idx }}">
-              {%- if block.settings.heading != blank -%}
-                {%- if is_first -%}
-                  <h1 class="wf-hero__heading">{{ block.settings.heading }}</h1>
-                {%- else -%}
-                  <h2 class="wf-hero__heading">{{ block.settings.heading }}</h2>
-                {%- endif -%}
-              {%- endif -%}
-              {%- if block.settings.subtitle != blank -%}
-                <p class="wf-hero__subtitle">{{ block.settings.subtitle }}</p>
-              {%- endif -%}
-              {%- if block.settings.button_text != blank -%}
-                <a href="{{ block.settings.button_link }}" class="wf-hero__btn">{{ block.settings.button_text }}</a>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
-      {%- else -%}
-        <div class="wf-hero__copy is-active" data-copy-index="0">
-          {%- if section.settings.heading != blank -%}
-            <h1 class="wf-hero__heading">{{ section.settings.heading }}</h1>
-          {%- endif -%}
-          {%- if section.settings.subtitle != blank -%}
-            <p class="wf-hero__subtitle">{{ section.settings.subtitle }}</p>
-          {%- endif -%}
-          {%- if section.settings.button_text != blank -%}
-            <a href="{{ section.settings.button_link }}" class="wf-hero__btn">{{ section.settings.button_text }}</a>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-    </div>
+  {%- comment -%} ----- IMAGE STAGE (square, slideshow) ----- {%- endcomment -%}
+  <div class="wf-hero__stage">
+    {%- if has_blocks -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'slide' -%}
+          {%- assign idx = forloop.index0 -%}
+          {%- assign is_first = false -%}
+          {%- if forloop.first -%}{%- assign is_first = true -%}{%- endif -%}
+          <div class="wf-hero__slide{% if is_first %} is-active{% endif %}" data-slide-index="{{ idx }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {%- assign img = block.settings.image -%}
+              {%- assign max_w = img.width | at_most: 5760 -%}
+              <img
+                src="{{ img | image_url: width: 1600, format: 'pjpg' }}"
+                srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
+                        {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
+                        {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
+                        {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
+                        {{ img | image_url: width: 2000, format: 'pjpg' }} 2000w,
+                        {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
+                sizes="100vw"
+                alt="{{ block.settings.alt_text | default: section.settings.heading | escape }}"
+                width="{{ img.width }}"
+                height="{{ img.height }}"
+                loading="{% if is_first %}eager{% else %}lazy{% endif %}"
+                {% if is_first %}fetchpriority="high"{% endif %}
+                decoding="{% if is_first %}sync{% else %}async{% endif %}">
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- elsif section.settings.image != blank -%}
+      {%- assign img = section.settings.image -%}
+      {%- assign max_w = img.width | at_most: 5760 -%}
+      <div class="wf-hero__slide is-active" data-slide-index="0">
+        <img
+          src="{{ img | image_url: width: 1600, format: 'pjpg' }}"
+          srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
+                  {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
+                  {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
+                  {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
+                  {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
+          sizes="100vw"
+          alt="{{ section.settings.heading | escape }}"
+          width="{{ img.width }}"
+          height="{{ img.height }}"
+          loading="eager"
+          fetchpriority="high"
+          decoding="sync">
+      </div>
+    {%- endif -%}
 
     {%- if has_blocks and section.blocks.size > 1 -%}
       <ul class="wf-hero__dots" role="tablist" aria-label="Hero slides">
@@ -262,7 +193,19 @@
         {%- endfor -%}
       </ul>
     {%- endif -%}
+  </div>
 
+  {%- comment -%} ----- STATIC COPY (does NOT change with slide) ----- {%- endcomment -%}
+  <div class="wf-hero__copy">
+    {%- if section.settings.heading != blank -%}
+      <h1 class="wf-hero__heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="wf-hero__subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_text != blank -%}
+      <a href="{{ section.settings.button_link }}" class="wf-hero__btn">{{ section.settings.button_text }}</a>
+    {%- endif -%}
   </div>
 </section>
 
@@ -271,7 +214,6 @@
     var root = document.getElementById('WfHero--{{ section.id }}');
     if (!root) return;
     var slides = root.querySelectorAll('.wf-hero__slide');
-    var copies = root.querySelectorAll('.wf-hero__copy');
     if (slides.length < 2) return;
 
     var dots = root.querySelectorAll('.wf-hero__dot');
@@ -284,9 +226,7 @@
     function go(idx) {
       idx = ((idx % slides.length) + slides.length) % slides.length;
       slides[current] && slides[current].classList.remove('is-active');
-      copies[current] && copies[current].classList.remove('is-active');
       slides[idx] && slides[idx].classList.add('is-active');
-      copies[idx] && copies[idx].classList.add('is-active');
       if (dots.length) {
         dots[current] && dots[current].classList.remove('is-active');
         dots[current] && dots[current].setAttribute('aria-selected', 'false');
@@ -331,7 +271,32 @@
   "settings": [
     {
       "type": "header",
-      "content": "Slideshow"
+      "content": "Static copy (shown below the image, does not change per slide)"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Posters"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Image slideshow"
     },
     {
       "type": "checkbox",
@@ -351,77 +316,31 @@
     },
     {
       "type": "header",
-      "content": "Legacy single-slide fallback",
+      "content": "Single-image fallback",
       "info": "Used only if no slide blocks are added."
     },
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Hero image (desktop)"
-    },
-    {
-      "type": "image_picker",
-      "id": "mobile_image",
-      "label": "Hero image (mobile)"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle"
-    },
-    {
-      "type": "text",
-      "id": "heading",
-      "label": "Heading"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button text"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button link"
+      "label": "Hero image"
     }
   ],
   "blocks": [
     {
       "type": "slide",
-      "name": "Slide",
+      "name": "Slide image",
       "limit": 8,
       "settings": [
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Slide image (1:1 recommended)"
+          "label": "Image (1:1 recommended)"
         },
         {
           "type": "text",
           "id": "alt_text",
           "label": "Alt text",
-          "info": "Falls back to the heading if blank."
-        },
-        {
-          "type": "text",
-          "id": "subtitle",
-          "label": "Subtitle"
-        },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading"
-        },
-        {
-          "type": "text",
-          "id": "button_text",
-          "label": "Button text",
-          "default": "Shop Now"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
+          "info": "Falls back to the section heading if blank."
         }
       ]
     }
