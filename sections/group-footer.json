@@ -1,1 +1,118 @@
-{"type":"footer","name":"Footer","sections":{"section_divider_7BwkKA":{"type":"section-divider","custom_css":[".wrapper--full {max-width: 100vw !important; margin: 0 0;}"],"name":"Divider","settings":{"show_line":true,"width":"wrapper--full","border_color":"#000000","bg_color":"","padding_top":0,"padding_bottom":0}},"footer":{"type":"footer","blocks":{"text_tpC4LE":{"type":"text","settings":{"image_width":150,"title":"Contact Us","text":"<p>If you have any issues with your order, need additional information, or just want insight into the community we are trying to build. Contact us on the contact page or shoot us an email at info@golfprintclub.com<\/p>","column_width":60,"enable_accordion":true}},"linklist_XkXR8K":{"type":"linklist","settings":{"linklist":"help","title":"Help","column_width":20,"enable_accordion":true}},"linklist_T8qXAL":{"type":"linklist","settings":{"linklist":"shop-with-us","title":"Shop with Us","column_width":20,"enable_accordion":true}},"linklist_4prhbf":{"type":"linklist","disabled":true,"settings":{"linklist":"explore","title":"Explore","column_width":20,"enable_accordion":true}}},"block_order":["text_tpC4LE","linklist_XkXR8K","linklist_T8qXAL","linklist_4prhbf"],"custom_css":[],"settings":{"logo_image_width":150,"border_color":"#fbfbfb","padding_top":0,"padding_bottom":40}},"supporting-menu":{"type":"section-supporting-menu","custom_css":[],"settings":{"linklist":"","footer_payment_enable":true,"show_locale_selector":false,"show_country_selector":false,"show_country_name":false,"show_country_flag":true,"padding_top":10,"padding_bottom":10}},"section_custom_code_yDe4xG":{"type":"section-custom-code","custom_css":[".wrapper--full {max-width: none !important; margin: 0 0;}"],"name":"Footer CSS","settings":{"code":"<style>input[type=text] {\n  display: none;\n}\n\n.rte p {\ntext-transform: uppercase;\nfont-size: 12px;\nfont-weight: 500;\n}\n\n.footer__quicklinks a {\ntext-transform: uppercase;\nfont-size: 12px;\nfont-weight: 500;\n}\n\n.footer__quicklinks li {\n    margin: 0 0 12px;\n}\n\n.site-footer-wrapper h2, .footer__block .h5  {\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\nfont-weight: 800 !important;\n  font-family: var(--BTN-FONT-STACK);\n  width: auto;\n  background-color: #fbfbfb;\n  color: #2E7D32;\n  padding: var(--btn-top) var(--btn-left);\n  border: 2px solid black;\nfont-size: 20px !important;\ntext-transform:uppercase;\n}\n\n.footer__block {\n        padding: 0 3px;\n    }\n\n.divider,\nhr {\n  max-width: 100vw !important;\n  border-top: solid black;\n  border-width: 2px 0 0;\n}\n\n@media only screen and (max-width: 763px) {\n.site-footer-wrapper h2, .footer__block .h5  {\n\tfont-size: 20px !important;\n\ttext-align: center;\n  \tfont-style: var(--BTN-FONT-STYLE);\n  \tfont-weight: var(--BTN-FONT-WEIGHT);\n\tfont-weight: 700 !important;\n  \tfont-family: var(--BTN-FONT-STACK);\n  \twidth: auto;\n  \tbackground-color: #fbfbfb;\n  \tcolor: #2E7D32;\n  \tpadding: var(--btn-top) var(--btn-left);\n  \tborder: 2px solid black;\n}\n}\n.site-footer-wrapper .wrapper--full-padded{\nmargin:0;}\n<\/style>","width":"wrapper","bg_color":"","color":"","padding_top":0,"padding_bottom":0}}},"order":["section_divider_7BwkKA","footer","supporting-menu","section_custom_code_yDe4xG"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "section_divider_7BwkKA": {
+      "type": "section-divider",
+      "custom_css": [
+        ".wrapper--full {max-width: 100vw !important; margin: 0 0;}"
+      ],
+      "name": "Divider",
+      "settings": {
+        "show_line": false,
+        "width": "wrapper--full",
+        "border_color": "#000000",
+        "bg_color": "",
+        "padding_top": 0,
+        "padding_bottom": 50
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "text_tpC4LE": {
+          "type": "text",
+          "settings": {
+            "title": "Contact Us",
+            "text": "<p>If you have any issues with your order, need additional information, or just want insight into the community we are trying to build. Contact us on the contact page or shoot us an email at info@golfprintclub.com</p>",
+            "column_width": 60,
+            "enable_accordion": true
+          }
+        },
+        "linklist_XkXR8K": {
+          "type": "linklist",
+          "settings": {
+            "linklist": "",
+            "title": "Help",
+            "column_width": 20,
+            "enable_accordion": true
+          }
+        },
+        "linklist_T8qXAL": {
+          "type": "linklist",
+          "settings": {
+            "linklist": "",
+            "title": "Shop with Us",
+            "column_width": 20,
+            "enable_accordion": true
+          }
+        },
+        "linklist_4prhbf": {
+          "type": "linklist",
+          "disabled": true,
+          "settings": {
+            "linklist": "",
+            "title": "Explore",
+            "column_width": 20,
+            "enable_accordion": true
+          }
+        }
+      },
+      "block_order": [
+        "text_tpC4LE",
+        "linklist_XkXR8K",
+        "linklist_T8qXAL",
+        "linklist_4prhbf"
+      ],
+      "custom_css": [],
+      "settings": {
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
+    "supporting-menu": {
+      "type": "section-supporting-menu",
+      "custom_css": [],
+      "settings": {
+        "linklist": "",
+        "footer_payment_enable": true,
+        "show_locale_selector": false,
+        "show_country_selector": false,
+        "show_country_name": false,
+        "show_country_flag": true,
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
+    },
+    "section_custom_code_yDe4xG": {
+      "type": "section-custom-code",
+      "custom_css": [
+        ".wrapper--full {max-width: none !important; margin: 0 0;}"
+      ],
+      "name": "Footer CSS",
+      "settings": {
+        "code": "<style>input[type=text] {\n  display: none;\n}\n\n.rte p {\ntext-transform: uppercase;\nfont-size: 12px;\nfont-weight: 500;\n}\n\n.footer__quicklinks a {\ntext-transform: uppercase;\nfont-size: 12px;\nfont-weight: 500;\n}\n\n.footer__quicklinks li {\n    margin: 0 0 12px;\n}\n\n.site-footer-wrapper h2, .footer__block .h5  {\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\nfont-weight: 800 !important;\n  font-family: var(--BTN-FONT-STACK);\n  width: auto;\n  background-color: #fbfbfb;\n  color: #2E7D32;\n  padding: var(--btn-top) var(--btn-left);\n  border: 2px solid black;\nfont-size: 20px !important;\ntext-transform:uppercase;\n}\n\n.footer__block {\n        padding: 0 3px;\n    }\n\n.divider,\nhr {\n  max-width: 100vw !important;\n  border-top: solid black;\n  border-width: 2px 0 0;\n}\n\n@media only screen and (max-width: 763px) {\n.site-footer-wrapper h2, .footer__block .h5  {\n\tfont-size: 20px !important;\n\ttext-align: center;\n  \tfont-style: var(--BTN-FONT-STYLE);\n  \tfont-weight: var(--BTN-FONT-WEIGHT);\n\tfont-weight: 700 !important;\n  \tfont-family: var(--BTN-FONT-STACK);\n  \twidth: auto;\n  \tbackground-color: #fbfbfb;\n  \tcolor: #2E7D32;\n  \tpadding: var(--btn-top) var(--btn-left);\n  \tborder: 2px solid black;\n}\n}\n.site-footer-wrapper .wrapper--full-padded{\nmargin:0;}\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "section_divider_7BwkKA",
+    "footer",
+    "supporting-menu",
+    "section_custom_code_yDe4xG"
+  ]
+}
