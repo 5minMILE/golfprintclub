@@ -36,7 +36,7 @@
         "toolbar": {
           "type": "toolbar",
           "settings": {
-            "text": "<p>FREE SHIPPING ON ALL US ORDERS OVER $125</p>",
+            "text": "<p><a href=\"/pages/buy-2-get-1-free\">BUY 2 GET 1 FREE POSTERS</a></p>",
             "menu": "toolbar-menu-less-stuff",
             "show_border": false,
             "border_opacity": 100,
