@@ -27,7 +27,10 @@
           }
         }
       },
-      "block_order": ["slide_1", "slide_2"],
+      "block_order": [
+        "slide_1",
+        "slide_2"
+      ],
       "settings": {
         "heading": "#1 wall art for golfers",
         "subtitle": "Original museum quality golf posters. Made for golfers who want to stand out.",
@@ -42,40 +45,90 @@
       "blocks": {
         "tab_best": {
           "type": "tab",
-          "settings": { "label": "Best Sellers", "collection": "golf-posters" }
+          "settings": {
+            "label": "Best Sellers",
+            "collection": "golf-posters"
+          }
         },
         "tab_new": {
           "type": "tab",
-          "settings": { "label": "New Arrivals", "collection": "golf-posters" }
+          "settings": {
+            "label": "New Arrivals",
+            "collection": "golf-posters"
+          }
         },
         "tab_all": {
           "type": "tab",
-          "settings": { "label": "All Posters", "collection": "golf-posters" }
+          "settings": {
+            "label": "All Posters",
+            "collection": "golf-posters"
+          }
         }
       },
-      "block_order": ["tab_best", "tab_new", "tab_all"],
+      "block_order": [
+        "tab_best",
+        "tab_new",
+        "tab_all"
+      ],
       "settings": {
         "products_per_tab": 8,
         "padding_top": 0,
-        "padding_bottom": 24
+        "padding_bottom": 0
       }
     },
     "ugc_grid": {
       "type": "section-ugc-grid",
       "blocks": {
-        "u1": { "type": "image", "settings": {} },
-        "u2": { "type": "image", "settings": {} },
-        "u3": { "type": "image", "settings": {} },
-        "u4": { "type": "image", "settings": {} },
-        "u5": { "type": "image", "settings": {} },
-        "u6": { "type": "image", "settings": {} }
+        "u1": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "u2": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "u3": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "u4": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "u5": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        },
+        "u6": {
+          "type": "image",
+          "settings": {
+            "link": ""
+          }
+        }
       },
-      "block_order": ["u1", "u2", "u3", "u4", "u5", "u6"],
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6"
+      ],
       "settings": {
         "heading": "On The Wall",
         "subtitle": "Hand-printed posters in real rooms. Tag @golfprintclub to be featured.",
-        "padding_top": 32,
-        "padding_bottom": 32
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "quality_education": {
@@ -110,10 +163,15 @@
           }
         }
       },
-      "block_order": ["feat_paper", "feat_made", "feat_sizes", "feat_promise"],
+      "block_order": [
+        "feat_paper",
+        "feat_made",
+        "feat_sizes",
+        "feat_promise"
+      ],
       "settings": {
         "heading": "Why Golf Print Club",
-        "padding_top": 60,
+        "padding_top": 0,
         "padding_bottom": 40
       }
     },
@@ -168,7 +226,13 @@
           }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4", "f5"],
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ],
       "settings": {
         "eyebrow": "Got questions?",
         "heading": "Quick Questions",
