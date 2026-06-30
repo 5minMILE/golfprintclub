@@ -22,6 +22,7 @@
         "slide_2": {
           "type": "slide",
           "settings": {
+            "image": "shopify://shop_images/1x1_5.png",
             "alt_text": "Golf Print Club poster on the wall"
           }
         }
