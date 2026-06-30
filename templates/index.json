@@ -27,10 +27,7 @@
           }
         }
       },
-      "block_order": [
-        "slide_1",
-        "slide_2"
-      ],
+      "block_order": ["slide_1", "slide_2"],
       "settings": {
         "heading": "#1 wall art for golfers",
         "subtitle": "Original museum quality golf posters. Made for golfers who want to stand out.",
@@ -45,50 +42,91 @@
       "blocks": {
         "tab_best": {
           "type": "tab",
-          "settings": {
-            "label": "Best Sellers",
-            "collection": "golf-posters"
-          }
+          "settings": { "label": "Best Sellers", "collection": "golf-posters" }
         },
         "tab_new": {
           "type": "tab",
-          "settings": {
-            "label": "New Arrivals",
-            "collection": "golf-posters"
-          }
+          "settings": { "label": "New Arrivals", "collection": "golf-posters" }
         },
         "tab_all": {
           "type": "tab",
-          "settings": {
-            "label": "All Posters",
-            "collection": "golf-posters"
-          }
+          "settings": { "label": "All Posters", "collection": "golf-posters" }
         }
       },
-      "block_order": [
-        "tab_best",
-        "tab_new",
-        "tab_all"
-      ],
+      "block_order": ["tab_best", "tab_new", "tab_all"],
       "settings": {
         "products_per_tab": 8,
         "padding_top": 0,
         "padding_bottom": 24
       }
     },
-    "bundle_banner": {
-      "type": "section-wf-lifestyle-banner",
+    "ugc_grid": {
+      "type": "section-ugc-grid",
+      "blocks": {
+        "u1": { "type": "image", "settings": {} },
+        "u2": { "type": "image", "settings": {} },
+        "u3": { "type": "image", "settings": {} },
+        "u4": { "type": "image", "settings": {} },
+        "u5": { "type": "image", "settings": {} },
+        "u6": { "type": "image", "settings": {} }
+      },
+      "block_order": ["u1", "u2", "u3", "u4", "u5", "u6"],
       "settings": {
-        "promo_text": "Buy 2 Shorts, Get 1 Free",
-        "heading": "Buy Two Posters, Get One Free",
-        "button_text": "Build Your Bundle",
-        "button_link": "shopify://pages/buy-2-get-1-free"
+        "heading": "On The Wall",
+        "subtitle": "Hand-printed posters in real rooms. Tag @golfprintclub to be featured.",
+        "padding_top": 32,
+        "padding_bottom": 32
       }
     },
-    "poster_wheel": {
-      "type": "section-wf-poster-wheel",
+    "quality_education": {
+      "type": "section-product-education",
+      "blocks": {
+        "feat_paper": {
+          "type": "feature",
+          "settings": {
+            "title": "Museum-Grade Paper",
+            "description": "200gsm matte stock with archival pigment ink. Heavy enough not to curl, archival enough to not fade in sunlight. The same press that prints for galleries."
+          }
+        },
+        "feat_made": {
+          "type": "feature",
+          "settings": {
+            "title": "Made in the US, To Order",
+            "description": "Each poster is printed in a US shop the moment you order. Nothing sits in a warehouse, nothing gets dropshipped overseas. Production takes 2 to 3 days, then ships."
+          }
+        },
+        "feat_sizes": {
+          "type": "feature",
+          "settings": {
+            "title": "Standard Sizes, Any Frame",
+            "description": "12x18, 16x24, and 24x36. Any frame from Amazon, IKEA, or Target fits perfectly. No oddball sizing that locks you into a custom shop."
+          }
+        },
+        "feat_promise": {
+          "type": "feature",
+          "settings": {
+            "title": "Arrives Damaged? We Reprint.",
+            "description": "If it shows up bent, faded, or off, email us within 14 days. We reprint and reship at our cost, no questions asked. Every reply comes from a real person."
+          }
+        }
+      },
+      "block_order": ["feat_paper", "feat_made", "feat_sizes", "feat_promise"],
       "settings": {
-        "collection": "golf-posters"
+        "heading": "Why Golf Print Club",
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "guarantee": {
+      "type": "section-guarantee",
+      "settings": {
+        "heading": "The Print Promise",
+        "description": "Every poster is made to order on archival paper in the US, then shipped rolled in a protective tube with tracking. If anything's wrong on arrival, we reprint and reship for free. No restocking fees, no runaround.",
+        "badge_1": "Made in USA",
+        "badge_2": "Archival Paper",
+        "badge_3": "Real Humans",
+        "padding_top": 20,
+        "padding_bottom": 40
       }
     },
     "faq": {
@@ -130,13 +168,7 @@
           }
         }
       },
-      "block_order": [
-        "f1",
-        "f2",
-        "f3",
-        "f4",
-        "f5"
-      ],
+      "block_order": ["f1", "f2", "f3", "f4", "f5"],
       "settings": {
         "eyebrow": "Got questions?",
         "heading": "Quick Questions",
@@ -152,8 +184,9 @@
   "order": [
     "hero",
     "collection_tabs",
-    "bundle_banner",
-    "poster_wheel",
+    "ugc_grid",
+    "quality_education",
+    "guarantee",
     "faq"
   ]
 }
