@@ -72,30 +72,29 @@
   #WfHero--{{ section.id }} .wf-hero__arrow {
     position: absolute;
     bottom: 12px;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
+    background: rgba(0,0,0,0.45);
     color: #ffffff;
     border: none;
+    border-radius: 50%;
     cursor: pointer;
     z-index: 4;
     padding: 0;
-    transition: transform 150ms ease, opacity 200ms ease;
+    transition: background 200ms ease, transform 150ms ease;
     -webkit-tap-highlight-color: transparent;
   }
-  #WfHero--{{ section.id }} .wf-hero__arrow:hover svg { opacity: 0.7; }
+  #WfHero--{{ section.id }} .wf-hero__arrow:hover { background: rgba(0,0,0,0.7); }
   #WfHero--{{ section.id }} .wf-hero__arrow:active { transform: scale(0.92); }
-  #WfHero--{{ section.id }} .wf-hero__arrow--prev { left: 6px; }
-  #WfHero--{{ section.id }} .wf-hero__arrow--next { right: 6px; }
+  #WfHero--{{ section.id }} .wf-hero__arrow--prev { left: 12px; }
+  #WfHero--{{ section.id }} .wf-hero__arrow--next { right: 12px; }
   #WfHero--{{ section.id }} .wf-hero__arrow svg {
-    width: 26px;
-    height: 26px;
+    width: 18px;
+    height: 18px;
     display: block;
-    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.55));
-    transition: opacity 200ms ease;
   }
 
   #WfHero--{{ section.id }} .wf-hero__stage {
