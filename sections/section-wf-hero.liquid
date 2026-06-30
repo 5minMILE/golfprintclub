@@ -3,11 +3,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 
-{%- comment -%}
-  Backwards-compatible fallback: if no slide blocks are configured, render a
-  single slide from the legacy section settings. This way an existing index.json
-  that still has the old settings keeps working until a block is added.
-{%- endcomment -%}
 {%- assign has_blocks = false -%}
 {%- for b in section.blocks -%}
   {%- if b.type == 'slide' -%}{%- assign has_blocks = true -%}{%- endif -%}
@@ -17,9 +12,22 @@
   #WfHero--{{ section.id }} {
     position: relative;
     width: 100%;
-    height: 90vh;
-    background: #111;
+    background: #ffffff;
+    padding: 32px 24px 48px;
+    box-sizing: border-box;
+  }
+  #WfHero--{{ section.id }} .wf-hero__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+  }
+  #WfHero--{{ section.id }} .wf-hero__stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: #f4f4f5;
     overflow: hidden;
+    border-radius: 6px;
   }
   #WfHero--{{ section.id }} .wf-hero__slide {
     position: absolute;
@@ -33,147 +41,109 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
     image-rendering: -webkit-optimize-contrast;
     image-rendering: high-quality;
-    image-rendering: crisp-edges;
+    display: block;
   }
-  #WfHero--{{ section.id }} .wf-hero__img--desktop { display: block; }
-  #WfHero--{{ section.id }} .wf-hero__img--mobile { display: none; }
-  #WfHero--{{ section.id }} .wf-hero__slide::after {
-    content: '';
+
+  #WfHero--{{ section.id }} .wf-hero__copy-stack {
+    position: relative;
+    margin-top: 32px;
+    min-height: 200px;
+  }
+  #WfHero--{{ section.id }} .wf-hero__copy {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-    z-index: 1;
+    inset: 0;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 700ms ease;
     pointer-events: none;
   }
-  #WfHero--{{ section.id }} .wf-hero__overlay {
-    position: absolute;
-    bottom: 60px;
-    left: 40px;
-    right: 40px;
-    max-width: 640px;
-    z-index: 2;
-  }
-  #WfHero--{{ section.id }} .wf-hero__subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 8px;
-    font-weight: 600;
-    color: #fff;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    line-height: 1.5;
-    max-width: 48ch;
-    margin-top: 14px;
+  #WfHero--{{ section.id }} .wf-hero__copy.is-active {
+    opacity: 1;
+    pointer-events: auto;
   }
   #WfHero--{{ section.id }} .wf-hero__heading {
     font-family: 'Montserrat', sans-serif;
     font-size: 32px;
-    font-weight: 1000;
-    color: #fff;
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
     text-transform: uppercase;
-    line-height: 1.05;
-    letter-spacing: -0.005em;
-    margin: 0;
+    color: #0a0a0a;
+    margin: 0 0 12px;
+  }
+  #WfHero--{{ section.id }} .wf-hero__subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: rgba(10,10,10,0.65);
+    margin: 0 auto 20px;
+    max-width: 56ch;
   }
   #WfHero--{{ section.id }} .wf-hero__btn {
     display: inline-block;
-    margin-top: 12px;
-    background: #1B5E20;
-    color: #fff;
-    padding: 10px 24px;
+    background: #2E7D32;
+    color: #ffffff;
+    padding: 13px 30px;
     font-family: 'Montserrat', sans-serif;
-    font-size: 10px;
-    font-weight: 1000;
-    letter-spacing: 0.12em;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     text-decoration: none;
-    border: none;
-    cursor: pointer;
+    border-radius: 4px;
+    transition: background 200ms ease;
   }
+  #WfHero--{{ section.id }} .wf-hero__btn:hover { background: #1B5E20; }
 
   #WfHero--{{ section.id }} .wf-hero__dots {
-    position: absolute;
-    bottom: 24px;
-    left: 0;
-    right: 0;
     display: flex;
     gap: 8px;
     justify-content: center;
-    z-index: 3;
     padding: 0;
-    margin: 0;
+    margin: 24px 0 0;
     list-style: none;
   }
   #WfHero--{{ section.id }} .wf-hero__dot {
     width: 28px;
     height: 3px;
     border-radius: 2px;
-    background: rgba(255,255,255,0.35);
+    background: rgba(10,10,10,0.18);
     border: none;
     padding: 0;
     cursor: pointer;
     transition: background 200ms ease, width 200ms ease;
   }
   #WfHero--{{ section.id }} .wf-hero__dot.is-active {
-    background: #ffffff;
+    background: #0a0a0a;
     width: 40px;
   }
-  #WfHero--{{ section.id }} .wf-hero__dot:hover { background: rgba(255,255,255,0.7); }
+  #WfHero--{{ section.id }} .wf-hero__dot:hover { background: rgba(10,10,10,0.5); }
 
   @media (max-width: 749px) {
     #WfHero--{{ section.id }} {
-      height: 70vh;
+      padding: 20px 16px 40px;
     }
-    #WfHero--{{ section.id }} .wf-hero__overlay {
-      bottom: 60px;
-      left: 40px;
-    }
-    #WfHero--{{ section.id }} .wf-hero__subtitle {
-      font-size: 10.5px;
+    #WfHero--{{ section.id }} .wf-hero__inner {
+      max-width: 100%;
     }
     #WfHero--{{ section.id }} .wf-hero__heading {
-      font-size: 36px;
+      font-size: 26px;
     }
-    #WfHero--{{ section.id }} .wf-hero__btn {
-      margin-top: 8px;
-      padding: 13.5px 30px;
+    #WfHero--{{ section.id }} .wf-hero__subtitle {
       font-size: 13.5px;
-      letter-spacing: 0.1em;
-      background: #2E7D32;
     }
-    #WfHero--{{ section.id }} .wf-hero__img--desktop { display: none !important; }
-    #WfHero--{{ section.id }} .wf-hero__img--mobile { display: block !important; }
-    #WfHero--{{ section.id }} .wf-hero__dots { bottom: 18px; }
-    #WfHero--{{ section.id }} .wf-hero__dot { width: 22px; }
-    #WfHero--{{ section.id }} .wf-hero__dot.is-active { width: 32px; }
+    #WfHero--{{ section.id }} .wf-hero__copy-stack { min-height: 220px; }
   }
   @media (min-width: 750px) {
-    #WfHero--{{ section.id }} .wf-hero__subtitle {
-      font-size: 13px;
-      color: #fff;
-      margin-top: 16px;
-    }
-    #WfHero--{{ section.id }} .wf-hero__heading {
-      font-size: 48px;
-    }
-    #WfHero--{{ section.id }} .wf-hero__btn {
-      background: #2E7D32;
-      padding: 14px 32px;
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 0.14em;
-      margin-top: 18px;
-    }
+    #WfHero--{{ section.id }} .wf-hero__heading { font-size: 42px; }
+    #WfHero--{{ section.id }} .wf-hero__subtitle { font-size: 15px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    #WfHero--{{ section.id }} .wf-hero__slide { transition: none; }
+    #WfHero--{{ section.id }} .wf-hero__slide,
+    #WfHero--{{ section.id }} .wf-hero__copy { transition: none; }
   }
 </style>
 
@@ -181,88 +151,102 @@
          data-wf-hero
          data-autoplay="{{ section.settings.autoplay | default: true }}"
          data-interval="{{ section.settings.autoplay_interval | default: 6 }}">
+  <div class="wf-hero__inner">
 
-  {%- if has_blocks -%}
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'slide' -%}
-        {%- assign slide_index = forloop.index0 -%}
-        {%- assign is_first = false -%}
-        {%- if forloop.first -%}{%- assign is_first = true -%}{%- endif -%}
-        <div class="wf-hero__slide{% if is_first %} is-active{% endif %}" data-slide-index="{{ slide_index }}" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            {%- assign img = block.settings.image -%}
-            {%- assign max_w = img.width | at_most: 5760 -%}
-            <img class="wf-hero__img--desktop"
-              src="{{ img | image_url: width: 2400, format: 'pjpg' }}"
-              srcset="{{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                      {{ img | image_url: width: 1800, format: 'pjpg' }} 1800w,
-                      {{ img | image_url: width: 2400, format: 'pjpg' }} 2400w,
-                      {{ img | image_url: width: 3200, format: 'pjpg' }} 3200w,
-                      {{ img | image_url: width: 4000, format: 'pjpg' }} 4000w,
-                      {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
-              sizes="100vw"
-              alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}"
-              width="{{ img.width }}"
-              height="{{ img.height }}"
-              loading="{% if is_first %}eager{% else %}lazy{% endif %}"
-              {% if is_first %}fetchpriority="high"{% endif %}
-              decoding="{% if is_first %}sync{% else %}async{% endif %}">
-          {%- endif -%}
-          {%- if block.settings.mobile_image != blank -%}
-            {%- assign mimg = block.settings.mobile_image -%}
-            {%- assign mmax_w = mimg.width | at_most: 2000 -%}
-            <img class="wf-hero__img--mobile"
-              src="{{ mimg | image_url: width: mmax_w, format: 'pjpg' }}"
-              srcset="{{ mimg | image_url: width: 600, format: 'pjpg' }} 600w,
-                      {{ mimg | image_url: width: 900, format: 'pjpg' }} 900w,
-                      {{ mimg | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                      {{ mimg | image_url: width: 1600, format: 'pjpg' }} 1600w,
-                      {{ mimg | image_url: width: mmax_w, format: 'pjpg' }} {{ mmax_w }}w"
-              sizes="100vw"
-              alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}"
-              width="{{ mimg.width }}"
-              height="{{ mimg.height }}"
-              loading="{% if is_first %}eager{% else %}lazy{% endif %}"
-              {% if is_first %}fetchpriority="high"{% endif %}
-              decoding="{% if is_first %}sync{% else %}async{% endif %}">
-          {%- elsif block.settings.image != blank -%}
-            {%- assign img = block.settings.image -%}
-            {%- assign mmax_w = img.width | at_most: 2000 -%}
-            <img class="wf-hero__img--mobile"
-              src="{{ img | image_url: width: mmax_w, format: 'pjpg' }}"
-              srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
-                      {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
-                      {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                      {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
-                      {{ img | image_url: width: mmax_w, format: 'pjpg' }} {{ mmax_w }}w"
-              sizes="100vw"
-              alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}"
-              width="{{ img.width }}"
-              height="{{ img.height }}"
-              loading="{% if is_first %}eager{% else %}lazy{% endif %}"
-              {% if is_first %}fetchpriority="high"{% endif %}
-              decoding="{% if is_first %}sync{% else %}async{% endif %}">
-          {%- endif -%}
-          <div class="wf-hero__overlay">
-            {%- if block.settings.heading != blank -%}
-              {%- if is_first -%}
-                <h1 class="wf-hero__heading">{{ block.settings.heading }}</h1>
-              {%- else -%}
-                <h2 class="wf-hero__heading">{{ block.settings.heading }}</h2>
+    {%- comment -%} ----- IMAGE STAGE (square) ----- {%- endcomment -%}
+    <div class="wf-hero__stage">
+      {%- if has_blocks -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'slide' -%}
+            {%- assign idx = forloop.index0 -%}
+            {%- assign is_first = false -%}
+            {%- if forloop.first -%}{%- assign is_first = true -%}{%- endif -%}
+            <div class="wf-hero__slide{% if is_first %} is-active{% endif %}" data-slide-index="{{ idx }}" {{ block.shopify_attributes }}>
+              {%- if block.settings.image != blank -%}
+                {%- assign img = block.settings.image -%}
+                {%- assign max_w = img.width | at_most: 5760 -%}
+                <img
+                  src="{{ img | image_url: width: 1200, format: 'pjpg' }}"
+                  srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
+                          {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
+                          {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
+                          {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
+                          {{ img | image_url: width: 2000, format: 'pjpg' }} 2000w,
+                          {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
+                  sizes="(min-width: 750px) 720px, 100vw"
+                  alt="{{ block.settings.alt_text | default: block.settings.heading | escape }}"
+                  width="{{ img.width }}"
+                  height="{{ img.height }}"
+                  loading="{% if is_first %}eager{% else %}lazy{% endif %}"
+                  {% if is_first %}fetchpriority="high"{% endif %}
+                  decoding="{% if is_first %}sync{% else %}async{% endif %}">
               {%- endif -%}
-            {%- endif -%}
-            {%- if block.settings.subtitle != blank -%}
-              <div class="wf-hero__subtitle">{{ block.settings.subtitle }}</div>
-            {%- endif -%}
-            {%- if block.settings.button_text != blank -%}
-              <a href="{{ block.settings.button_link }}" class="wf-hero__btn">{{ block.settings.button_text }}</a>
-            {%- endif -%}
-          </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif section.settings.image != blank -%}
+        {%- assign img = section.settings.image -%}
+        {%- assign max_w = img.width | at_most: 5760 -%}
+        <div class="wf-hero__slide is-active" data-slide-index="0">
+          <img
+            src="{{ img | image_url: width: 1200, format: 'pjpg' }}"
+            srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
+                    {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
+                    {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
+                    {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
+                    {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
+            sizes="(min-width: 750px) 720px, 100vw"
+            alt="{{ section.settings.heading | escape }}"
+            width="{{ img.width }}"
+            height="{{ img.height }}"
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync">
         </div>
       {%- endif -%}
-    {%- endfor -%}
+    </div>
 
-    {%- if section.blocks.size > 1 -%}
+    {%- comment -%} ----- COPY STACK (below image) ----- {%- endcomment -%}
+    <div class="wf-hero__copy-stack">
+      {%- if has_blocks -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'slide' -%}
+            {%- assign idx = forloop.index0 -%}
+            {%- assign is_first = false -%}
+            {%- if forloop.first -%}{%- assign is_first = true -%}{%- endif -%}
+            <div class="wf-hero__copy{% if is_first %} is-active{% endif %}" data-copy-index="{{ idx }}">
+              {%- if block.settings.heading != blank -%}
+                {%- if is_first -%}
+                  <h1 class="wf-hero__heading">{{ block.settings.heading }}</h1>
+                {%- else -%}
+                  <h2 class="wf-hero__heading">{{ block.settings.heading }}</h2>
+                {%- endif -%}
+              {%- endif -%}
+              {%- if block.settings.subtitle != blank -%}
+                <p class="wf-hero__subtitle">{{ block.settings.subtitle }}</p>
+              {%- endif -%}
+              {%- if block.settings.button_text != blank -%}
+                <a href="{{ block.settings.button_link }}" class="wf-hero__btn">{{ block.settings.button_text }}</a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        <div class="wf-hero__copy is-active" data-copy-index="0">
+          {%- if section.settings.heading != blank -%}
+            <h1 class="wf-hero__heading">{{ section.settings.heading }}</h1>
+          {%- endif -%}
+          {%- if section.settings.subtitle != blank -%}
+            <p class="wf-hero__subtitle">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+          {%- if section.settings.button_text != blank -%}
+            <a href="{{ section.settings.button_link }}" class="wf-hero__btn">{{ section.settings.button_text }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if has_blocks and section.blocks.size > 1 -%}
       <ul class="wf-hero__dots" role="tablist" aria-label="Hero slides">
         {%- for block in section.blocks -%}
           {%- if block.type == 'slide' -%}
@@ -279,76 +263,7 @@
       </ul>
     {%- endif -%}
 
-  {%- else -%}
-    {%- comment -%} Legacy single-slide fallback {%- endcomment -%}
-    <div class="wf-hero__slide is-active" data-slide-index="0">
-      {%- if section.settings.image != blank -%}
-        {%- assign img = section.settings.image -%}
-        {%- assign max_w = img.width | at_most: 5760 -%}
-        <img class="wf-hero__img--desktop"
-          src="{{ img | image_url: width: 2400, format: 'pjpg' }}"
-          srcset="{{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                  {{ img | image_url: width: 1800, format: 'pjpg' }} 1800w,
-                  {{ img | image_url: width: 2400, format: 'pjpg' }} 2400w,
-                  {{ img | image_url: width: 3200, format: 'pjpg' }} 3200w,
-                  {{ img | image_url: width: 4000, format: 'pjpg' }} 4000w,
-                  {{ img | image_url: width: max_w, format: 'pjpg' }} {{ max_w }}w"
-          sizes="100vw"
-          alt="{{ section.settings.heading | escape }}"
-          width="{{ img.width }}"
-          height="{{ img.height }}"
-          loading="eager"
-          fetchpriority="high"
-          decoding="sync">
-      {%- endif -%}
-      {%- if section.settings.mobile_image != blank -%}
-        {%- assign mimg = section.settings.mobile_image -%}
-        {%- assign mmax_w = mimg.width | at_most: 2000 -%}
-        <img class="wf-hero__img--mobile"
-          src="{{ mimg | image_url: width: mmax_w, format: 'pjpg' }}"
-          srcset="{{ mimg | image_url: width: 600, format: 'pjpg' }} 600w,
-                  {{ mimg | image_url: width: 900, format: 'pjpg' }} 900w,
-                  {{ mimg | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                  {{ mimg | image_url: width: 1600, format: 'pjpg' }} 1600w,
-                  {{ mimg | image_url: width: mmax_w, format: 'pjpg' }} {{ mmax_w }}w"
-          sizes="100vw"
-          alt="{{ section.settings.heading | escape }}"
-          width="{{ mimg.width }}"
-          height="{{ mimg.height }}"
-          loading="eager"
-          fetchpriority="high"
-          decoding="sync">
-      {%- elsif section.settings.image != blank -%}
-        {%- assign img = section.settings.image -%}
-        {%- assign mmax_w = img.width | at_most: 2000 -%}
-        <img class="wf-hero__img--mobile"
-          src="{{ img | image_url: width: mmax_w, format: 'pjpg' }}"
-          srcset="{{ img | image_url: width: 600, format: 'pjpg' }} 600w,
-                  {{ img | image_url: width: 900, format: 'pjpg' }} 900w,
-                  {{ img | image_url: width: 1200, format: 'pjpg' }} 1200w,
-                  {{ img | image_url: width: 1600, format: 'pjpg' }} 1600w,
-                  {{ img | image_url: width: mmax_w, format: 'pjpg' }} {{ mmax_w }}w"
-          sizes="100vw"
-          alt="{{ section.settings.heading | escape }}"
-          width="{{ img.width }}"
-          height="{{ img.height }}"
-          loading="eager"
-          fetchpriority="high"
-          decoding="sync">
-      {%- endif -%}
-      <div class="wf-hero__overlay">
-        {%- if section.settings.heading != blank -%}
-          <h1 class="wf-hero__heading">{{ section.settings.heading }}</h1>
-        {%- endif -%}
-        {%- if section.settings.subtitle != blank -%}
-          <div class="wf-hero__subtitle">{{ section.settings.subtitle }}</div>
-        {%- endif -%}
-        {%- if section.settings.button_text != blank -%}
-          <a href="{{ section.settings.button_link }}" class="wf-hero__btn">{{ section.settings.button_text }}</a>
-        {%- endif -%}
-      </div>
-    </div>
-  {%- endif -%}
+  </div>
 </section>
 
 <script>
@@ -356,6 +271,7 @@
     var root = document.getElementById('WfHero--{{ section.id }}');
     if (!root) return;
     var slides = root.querySelectorAll('.wf-hero__slide');
+    var copies = root.querySelectorAll('.wf-hero__copy');
     if (slides.length < 2) return;
 
     var dots = root.querySelectorAll('.wf-hero__dot');
@@ -367,8 +283,10 @@
 
     function go(idx) {
       idx = ((idx % slides.length) + slides.length) % slides.length;
-      slides[current].classList.remove('is-active');
-      slides[idx].classList.add('is-active');
+      slides[current] && slides[current].classList.remove('is-active');
+      copies[current] && copies[current].classList.remove('is-active');
+      slides[idx] && slides[idx].classList.add('is-active');
+      copies[idx] && copies[idx].classList.add('is-active');
       if (dots.length) {
         dots[current] && dots[current].classList.remove('is-active');
         dots[current] && dots[current].setAttribute('aria-selected', 'false');
@@ -392,8 +310,7 @@
         var target = parseInt(dot.dataset.slideTarget, 10);
         if (!isNaN(target)) {
           go(target);
-          stop();
-          start();
+          stop(); start();
         }
       });
     });
@@ -435,7 +352,7 @@
     {
       "type": "header",
       "content": "Legacy single-slide fallback",
-      "info": "Used only if no slide blocks are added. Once you add slide blocks, these are ignored."
+      "info": "Used only if no slide blocks are added."
     },
     {
       "type": "image_picker",
@@ -477,12 +394,7 @@
         {
           "type": "image_picker",
           "id": "image",
-          "label": "Slide image (desktop)"
-        },
-        {
-          "type": "image_picker",
-          "id": "mobile_image",
-          "label": "Slide image (mobile)"
+          "label": "Slide image (1:1 recommended)"
         },
         {
           "type": "text",

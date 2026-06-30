@@ -590,70 +590,7 @@
   })();
   </script>
 
-  {%- comment -%} Golf Print Club: transparent-until-scroll header on homepage (desktop only) {%- endcomment -%}
-  {%- if template.name == 'index' -%}
-  <style>
-    @media only screen and (min-width: 990px) {
-      body.template-index .header__wrapper {
-        background-color: transparent !important;
-        background-image: none !important;
-        box-shadow: none !important;
-        border-bottom: none !important;
-        transition: background-color 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
-      }
-      body.template-index .header__wrapper,
-      body.template-index .header__wrapper .header__inner,
-      body.template-index .header__wrapper .together,
-      body.template-index .header__wrapper .navlink,
-      body.template-index .header__wrapper .header__logo a,
-      body.template-index .header__wrapper .header__icons a,
-      body.template-index .header__wrapper svg {
-        color: #ffffff;
-      }
-      body.template-index .header__wrapper .navtext,
-      body.template-index .header__wrapper .header__logo-text {
-        color: #ffffff !important;
-      }
-      body.template-index .header__wrapper svg path,
-      body.template-index .header__wrapper svg circle {
-        stroke: currentColor;
-      }
-      /* Once scrolled past hero, fade to white */
-      body.template-index.is-scrolled .header__wrapper {
-        background-color: #ffffff !important;
-        box-shadow: 0 1px 0 rgba(0,0,0,0.06);
-      }
-      body.template-index.is-scrolled .header__wrapper,
-      body.template-index.is-scrolled .header__wrapper .navtext,
-      body.template-index.is-scrolled .header__wrapper .header__logo-text,
-      body.template-index.is-scrolled .header__wrapper .header__icons a,
-      body.template-index.is-scrolled .header__wrapper svg {
-        color: #111111 !important;
-      }
-    }
-  </style>
-  <script>
-    (function() {
-      var threshold = 80; // pixels scrolled before header swaps to white
-      var ticking = false;
-      function update() {
-        if (window.scrollY > threshold) {
-          document.body.classList.add('is-scrolled');
-        } else {
-          document.body.classList.remove('is-scrolled');
-        }
-        ticking = false;
-      }
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(update);
-          ticking = true;
-        }
-      }, { passive: true });
-      update();
-    })();
-  </script>
-  {%- endif -%}
+  {%- comment -%} Hero is now image+copy stacked (light background), so header stays default white. No transparent overlay needed. {%- endcomment -%}
   </head>
   <body
     id="{{ page_title | handle }}"
