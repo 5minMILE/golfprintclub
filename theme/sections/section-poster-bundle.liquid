@@ -1,0 +1,1134 @@
+<!-- /sections/section-poster-bundle.liquid -->
+<style>
+  /* === BASE === */
+  .pb-{{ section.id }} { font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif; color: #0A0A0A; background: #fff; -webkit-font-smoothing: antialiased; padding-bottom: 0; }
+  .pb-{{ section.id }} * { box-sizing: border-box; }
+  .pb-{{ section.id }} h1, .pb-{{ section.id }} h2, .pb-{{ section.id }} h3, .pb-{{ section.id }} h4, .pb-{{ section.id }} p { margin: 0; }
+  .pb-{{ section.id }} button { font-family: inherit; }
+  .pb-{{ section.id }} a { color: inherit; }
+
+  /* === HERO === */
+  .pb-{{ section.id }} .pb-hero {
+    text-align: center; padding: 40px 20px 48px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .pb-{{ section.id }} .pb-hero__visual {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    aspect-ratio: 16 / 10;
+    margin: 0 auto 32px;
+  }
+  .pb-{{ section.id }} .pb-hero__poster {
+    position: absolute;
+    width: 42%;
+    aspect-ratio: 2 / 3;
+    background: #fff;
+    box-shadow: 0 22px 48px rgba(0,0,0,0.20), 0 8px 16px rgba(0,0,0,0.12);
+    overflow: hidden;
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .pb-{{ section.id }} .pb-hero__poster img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .pb-{{ section.id }} .pb-hero__poster--1 {
+    left: 2%; top: 8%; transform: rotate(-7deg); z-index: 2;
+    animation: pbFanLeft-{{ section.id }} 1.1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: 0.2s;
+  }
+  .pb-{{ section.id }} .pb-hero__poster--2 {
+    left: 29%; top: 0; z-index: 3; width: 44%;
+    animation: pbFanCenter-{{ section.id }} 0.7s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  .pb-{{ section.id }} .pb-hero__poster--3 {
+    right: 2%; top: 8%; transform: rotate(7deg); z-index: 2;
+    animation: pbFanRight-{{ section.id }} 1.1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: 0.3s;
+  }
+  /* Animations use pure transforms (GPU-accelerated) — no left/right/top changes during the keyframes */
+  @keyframes pbFanLeft-{{ section.id }} {
+    0%   { transform: translate3d(67%, -10%, 0) scale(0.85) rotate(10deg);  opacity: 0; }
+    20%  { opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) scale(1) rotate(-7deg);          opacity: 1; }
+  }
+  @keyframes pbFanRight-{{ section.id }} {
+    0%   { transform: translate3d(-67%, -10%, 0) scale(0.85) rotate(-10deg); opacity: 0; }
+    20%  { opacity: 1; }
+    100% { transform: translate3d(0, 0, 0) scale(1) rotate(7deg);            opacity: 1; }
+  }
+  @keyframes pbFanCenter-{{ section.id }} {
+    0%   { transform: translate3d(0, 20px, 0) scale(0.86); opacity: 0; }
+    100% { transform: translate3d(0, 0, 0) scale(1);       opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pb-{{ section.id }} .pb-hero__poster--1,
+    .pb-{{ section.id }} .pb-hero__poster--2,
+    .pb-{{ section.id }} .pb-hero__poster--3 { animation: none; }
+  }
+  @media (max-width: 600px) {
+    .pb-{{ section.id }} .pb-hero__visual { max-width: 100%; aspect-ratio: 4 / 3; margin-bottom: 24px; }
+    .pb-{{ section.id }} .pb-hero__poster { width: 44%; }
+    .pb-{{ section.id }} .pb-hero__poster--2 { width: 46%; }
+  }
+
+  .pb-{{ section.id }} .pb-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 800;
+    color: #fff; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 16px; padding: 7px 14px;
+    background: #007BFF;
+    border-radius: 999px;
+  }
+  .pb-{{ section.id }} .pb-eyebrow__dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #fff;
+    position: relative;
+  }
+  .pb-{{ section.id }} .pb-eyebrow__dot::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 50%; background: #fff;
+    animation: pb-pulse-{{ section.id }} 1.6s ease-out infinite;
+  }
+  @keyframes pb-pulse-{{ section.id }} {
+    0%   { transform: scale(1);   opacity: 0.7; }
+    100% { transform: scale(3.0); opacity: 0; }
+  }
+
+  .pb-{{ section.id }} .pb-hero h1 {
+    font-size: clamp(32px, 7vw, 60px); font-weight: 1000;
+    text-transform: uppercase; line-height: 0.96; letter-spacing: -0.015em;
+    margin-bottom: 14px;
+  }
+  .pb-{{ section.id }} .pb-hero__sub {
+    font-size: clamp(15px, 2vw, 18px); color: #555;
+    line-height: 1.45; max-width: 38ch; margin: 0 auto 20px;
+  }
+  .pb-{{ section.id }} .pb-hero__trust {
+    display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: #888;
+  }
+  .pb-{{ section.id }} .pb-hero__trust .star { color: #007BFF; letter-spacing: 1px; }
+
+  /* === GRID === */
+  .pb-{{ section.id }} .pb-grid-wrap { padding: 28px 16px 48px; max-width: 1100px; margin: 0 auto; }
+  .pb-{{ section.id }} .pb-grid-head { text-align: center; margin-bottom: 24px; }
+  .pb-{{ section.id }} .pb-grid-head h2 {
+    font-size: clamp(24px, 4vw, 32px); font-weight: 1000;
+    text-transform: uppercase; letter-spacing: -0.005em; margin-bottom: 8px;
+  }
+  .pb-{{ section.id }} .pb-grid-head p { font-size: 13px; color: #777; }
+  .pb-{{ section.id }} .pb-grid-head .anchor {
+    display: inline-block; margin-top: 10px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase; color: #007BFF;
+    padding: 4px 10px; background: rgba(0,123,255,0.08);
+  }
+
+  .pb-{{ section.id }} .pb-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
+  }
+  @media (min-width: 700px) { .pb-{{ section.id }} .pb-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+
+  .pb-{{ section.id }} .pb-poster { position: relative; user-select: none; }
+  .pb-{{ section.id }} .pb-poster__img {
+    position: relative; aspect-ratio: 2/3; background: #f5f5f5; overflow: hidden;
+    border: 2px solid transparent; transition: all 0.15s; cursor: pointer;
+  }
+  .pb-{{ section.id }} .pb-poster__img:active { transform: scale(0.98); }
+  .pb-{{ section.id }} .pb-poster.selected .pb-poster__img {
+    border-color: #0A0A0A; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  }
+  .pb-{{ section.id }} .pb-poster__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pb-{{ section.id }} .pb-poster__add {
+    position: absolute; bottom: 12px; left: 12px; right: 12px;
+    background: rgba(255,255,255,0.95); color: #0A0A0A;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 8px;
+    text-align: center; pointer-events: none;
+    opacity: 1;
+  }
+  .pb-{{ section.id }} .pb-poster.selected .pb-poster__add { display: none; }
+
+  /* === Checkmark indicator (faint ring by default, solid on selected) === */
+  .pb-{{ section.id }} .pb-poster__check {
+    position: absolute; top: 10px; right: 10px;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    border: 2px solid rgba(255,255,255,0.95);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: transparent;
+    transition: all 0.18s;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+  .pb-{{ section.id }} .pb-poster.selected .pb-poster__check {
+    background: #0A0A0A; border-color: #0A0A0A;
+    color: #fff; transform: scale(1.05);
+  }
+
+  .pb-{{ section.id }} .pb-poster__title {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.02em; margin-top: 12px; line-height: 1.2;
+  }
+  .pb-{{ section.id }} .pb-poster__price { font-size: 12px; color: #777; margin-top: 2px; }
+  .pb-{{ section.id }} .pb-poster__btn {
+    display: block; width: 100%;
+    background: #0A0A0A; color: #fff;
+    border: 1px solid #0A0A0A;
+    padding: 11px; margin-top: 10px;
+    font-size: 11px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    text-decoration: none; text-align: center;
+    transition: opacity 0.15s;
+  }
+  .pb-{{ section.id }} .pb-poster__btn:hover { opacity: 0.85; }
+
+  /* === GUARANTEES === */
+  .pb-{{ section.id }} .pb-guarantees {
+    padding: 36px 20px; background: #fafafa;
+    border-top: 1px solid #eee; border-bottom: 1px solid #eee;
+  }
+  .pb-{{ section.id }} .pb-guarantees__inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 28px;
+  }
+  @media (min-width: 700px) {
+    .pb-{{ section.id }} .pb-guarantees__inner { grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  }
+  .pb-{{ section.id }} .pb-guarantee { text-align: center; }
+  .pb-{{ section.id }} .pb-guarantee__check { color: #007BFF; font-weight: 800; font-size: 16px; line-height: 1; }
+  .pb-{{ section.id }} .pb-guarantee__label {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-top: 6px; line-height: 1.3;
+  }
+  .pb-{{ section.id }} .pb-guarantee__detail { font-size: 11px; color: #777; margin-top: 4px; line-height: 1.4; }
+
+  /* === REVIEWS (BLUE) === */
+  .pb-{{ section.id }} .pb-reviews { padding: 56px 20px 64px; background: #007BFF; color: #fff; }
+  .pb-{{ section.id }} .pb-reviews__inner { max-width: 1100px; margin: 0 auto; }
+  .pb-{{ section.id }} .pb-reviews__header { text-align: center; margin-bottom: 36px; }
+  .pb-{{ section.id }} .pb-reviews__header .stars { color: #fff; font-size: 26px; letter-spacing: 4px; margin-bottom: 6px; }
+  .pb-{{ section.id }} .pb-reviews__header .rating {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255,255,255,0.9);
+  }
+  .pb-{{ section.id }} .pb-reviews__header h2 {
+    margin-top: 14px; color: #fff;
+    font-size: clamp(22px, 3.5vw, 32px); font-weight: 1000;
+    text-transform: uppercase; letter-spacing: -0.005em;
+  }
+  .pb-{{ section.id }} .pb-reviews__grid {
+    display: grid; grid-template-columns: 1fr; gap: 16px;
+  }
+  @media (min-width: 700px) { .pb-{{ section.id }} .pb-reviews__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .pb-{{ section.id }} .pb-reviews__grid { grid-template-columns: repeat(3, 1fr); } }
+  .pb-{{ section.id }} .pb-review { background: #fff; padding: 24px; color: #0A0A0A; }
+  .pb-{{ section.id }} .pb-review__stars { color: #007BFF; font-size: 14px; margin-bottom: 10px; letter-spacing: 2px; }
+  .pb-{{ section.id }} .pb-review__quote { font-size: 14px; line-height: 1.55; color: #1a1a1a; margin-bottom: 12px; }
+  .pb-{{ section.id }} .pb-review__meta { font-size: 11px; color: #777; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
+  .pb-{{ section.id }} .pb-review__product { font-size: 10px; color: #999; margin-top: 2px; letter-spacing: 0.04em; }
+
+  /* === FAQ === */
+  .pb-{{ section.id }} .pb-faq { padding: 56px 20px; background: #fff; }
+  .pb-{{ section.id }} .pb-faq__inner { max-width: 720px; margin: 0 auto; }
+  .pb-{{ section.id }} .pb-faq__title {
+    text-align: center; font-size: clamp(22px, 3.5vw, 28px);
+    font-weight: 1000; text-transform: uppercase; margin-bottom: 24px;
+    letter-spacing: -0.005em;
+  }
+  .pb-{{ section.id }} .pb-faq details { border-top: 1px solid #eee; padding: 16px 0; }
+  .pb-{{ section.id }} .pb-faq details:last-of-type { border-bottom: 1px solid #eee; }
+  .pb-{{ section.id }} .pb-faq summary {
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.02em;
+    list-style: none; display: flex; align-items: center; justify-content: space-between;
+  }
+  .pb-{{ section.id }} .pb-faq summary::-webkit-details-marker { display: none; }
+  .pb-{{ section.id }} .pb-faq summary::after { content: '+'; font-size: 22px; font-weight: 300; }
+  .pb-{{ section.id }} .pb-faq details[open] summary::after { content: '\2212'; }
+  .pb-{{ section.id }} .pb-faq p { font-size: 13px; color: #555; line-height: 1.6; margin-top: 12px; }
+
+  /* === FINAL CTA === */
+  .pb-{{ section.id }} .pb-final {
+    background: #0A0A0A; color: #fff;
+    padding: 64px 20px; text-align: center;
+  }
+  .pb-{{ section.id }} .pb-final__eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; font-weight: 800; color: #fff;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 16px; padding: 7px 13px; background: #007BFF;
+  }
+  .pb-{{ section.id }} .pb-final__eyebrow__dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #fff;
+    position: relative;
+  }
+  .pb-{{ section.id }} .pb-final__eyebrow__dot::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: 50%; background: #fff;
+    animation: pb-pulse-{{ section.id }} 1.6s ease-out infinite;
+  }
+  .pb-{{ section.id }} .pb-final h2 {
+    font-size: clamp(28px, 5.5vw, 44px); font-weight: 1000;
+    text-transform: uppercase; line-height: 0.95; margin-bottom: 14px;
+  }
+  .pb-{{ section.id }} .pb-final p { font-size: 14px; color: #ccc; margin-bottom: 24px; max-width: 44ch; margin-left: auto; margin-right: auto; }
+  .pb-{{ section.id }} .pb-final a {
+    display: inline-block; background: #fff; color: #0A0A0A;
+    padding: 18px 36px; font-size: 12px; font-weight: 1000;
+    letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none;
+  }
+
+  /* === STICKY BOTTOM BAR === */
+  .pb-{{ section.id }} .pb-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+    background: #fff; border-top: 1px solid #e0e0e0;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.08);
+    padding: 0 14px 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+    transform: translateY(0);
+    transition: transform 0.28s ease;
+  }
+  .pb-{{ section.id }} .pb-bar[hidden] {
+    display: block !important;
+    transform: translateY(110%);
+    pointer-events: none;
+  }
+  .pb-{{ section.id }} .pb-bar.collapsed {
+    transform: translateY(calc(100% - 44px));
+  }
+  .pb-{{ section.id }} .pb-bar__handle {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    height: 28px; cursor: pointer;
+    pointer-events: auto;
+  }
+  .pb-{{ section.id }} .pb-bar__handle-grip {
+    width: 44px; height: 4px;
+    background: #d0d0d0; border-radius: 2px;
+    transition: background 0.15s;
+  }
+  .pb-{{ section.id }} .pb-bar__handle:hover .pb-bar__handle-grip { background: #999; }
+  .pb-{{ section.id }} .pb-bar__handle-label {
+    position: absolute; right: 16px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px; font-weight: 800;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #888; display: flex; align-items: center; gap: 6px;
+  }
+  .pb-{{ section.id }} .pb-bar__handle-chev {
+    display: inline-block; font-size: 12px; line-height: 1;
+    transition: transform 0.2s;
+  }
+  .pb-{{ section.id }} .pb-bar.collapsed .pb-bar__handle-chev { transform: rotate(180deg); }
+  .pb-{{ section.id }} .pb-bar__inner {
+    max-width: 480px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .pb-{{ section.id }} .pb-bar__slots {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+  .pb-{{ section.id }} .pb-bar__slot {
+    position: relative;
+    background: #f6f6f6; border: 1px dashed #d0d0d0;
+    aspect-ratio: 2/3;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 1000; color: #ccc;
+    overflow: hidden;
+    transition: all 0.15s;
+  }
+  .pb-{{ section.id }} .pb-bar__slot.filled {
+    background: #fff; border: 1px solid #0A0A0A; border-style: solid;
+    padding: 0;
+  }
+  .pb-{{ section.id }} .pb-bar__slot.filled img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .pb-{{ section.id }} .pb-bar__slot-remove {
+    position: absolute; top: -7px; right: -7px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #0A0A0A; color: #fff; border: 2px solid #fff;
+    font-size: 13px; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; padding: 0;
+    z-index: 2;
+  }
+  .pb-{{ section.id }} .pb-bar__cta {
+    background: #0A0A0A; color: #fff; border: none;
+    padding: 16px 18px; font-size: 12px; font-weight: 1000;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    cursor: pointer; width: 100%;
+    transition: background 0.15s;
+  }
+  .pb-{{ section.id }} .pb-bar__cta:disabled { background: #ccc; cursor: not-allowed; }
+  .pb-{{ section.id }} .pb-bar__cta:not(:disabled):hover { background: #007BFF; }
+
+  @media (min-width: 700px) {
+    .pb-{{ section.id }} .pb-bar { padding: 14px 20px; }
+    .pb-{{ section.id }} .pb-bar__inner { max-width: 540px; }
+    .pb-{{ section.id }} .pb-bar__cta { padding: 18px; }
+  }
+
+  /* === MODAL (full viewport) === */
+  .pb-{{ section.id }} .pb-modal {
+    position: fixed; inset: 0; background: #fff;
+    z-index: 200; display: none;
+    align-items: stretch; justify-content: stretch;
+  }
+  .pb-{{ section.id }} .pb-modal.open { display: flex; }
+  .pb-{{ section.id }} .pb-modal__inner {
+    background: #fff; width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    padding: 24px 22px;
+    padding-top: calc(24px + env(safe-area-inset-top));
+    padding-bottom: calc(28px + env(safe-area-inset-bottom));
+    position: relative;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .pb-{{ section.id }} .pb-modal__close {
+    position: absolute; top: 14px; right: 16px;
+    background: none; border: none; font-size: 28px;
+    color: #0A0A0A; cursor: pointer; line-height: 1; padding: 4px 8px;
+  }
+  .pb-{{ section.id }} .pb-modal__title {
+    font-size: 20px; font-weight: 1000; text-transform: uppercase;
+    margin-bottom: 6px; letter-spacing: -0.005em;
+  }
+  .pb-{{ section.id }} .pb-modal__sub { font-size: 13px; color: #666; margin-bottom: 22px; }
+  .pb-{{ section.id }} .pb-modal__item {
+    display: flex; gap: 14px; padding: 16px 0;
+    border-top: 1px solid #eee;
+  }
+  .pb-{{ section.id }} .pb-modal__item:first-of-type { border-top: 1px solid #ddd; }
+  .pb-{{ section.id }} .pb-modal__img {
+    width: 64px; height: 96px; object-fit: cover; background: #f5f5f5; flex-shrink: 0;
+  }
+  .pb-{{ section.id }} .pb-modal__body { flex: 1; min-width: 0; }
+  .pb-{{ section.id }} .pb-modal__name {
+    font-size: 13px; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.02em; margin-bottom: 8px; line-height: 1.2;
+  }
+  .pb-{{ section.id }} .pb-modal__free {
+    display: inline-block; background: #1ea65f; color: #fff;
+    font-size: 9px; font-weight: 800; letter-spacing: 0.1em;
+    padding: 2px 6px; text-transform: uppercase; margin-left: 6px;
+    vertical-align: middle;
+  }
+  .pb-{{ section.id }} .pb-modal__opt-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase; color: #888; margin-bottom: 6px;
+  }
+  .pb-{{ section.id }} .pb-modal__opt-value { color: #0A0A0A; font-weight: 800; }
+  .pb-{{ section.id }} .pb-modal__colors {
+    display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 4px;
+  }
+  .pb-{{ section.id }} .pb-modal__color {
+    background: #fff; border: 1px solid #ddd; padding: 7px 12px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+    cursor: pointer; transition: all 0.15s; font-family: inherit;
+  }
+  .pb-{{ section.id }} .pb-modal__color.active {
+    background: #0A0A0A; color: #fff; border-color: #0A0A0A;
+  }
+  .pb-{{ section.id }} .pb-modal__sizes {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px;
+  }
+  .pb-{{ section.id }} .pb-modal__size {
+    background: #fff; border: 1px solid #ddd; padding: 9px 4px;
+    font-weight: 700; letter-spacing: 0.04em;
+    cursor: pointer; transition: all 0.15s;
+    text-align: center; font-family: inherit;
+  }
+  .pb-{{ section.id }} .pb-modal__size.active {
+    background: #0A0A0A; color: #fff; border-color: #0A0A0A;
+  }
+  .pb-{{ section.id }} .pb-modal__size .sz {
+    display: block; font-size: 13px; line-height: 1.1;
+  }
+  .pb-{{ section.id }} .pb-modal__size .pp {
+    display: block; font-size: 10px; font-weight: 500; opacity: 0.7; margin-top: 2px;
+  }
+  .pb-{{ section.id }} .pb-modal__totals {
+    margin-top: 22px; padding: 18px 0; border-top: 2px solid #0A0A0A;
+  }
+  .pb-{{ section.id }} .pb-modal__row {
+    display: flex; justify-content: space-between;
+    font-size: 13px; padding: 4px 0; color: #444;
+  }
+  .pb-{{ section.id }} .pb-modal__row.pb-savings { color: #1ea65f; font-weight: 700; }
+  .pb-{{ section.id }} .pb-modal__row.pb-total {
+    font-size: 17px; font-weight: 1000; color: #0A0A0A;
+    border-top: 1px solid #eee; margin-top: 8px; padding-top: 12px;
+  }
+  .pb-{{ section.id }} .pb-modal__cta {
+    display: block; width: 100%; background: #0A0A0A; color: #fff;
+    border: none; padding: 18px; margin-top: 20px;
+    font-size: 13px; font-weight: 1000; letter-spacing: 0.14em;
+    text-transform: uppercase; cursor: pointer; transition: opacity 0.15s;
+  }
+  .pb-{{ section.id }} .pb-modal__cta:hover { opacity: 0.85; }
+  .pb-{{ section.id }} .pb-modal__fine {
+    font-size: 10px; color: #888; text-align: center;
+    margin-top: 12px; letter-spacing: 0.04em; line-height: 1.5;
+  }
+</style>
+
+<section class="pb-{{ section.id }}" data-section-id="{{ section.id }}">
+
+  {%- assign coll_handle = section.settings.collection_handle | default: 'running-posters' -%}
+  {%- assign poster_col = collections[coll_handle] -%}
+
+  {%- comment -%} Helper: try to find a "close" image per product, fall back to second image, then featured. {%- endcomment -%}
+
+  <!-- HERO -->
+  <div class="pb-hero">
+    {%- if poster_col != blank and poster_col.products.size >= 3 -%}
+      <div class="pb-hero__visual" aria-hidden="true">
+        {%- assign hero_count = 0 -%}
+        {%- for hp in poster_col.products -%}
+          {%- if hero_count >= 3 -%}{%- break -%}{%- endif -%}
+          {%- assign hero_img = nil -%}
+          {%- for m in hp.media -%}
+            {%- assign altstr = m.alt | default: '' -%}
+            {%- assign altlow = altstr | downcase -%}
+            {%- if altlow contains 'upclose' -%}
+              {%- assign hero_img = m.preview_image -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if hero_img == nil -%}{%- assign hero_img = hp.featured_image -%}{%- endif -%}
+          {%- if hero_img != blank -%}
+            {%- assign hero_count = hero_count | plus: 1 -%}
+            <div class="pb-hero__poster pb-hero__poster--{{ hero_count }}"><img src="{{ hero_img | image_url: width: 700 }}" alt=""></div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pb-eyebrow"><span class="pb-eyebrow__dot"></span>{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <h1>{{ section.settings.heading | replace: ', ', ',<br>' | replace: ' Get ', '<br>Get ' }}</h1>
+    <p class="pb-hero__sub">{{ section.settings.subheading }}</p>
+    <div class="pb-hero__trust">
+      <span><span class="star">★★★★★</span> {{ shop.metafields.judgeme.all_reviews_rating | default: '4.9' }}</span>
+      <span>{{ shop.metafields.judgeme.all_reviews_count | default: '200+' }} reviews</span>
+      <span>Made in the USA</span>
+    </div>
+  </div>
+
+  <!-- POSTER GRID -->
+  <div class="pb-grid-wrap">
+    <div class="pb-grid-head">
+      <h2>Pick any 3 posters</h2>
+      <p>Tap to add.</p>
+      {%- if section.settings.savings_anchor != blank -%}
+        <span class="anchor">{{ section.settings.savings_anchor }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if poster_col != blank and poster_col.products.size > 0 -%}
+      <div class="pb-grid">
+        {%- for product in poster_col.products -%}
+          {%- assign card_img = nil -%}
+          {%- for m in product.media -%}
+            {%- assign altstr = m.alt | default: '' -%}
+            {%- assign altlow = altstr | downcase -%}
+            {%- if altlow contains 'upclose' -%}
+              {%- assign card_img = m.preview_image -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if card_img == nil -%}{%- assign card_img = product.featured_image -%}{%- endif -%}
+          {%- capture variants_json -%}[{%- for v in product.variants -%}{"id":{{v.id}},"title":{{ v.title | json }},"options":{{ v.options | json }},"price":{{ v.price }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]{%- endcapture -%}
+          {%- capture option_names_json -%}{{ product.options | json }}{%- endcapture -%}
+          <div class="pb-poster"
+               data-product-id="{{ product.id }}"
+               data-handle="{{ product.handle }}"
+               data-title="{{ product.title | replace: ' Poster', '' | escape }}"
+               data-image="{{ card_img | image_url: width: 600 }}"
+               data-option-names='{{ option_names_json | escape }}'
+               data-variants='{{ variants_json | escape }}'>
+            <div class="pb-poster__img" data-pb-add>
+              {%- if card_img -%}
+                <img src="{{ card_img | image_url: width: 700 }}" alt="{{ product.title | escape }}" loading="lazy">
+              {%- endif -%}
+              <div class="pb-poster__check">✓</div>
+              <div class="pb-poster__add">Tap to Add</div>
+            </div>
+            <div class="pb-poster__title">{{ product.title | replace: ' Poster', '' }}</div>
+            <div class="pb-poster__price">{{ product.price_min | money }} – {{ product.price_max | money }}</div>
+            <a class="pb-poster__btn" href="{{ product.url }}" target="_blank" rel="noopener">View Product</a>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- GUARANTEES STRIP -->
+  <div class="pb-guarantees">
+    <div class="pb-guarantees__inner">
+      <div class="pb-guarantee">
+        <div class="pb-guarantee__check">✓</div>
+        <div class="pb-guarantee__label">Free Reprint if Damaged</div>
+        <div class="pb-guarantee__detail">No questions asked</div>
+      </div>
+      <div class="pb-guarantee">
+        <div class="pb-guarantee__check">✓</div>
+        <div class="pb-guarantee__label">5-Day US Delivery</div>
+        <div class="pb-guarantee__detail">Tracked. Flat $7.</div>
+      </div>
+      <div class="pb-guarantee">
+        <div class="pb-guarantee__check">✓</div>
+        <div class="pb-guarantee__label">200gsm Museum Paper</div>
+        <div class="pb-guarantee__detail">Archival pigment ink</div>
+      </div>
+      <div class="pb-guarantee">
+        <div class="pb-guarantee__check">✓</div>
+        <div class="pb-guarantee__label">Made in the USA</div>
+        <div class="pb-guarantee__detail">Independent. Small.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS (per-poster Judge.me widgets, aggregated client-side) -->
+  <div class="pb-reviews">
+    <div class="pb-reviews__inner">
+      <div class="pb-reviews__header">
+        <div class="stars">★★★★★</div>
+        <div class="rating">{{ shop.metafields.judgeme.all_reviews_rating | default: '4.9' }} stars · {{ shop.metafields.judgeme.all_reviews_count | default: '200+' }} reviews</div>
+        <h2>{{ section.settings.reviews_heading | default: 'What runners say' }}</h2>
+      </div>
+      <div class="pb-reviews__grid" id="pb-reviews-grid-{{ section.id }}"></div>
+    </div>
+  </div>
+
+  {%- comment -%}
+    Live fetch poster reviews from Judge.me API (same source as the product
+    page). We render a lightweight JSON list of poster product IDs and let
+    the client fetch reviews per product, aggregate, and display.
+  {%- endcomment -%}
+  <script type="application/json" id="pb-posters-{{ section.id }}">{
+    "shop": {{ shop.permanent_domain | json }},
+    "products": [
+      {%- for product in poster_col.products -%}
+        {"id": {{ product.id }}, "title": {{ product.title | replace: ' Poster', '' | json }}, "handle": {{ product.handle | json }}}{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }</script>
+
+  <!-- FAQ -->
+  <div class="pb-faq">
+    <div class="pb-faq__inner">
+      <h2 class="pb-faq__title">{{ section.settings.faq_heading | default: 'Quick questions' }}</h2>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq' -%}
+          <details {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question }}</summary>
+            <p>{{ block.settings.answer }}</p>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- STICKY BAR -->
+  <div class="pb-bar" id="pb-bar-{{ section.id }}" hidden>
+    <div class="pb-bar__handle" id="pb-bar-handle-{{ section.id }}">
+      <span class="pb-bar__handle-grip"></span>
+      <span class="pb-bar__handle-label">
+        <span id="pb-bar-handle-text-{{ section.id }}">Hide</span>
+        <span class="pb-bar__handle-chev">⌃</span>
+      </span>
+    </div>
+    <div class="pb-bar__inner">
+      <div class="pb-bar__slots">
+        <div class="pb-bar__slot" data-slot="0">1</div>
+        <div class="pb-bar__slot" data-slot="1">2</div>
+        <div class="pb-bar__slot" data-slot="2">3</div>
+      </div>
+      <button class="pb-bar__cta" id="pb-bar-cta-{{ section.id }}" disabled>Pick 3</button>
+    </div>
+  </div>
+
+  <!-- MODAL: size selection + checkout -->
+  <div class="pb-modal" id="pb-modal-{{ section.id }}">
+    <div class="pb-modal__inner">
+      <button class="pb-modal__close" id="pb-modal-close-{{ section.id }}">×</button>
+      <h2 class="pb-modal__title">Select a Size</h2>
+      <p class="pb-modal__sub">Pick a size for each poster. The cheapest of the three is free.</p>
+      <div id="pb-modal-items-{{ section.id }}"></div>
+      <div class="pb-modal__totals">
+        <div class="pb-modal__row"><span>Subtotal (3 posters)</span><span id="pb-modal-subtotal-{{ section.id }}">$0</span></div>
+        <div class="pb-modal__row pb-savings"><span>Cheapest free</span><span id="pb-modal-savings-{{ section.id }}">-$0</span></div>
+        <div class="pb-modal__row"><span>Shipping</span><span id="pb-modal-shipping-{{ section.id }}">$7.00</span></div>
+        <div class="pb-modal__row pb-total"><span>Total</span><span id="pb-modal-total-{{ section.id }}">$0</span></div>
+      </div>
+      <button class="pb-modal__cta" id="pb-modal-cta-{{ section.id }}">Checkout</button>
+      <p class="pb-modal__fine">Secure checkout · Made to order · Free reprint if damaged</p>
+    </div>
+  </div>
+
+</section>
+
+<script>
+(function() {
+  var SID = '{{ section.id }}';
+  var MAX = 3;
+  var DISCOUNT = '{{ section.settings.discount_code | default: "B2G1FREE" }}';
+  var SHIPPING_CENTS = {{ section.settings.shipping_cents | default: 700 }};
+  var DEFAULT_SIZE_HINT = '{{ section.settings.default_size_hint | default: "16" }}';
+  var section = document.querySelector('.pb-' + SID);
+  if (!section) return;
+
+  var selected = [];
+
+  function money(c) { return '$' + (c/100).toFixed(2); }
+  function $(id) { return document.getElementById(id); }
+
+  function pickDefaultVariant(variants) {
+    for (var i = 0; i < variants.length; i++) {
+      if (variants[i].title && variants[i].title.toLowerCase().indexOf(DEFAULT_SIZE_HINT.toLowerCase()) >= 0) return variants[i];
+    }
+    return variants[Math.floor(variants.length / 2)] || variants[0];
+  }
+
+  function updateBar() {
+    var slots = section.querySelectorAll('.pb-bar__slot');
+    slots.forEach(function(slot, i) {
+      var item = selected[i];
+      if (item) {
+        slot.classList.add('filled');
+        slot.innerHTML =
+          '<img src="' + item.image + '">' +
+          '<button class="pb-bar__slot-remove" data-i="' + i + '">×</button>';
+      } else {
+        slot.classList.remove('filled');
+        slot.innerHTML = (i + 1);
+      }
+    });
+    section.querySelectorAll('.pb-bar__slot-remove').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var i = parseInt(btn.dataset.i, 10);
+        var item = selected[i];
+        if (item) {
+          var card = section.querySelector('.pb-poster[data-product-id="' + item.productId + '"]');
+          if (card) card.classList.remove('selected');
+          selected.splice(i, 1);
+          updateBar();
+        }
+      });
+    });
+
+    var btn = $('pb-bar-cta-' + SID);
+    var bar = $('pb-bar-' + SID);
+    if (selected.length === 0) {
+      bar.hidden = true;
+      bar.classList.remove('collapsed');
+      btn.disabled = true;
+      btn.textContent = 'Pick 3';
+    } else {
+      bar.hidden = false;
+      if (selected.length < MAX) {
+        var n = MAX - selected.length;
+        btn.disabled = true;
+        btn.textContent = 'Pick ' + n + ' More';
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Select Size';
+      }
+    }
+  }
+
+  function openModal() {
+    if (selected.length !== MAX) return;
+    renderModal();
+    $('pb-modal-' + SID).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function formatSize(s) {
+    if (!s) return '';
+    return s.replace(/[″"]/g, '').replace(/x/i, ' × ');
+  }
+  function moneyShort(c) {
+    return (c % 100 === 0) ? ('$' + (c / 100)) : ('$' + (c / 100).toFixed(2));
+  }
+  function findColorSizeIndices(optionNames) {
+    var colorIdx = -1, sizeIdx = -1;
+    (optionNames || []).forEach(function(n, i) {
+      var nl = (n || '').toLowerCase();
+      if (nl === 'color' || nl === 'colour') colorIdx = i;
+      if (nl === 'size' || nl === 'dimensions') sizeIdx = i;
+    });
+    // Fallbacks: if no labels, assume index 0 = color, index 1 = size when there are 2 options
+    if (colorIdx < 0 && sizeIdx < 0 && optionNames && optionNames.length === 2) { colorIdx = 0; sizeIdx = 1; }
+    if (sizeIdx < 0 && optionNames && optionNames.length === 1) sizeIdx = 0;
+    return { colorIdx: colorIdx, sizeIdx: sizeIdx };
+  }
+
+  function renderModal() {
+    var items = $('pb-modal-items-' + SID);
+    var cheapest = Math.min.apply(null, selected.map(function(x) { return x.variant.price; }));
+    var freeIdx = selected.findIndex(function(x) { return x.variant.price === cheapest; });
+    var html = '';
+    selected.forEach(function(item, idx) {
+      var showFree = (idx === freeIdx);
+      var idxs = findColorSizeIndices(item.optionNames);
+      var hasColor = idxs.colorIdx >= 0;
+      var sizeIdx = idxs.sizeIdx;
+
+      // Distinct colors
+      var colors = [];
+      if (hasColor) {
+        item.variants.forEach(function(v) {
+          var c = v.options && v.options[idxs.colorIdx];
+          if (c && colors.indexOf(c) === -1) colors.push(c);
+        });
+      }
+      var activeColor = hasColor ? (item.variant.options && item.variant.options[idxs.colorIdx]) : null;
+
+      // Variants matching current color (filtered for size pills)
+      var sizeVariants = item.variants.filter(function(v) {
+        if (!hasColor) return true;
+        return v.options && v.options[idxs.colorIdx] === activeColor;
+      });
+
+      html += '<div class="pb-modal__item">';
+      html += '<img class="pb-modal__img" src="' + item.image + '">';
+      html += '<div class="pb-modal__body">';
+      html += '<div class="pb-modal__name">' + item.title + (showFree ? '<span class="pb-modal__free">Free</span>' : '') + '</div>';
+
+      // Color row (only if more than one)
+      if (hasColor && colors.length > 1) {
+        html += '<div class="pb-modal__opt-label">Color: <span class="pb-modal__opt-value">' + activeColor + '</span></div>';
+        html += '<div class="pb-modal__colors">';
+        colors.forEach(function(c) {
+          var ac = (c === activeColor) ? ' active' : '';
+          html += '<button class="pb-modal__color' + ac + '" data-i="' + idx + '" data-color="' + encodeURIComponent(c) + '">' + c + '</button>';
+        });
+        html += '</div>';
+      } else if (hasColor && colors.length === 1) {
+        html += '<div class="pb-modal__opt-label">Color: <span class="pb-modal__opt-value">' + activeColor + '</span></div>';
+      }
+
+      // Sizes
+      if (sizeIdx >= 0 && sizeVariants.length > 0) {
+        html += '<div class="pb-modal__opt-label" style="margin-top:10px;">Size</div>';
+        html += '<div class="pb-modal__sizes">';
+        sizeVariants.forEach(function(v) {
+          var active = (v.id === item.variant.id) ? ' active' : '';
+          var sizeLabel = formatSize(v.options[sizeIdx]);
+          html += '<button class="pb-modal__size' + active + '" data-i="' + idx + '" data-vid="' + v.id + '">' +
+                  '<span class="sz">' + sizeLabel + '</span>' +
+                  '<span class="pp">' + moneyShort(v.price) + '</span>' +
+                  '</button>';
+        });
+        html += '</div>';
+      }
+
+      html += '</div></div>';
+    });
+    items.innerHTML = html;
+
+    // Size pills
+    items.querySelectorAll('.pb-modal__size').forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        var i = parseInt(pill.dataset.i, 10);
+        var vid = pill.dataset.vid;
+        var v = selected[i].variants.find(function(x) { return String(x.id) === String(vid); });
+        if (v) { selected[i].variant = v; renderModal(); updateModalTotals(); }
+      });
+    });
+    // Color pills
+    items.querySelectorAll('.pb-modal__color').forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        var i = parseInt(pill.dataset.i, 10);
+        var newColor = decodeURIComponent(pill.dataset.color);
+        var item = selected[i];
+        var idxs = findColorSizeIndices(item.optionNames);
+        // Find variant with new color + same size if possible
+        var currentSize = item.variant.options[idxs.sizeIdx];
+        var match = item.variants.find(function(v) {
+          return v.options[idxs.colorIdx] === newColor && v.options[idxs.sizeIdx] === currentSize;
+        });
+        if (!match) {
+          match = item.variants.find(function(v) { return v.options[idxs.colorIdx] === newColor; });
+        }
+        if (match) { selected[i].variant = match; renderModal(); updateModalTotals(); }
+      });
+    });
+    updateModalTotals();
+  }
+
+  function updateModalTotals() {
+    var subtotal = selected.reduce(function(s, x) { return s + x.variant.price; }, 0);
+    var cheapest = Math.min.apply(null, selected.map(function(x) { return x.variant.price; }));
+    var total = subtotal - cheapest + SHIPPING_CENTS;
+    $('pb-modal-subtotal-' + SID).textContent = money(subtotal);
+    $('pb-modal-savings-' + SID).textContent = '-' + money(cheapest);
+    $('pb-modal-shipping-' + SID).textContent = money(SHIPPING_CENTS);
+    $('pb-modal-total-' + SID).textContent = money(total);
+  }
+
+  function closeModal() {
+    $('pb-modal-' + SID).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function addToCart() {
+    var cta = $('pb-modal-cta-' + SID);
+    cta.disabled = true; cta.textContent = 'Adding...';
+    var items = selected.map(function(s) {
+      var vid = s.variant && s.variant.id;
+      return { id: parseInt(vid, 10), quantity: 1 };
+    });
+    console.log('PB: adding bundle to cart:', items);
+    // Validate
+    if (items.some(function(it) { return !it.id || isNaN(it.id); })) {
+      console.error('PB: invalid variant id(s):', items);
+      cta.disabled = false; cta.textContent = 'Checkout';
+      alert('Bundle has an invalid item. Please re-select.');
+      return;
+    }
+    // Clear cart first (non-blocking — if it fails, still try to add)
+    fetch('/cart/clear.js', { method: 'POST', credentials: 'same-origin' })
+      .catch(function(e) { console.warn('PB: clear failed (continuing):', e); })
+      .then(function() {
+        return fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          credentials: 'same-origin',
+          body: JSON.stringify({ items: items })
+        });
+      })
+      .then(function(r) {
+        if (!r.ok) {
+          return r.text().then(function(t) {
+            throw new Error('Cart add failed (' + r.status + '): ' + t.slice(0, 200));
+          });
+        }
+        return r.json();
+      })
+      .then(function(data) {
+        console.log('PB: items added; navigating to checkout via discount URL');
+        // Shopify discount URL: applies the code to the session and redirects.
+        // If the code doesn't exist, the redirect still happens — the items just go to checkout without a discount.
+        window.location.href = '/discount/' + encodeURIComponent(DISCOUNT) + '?redirect=/checkout';
+      })
+      .catch(function(err) {
+        console.error('PB checkout error:', err);
+        cta.disabled = false; cta.textContent = 'Checkout';
+        alert('Could not add bundle.\n\n' + (err && err.message ? err.message : 'Unknown error') + '\n\nPlease try again or email info@rnculture.com.');
+      });
+  }
+
+  // Wire poster tap on image only (not button)
+  section.querySelectorAll('.pb-poster').forEach(function(card) {
+    var img = card.querySelector('[data-pb-add]');
+    if (!img) return;
+    img.addEventListener('click', function() {
+      var pid = card.dataset.productId;
+      var existingIdx = selected.findIndex(function(s) { return s.productId === pid; });
+      if (existingIdx >= 0) {
+        selected.splice(existingIdx, 1);
+        card.classList.remove('selected');
+      } else if (selected.length < MAX) {
+        var variants, optionNames;
+        try { variants = JSON.parse(card.dataset.variants.replace(/&quot;/g, '"')); } catch(e) { variants = []; }
+        try { optionNames = JSON.parse(card.dataset.optionNames.replace(/&quot;/g, '"')); } catch(e) { optionNames = []; }
+        if (!variants.length) return;
+        selected.push({
+          productId: pid,
+          title: card.dataset.title,
+          image: card.dataset.image,
+          variants: variants,
+          optionNames: optionNames,
+          variant: pickDefaultVariant(variants)
+        });
+        card.classList.add('selected');
+      }
+      updateBar();
+    });
+  });
+
+  $('pb-bar-cta-' + SID).addEventListener('click', openModal);
+  $('pb-modal-close-' + SID).addEventListener('click', closeModal);
+  $('pb-modal-cta-' + SID).addEventListener('click', addToCart);
+  $('pb-bar-handle-' + SID).addEventListener('click', function() {
+    var bar = $('pb-bar-' + SID);
+    bar.classList.toggle('collapsed');
+    $('pb-bar-handle-text-' + SID).textContent = bar.classList.contains('collapsed') ? 'Show' : 'Hide';
+  });
+  $('pb-modal-' + SID).addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+  // ===== Live fetch poster reviews from Judge.me API (same source as PDP) =====
+  (function renderPosterReviews() {
+    var grid = $('pb-reviews-grid-' + SID);
+    if (!grid) return;
+    var cfg;
+    try { cfg = JSON.parse(document.getElementById('pb-posters-' + SID).textContent); } catch (e) { return; }
+    var shop = cfg.shop;
+    var products = cfg.products || [];
+    if (!products.length || !shop) return;
+
+    function esc(t) { var d = document.createElement('div'); d.textContent = t == null ? '' : t; return d.innerHTML; }
+
+    function parseWidgetHtml(html, ptitle) {
+      var doc;
+      try { doc = new DOMParser().parseFromString(html || '', 'text/html'); } catch (e) { return []; }
+      var nodes = doc.querySelectorAll('.jdgm-rev');
+      var out = [];
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i];
+        var ratingEl = el.querySelector('.jdgm-rev__rating');
+        var tsEl = el.querySelector('.jdgm-rev__timestamp');
+        var authEl = el.querySelector('.jdgm-rev__author');
+        var bodyEl = el.querySelector('.jdgm-rev__body');
+        var body = bodyEl ? bodyEl.textContent.replace(/\s+/g, ' ').replace(/Read more$/, '').trim() : '';
+        if (!body || body.length < 20) continue;
+        var rating = parseInt(ratingEl ? ratingEl.getAttribute('data-score') : 5, 10);
+        if (rating < 4) continue;
+        out.push({
+          rating: rating,
+          name: authEl ? authEl.textContent.trim() : '',
+          date: tsEl ? (tsEl.getAttribute('data-content') || tsEl.textContent) : '',
+          body: body,
+          uuid: el.getAttribute('data-review-id') || '',
+          ptitle: ptitle
+        });
+      }
+      return out;
+    }
+
+    // Fetch all poster product reviews in parallel
+    var fetches = products.map(function(p) {
+      var url = 'https://api.judge.me/reviews/reviews_for_widget'
+        + '?url=' + encodeURIComponent(shop)
+        + '&shop_domain=' + encodeURIComponent(shop)
+        + '&platform=shopify&page=1&per_page=20'
+        + '&product_id=' + encodeURIComponent(p.id);
+      return fetch(url)
+        .then(function(r) { return r.text(); })
+        .then(function(t) {
+          var html = t;
+          try { var j = JSON.parse(t); if (j && j.html) html = j.html; } catch (e) {}
+          return parseWidgetHtml(html, p.title);
+        })
+        .catch(function() { return []; });
+    });
+
+    Promise.all(fetches).then(function(arrs) {
+      var all = arrs.reduce(function(acc, a) { return acc.concat(a); }, []);
+      // Dedup by review uuid first, then by name+body slice
+      var seenUuid = {}, seenKey = {};
+      all = all.filter(function(r) {
+        if (r.uuid) { if (seenUuid[r.uuid]) return false; seenUuid[r.uuid] = 1; }
+        var k = (r.name || '') + '|' + r.body.slice(0, 40).toLowerCase();
+        if (seenKey[k]) return false; seenKey[k] = 1;
+        return true;
+      });
+      // Sort newest first
+      all.sort(function(a, b) {
+        var da = a.date ? new Date(a.date).getTime() : 0;
+        var db = b.date ? new Date(b.date).getTime() : 0;
+        return db - da;
+      });
+      var MAX_REVIEWS = 9;
+      if (!all.length) { grid.innerHTML = '<p style="color:rgba(255,255,255,0.7);text-align:center;font-size:13px;">Loading reviews...</p>'; return; }
+      grid.innerHTML = all.slice(0, MAX_REVIEWS).map(function(r) {
+        var starsHtml = '';
+        for (var i = 1; i <= 5; i++) starsHtml += (i <= r.rating) ? '&#9733;' : '&#9734;';
+        var dt = r.date ? new Date(r.date) : null;
+        var dateStr = (dt && !isNaN(dt.getTime())) ? dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) : '';
+        return '<div class="pb-review">' +
+          '<div class="pb-review__stars">' + starsHtml + '</div>' +
+          '<p class="pb-review__quote">' + esc(r.body) + '</p>' +
+          '<p class="pb-review__meta">' + esc(r.name || 'Verified Runner') + (dateStr ? ' &middot; ' + dateStr : '') + '</p>' +
+          (r.ptitle ? '<p class="pb-review__product">on ' + esc(r.ptitle) + '</p>' : '') +
+          '</div>';
+      }).join('');
+    });
+  })();
+
+  updateBar();
+
+  // ===== Hide site header on scroll down, show on scroll up =====
+  (function hideHeaderOnScroll() {
+    var header = document.querySelector('header.theme__header') || document.querySelector('header[data-section-type]') || document.querySelector('header');
+    if (!header) return;
+    // Inject minimal transform style without breaking the theme's existing sticky behavior
+    header.style.transition = 'transform 0.25s ease';
+    header.style.willChange = 'transform';
+    var lastY = window.scrollY;
+    var ticking = false;
+    var THRESHOLD = 80; // px from top before hiding kicks in
+    function onScroll() {
+      var y = window.scrollY;
+      if (y > THRESHOLD && y > lastY) {
+        header.style.transform = 'translateY(-110%)';
+      } else {
+        header.style.transform = 'translateY(0)';
+      }
+      lastY = y;
+      ticking = false;
+    }
+    window.addEventListener('scroll', function() {
+      if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
+    }, { passive: true });
+  })();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Poster Bundle Builder",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Limited Time" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Buy Two, Get One Free" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Make your room look like a runner's room. Made to order." },
+
+    { "type": "header", "content": "Builder" },
+    { "type": "text", "id": "collection_handle", "label": "Source collection", "default": "running-posters" },
+    { "type": "text", "id": "discount_code", "label": "Discount code", "default": "B2G1FREE" },
+    { "type": "number", "id": "shipping_cents", "label": "Flat shipping (cents)", "default": 700 },
+    { "type": "text", "id": "default_size_hint", "label": "Default size substring", "default": "16" },
+    { "type": "text", "id": "savings_anchor", "label": "Savings anchor chip", "default": "Save up to 33% on 3" },
+
+    { "type": "header", "content": "Section headings" },
+    { "type": "text", "id": "reviews_heading", "label": "Reviews heading", "default": "What runners say" },
+    { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Quick questions" },
+
+    { "type": "header", "content": "Final CTA" },
+    { "type": "text", "id": "final_eyebrow", "label": "Eyebrow", "default": "Limited Time" },
+    { "type": "text", "id": "final_heading", "label": "Heading", "default": "Make Your Room Look Like A Runner's Room" },
+    { "type": "textarea", "id": "final_sub", "label": "Sub", "default": "Pick your 3. The cheapest is on us. Ships in 5 days for $7 flat." }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "How does the bundle work?" },
+        { "type": "textarea", "id": "answer", "label": "Answer", "default": "Pick any 3 posters. The cheapest comes off at checkout." }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Poster Bundle Builder", "category": "Custom" }
+  ]
+}
+{% endschema %}

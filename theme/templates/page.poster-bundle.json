@@ -1,0 +1,82 @@
+{
+  "sections": {
+    "main": {
+      "type": "section-poster-bundle",
+      "blocks": {
+        "faq1": {
+          "type": "faq",
+          "settings": {
+            "question": "How does the bundle work?",
+            "answer": "Pick any 3 posters. At checkout the cheapest comes off the total automatically. Mix sizes and designs freely. Shipping is a flat $7."
+          }
+        },
+        "faq2": {
+          "type": "faq",
+          "settings": {
+            "question": "How fast does it ship?",
+            "answer": "We print to order, no warehouse. Production takes 2 to 3 business days. US shipping is another 2 to 3 days. Most orders arrive within 5 business days, with tracking on every order."
+          }
+        },
+        "faq3": {
+          "type": "faq",
+          "settings": {
+            "question": "What if it arrives damaged?",
+            "answer": "Email info@golfprintclub.com within 14 days. We reprint and reship for free, no questions asked. Every email is answered by a real person, usually within a day."
+          }
+        },
+        "faq4": {
+          "type": "faq",
+          "settings": {
+            "question": "What sizes can I pick?",
+            "answer": "Three sizes per poster: 12 by 18, 16 by 24, and 24 by 36 inches. Default is 16 by 24 (our most popular). You'll pick the size for each poster after you build the bundle."
+          }
+        },
+        "faq5": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the posters framed?",
+            "answer": "No. Posters ship unframed and rolled in a protective tube. We use standard sizes so any matching frame from Amazon, IKEA, or Target fits. Keeping them unframed keeps the price honest."
+          }
+        },
+        "faq6": {
+          "type": "faq",
+          "settings": {
+            "question": "What's the paper and print quality?",
+            "answer": "200gsm premium matte paper. Museum-grade pigment ink. Heavy enough not to curl, archival enough to not fade in sunlight. Same press that prints for galleries."
+          }
+        },
+        "faq7": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I return it if I change my mind?",
+            "answer": "Print-to-order means we can't accept change-of-mind returns. But if it arrives damaged or wrong, we make it right. We stand behind the print quality 100%."
+          }
+        },
+        "faq8": {
+          "type": "faq",
+          "settings": {
+            "question": "Why is shipping $7 instead of free?",
+            "answer": "Shipping a rigid tube costs us real money. $7 covers the carrier and tracking. Orders over $75 ship free. We keep the price honest rather than building shipping into a higher poster price."
+          }
+        }
+      },
+      "block_order": ["faq1", "faq2", "faq3", "faq4", "faq5", "faq6", "faq7", "faq8"],
+      "settings": {
+        "eyebrow": "Limited Time Offer",
+        "heading": "Buy Two, Get One Free",
+        "subheading": "Wall art for golfers who actually play. Made to order.",
+        "collection_handle": "golf-posters",
+        "discount_code": "B2G1FREE",
+        "shipping_cents": 700,
+        "default_size_hint": "16",
+        "savings_anchor": "Get One Free",
+        "reviews_heading": "What golfers say about our posters",
+        "faq_heading": "Quick questions",
+        "final_eyebrow": "Limited Time",
+        "final_heading": "Make Your Office Look Like A Clubhouse",
+        "final_sub": "Pick your 3. The cheapest is on us. Ships in 5 days for $7 flat."
+      }
+    }
+  },
+  "order": ["main"]
+}
