@@ -29,7 +29,108 @@
         "autoplay": true,
         "autoplay_interval": 6
       }
+    },
+    "collection_tabs": {
+      "type": "section-wf-collection-tabs",
+      "blocks": {
+        "tab_best": {
+          "type": "tab",
+          "settings": {
+            "label": "Best Sellers",
+            "collection": "golf-posters"
+          }
+        },
+        "tab_new": {
+          "type": "tab",
+          "settings": {
+            "label": "New Arrivals",
+            "collection": "golf-posters"
+          }
+        },
+        "tab_all": {
+          "type": "tab",
+          "settings": {
+            "label": "All Posters",
+            "collection": "golf-posters"
+          }
+        }
+      },
+      "block_order": ["tab_best", "tab_new", "tab_all"],
+      "settings": {
+        "products_per_tab": 8,
+        "padding_top": 64,
+        "padding_bottom": 24
+      }
+    },
+    "bundle_banner": {
+      "type": "section-wf-lifestyle-banner",
+      "settings": {
+        "image_position": "right",
+        "eyebrow": "Limited Time Offer",
+        "heading": "Buy Two Posters, Get One Free",
+        "subheading": "Three originals on 200gsm museum-grade paper. Made to order in the US. Ships in 5 days for $7 flat. Bundle savings apply automatically at checkout.",
+        "button_text": "Build Your Bundle",
+        "button_link": "shopify://pages/buy-2-get-1-free",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "poster_wheel": {
+      "type": "section-wf-poster-wheel",
+      "settings": {
+        "heading": "Pick Your Posters",
+        "subheading": "Browse every design. Each one hand-printed and made to order.",
+        "collection": "golf-posters",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
+    },
+    "faq": {
+      "type": "section-wf-faq",
+      "blocks": {
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "How fast does it ship?",
+            "answer": "We print to order, no warehouse. Production takes 2 to 3 business days. US shipping is another 2 to 3 days. Most orders arrive within 5 business days, with tracking on every order."
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "What's the paper and print quality?",
+            "answer": "200gsm premium matte paper. Museum-grade pigment ink. Heavy enough not to curl, archival enough to not fade in sunlight. Same press that prints for galleries."
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "What sizes can I pick?",
+            "answer": "Three sizes: 12 by 18, 16 by 24, and 24 by 36 inches. Most popular is 16 by 24."
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "Are the posters framed?",
+            "answer": "No. Posters ship unframed and rolled in a protective tube. We use standard sizes so any matching frame from Amazon, IKEA, or Target fits. Keeping them unframed keeps the price honest."
+          }
+        },
+        "f5": {
+          "type": "faq",
+          "settings": {
+            "question": "What if it arrives damaged?",
+            "answer": "Email info@golfprintclub.com within 14 days. We reprint and reship for free, no questions asked. Every email is answered by a real person, usually within a day."
+          }
+        }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5"],
+      "settings": {
+        "heading": "Quick Questions",
+        "padding_top": 80,
+        "padding_bottom": 80
+      }
     }
   },
-  "order": ["hero"]
+  "order": ["hero", "collection_tabs", "bundle_banner", "poster_wheel", "faq"]
 }
