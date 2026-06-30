@@ -1,0 +1,63 @@
+<div class="lp-page-wrap">
+  <div class="lp-bundle-final-cta">
+    <a href="{{ section.settings.primary_url }}" class="lp-btn-primary" style="margin-bottom:10px;">{{ section.settings.primary_text }}</a>
+    <a href="{{ section.settings.secondary_url }}" class="lp-btn-secondary">{{ section.settings.secondary_text }}</a>
+    <div class="lp-bundle-final-cta__fine">{{ section.settings.fine_print }}</div>
+  </div>
+</div>
+
+<style>
+  .lp-bundle-final-cta {
+    padding: 0 16px 20px;
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-bundle-final-cta__fine {
+    text-align: center;
+    font-size: 11px;
+    color: var(--lp-mid);
+    margin-top: 10px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Final CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "primary_text",
+      "label": "Primary button text",
+      "default": "Claim My Bundle — $120"
+    },
+    {
+      "type": "url",
+      "id": "primary_url",
+      "label": "Primary button link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_text",
+      "label": "Secondary button text",
+      "default": "Buy 1 Pair Instead — $60"
+    },
+    {
+      "type": "url",
+      "id": "secondary_url",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Free US shipping over $125 · Easy exchanges"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Final CTA"
+    }
+  ]
+}
+{% endschema %}

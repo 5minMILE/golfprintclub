@@ -1,0 +1,811 @@
+<!-- /sections/section-wf-collection-tabs.liquid -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+{%- style -%}
+  #WfTabs--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<style>
+  #WfTabs--{{ section.id }} {
+    padding-top: var(--PT);
+    padding-bottom: var(--PB);
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__inner {
+    max-width: 3000px;
+    margin: 0 50px;
+  }
+  @media (min-width: 3001px) {
+    #WfTabs--{{ section.id }} .wf-tabs__inner {
+      margin: 0 auto;
+    }
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__bar {
+    display: flex;
+    gap: 24px;
+    padding: 14px 0 0;
+    border-bottom: 1px solid #E0E0E0;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__tab {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #999;
+    padding-bottom: 10px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    white-space: nowrap;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__tab.is-active {
+    color: #000;
+    font-weight: 1000;
+    border-bottom-color: #000;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__panel-wrap {
+    display: none;
+    position: relative;
+    padding: 20px 0;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__panel-wrap.is-active {
+    display: block;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    align-items: start;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__grid::-webkit-scrollbar {
+    display: none;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__grid .wf-card {
+    flex: 0 0 calc(25% - 16px);
+    min-width: 260px;
+  }
+  /* Desktop slider arrows */
+  #WfTabs--{{ section.id }} .wf-tabs__arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #3D6E2E;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__arrow:hover {
+    background: #0069d9;
+  }
+  #WfTabs--{{ section.id }} .wf-tabs__arrow--prev { left: -16px; }
+  #WfTabs--{{ section.id }} .wf-tabs__arrow--next { right: -16px; }
+  #WfTabs--{{ section.id }} .wf-tabs__arrow.is-visible {
+    display: flex;
+  }
+  /* Product card */
+  #WfTabs--{{ section.id }} .wf-card {
+    border: 1px solid #E0E0E0;
+    padding: 0;
+    margin: 8px;
+    overflow: hidden;
+  }
+  #WfTabs--{{ section.id }} .wf-card__info {
+    padding: 8px 10px 10px;
+  }
+  #WfTabs--{{ section.id }} .wf-card__img {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: #F0F0F0;
+    overflow: hidden;
+  }
+  #WfTabs--{{ section.id }} .wf-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  #WfTabs--{{ section.id }} .wf-card__badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 7px;
+    padding: 2px 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    z-index: 1;
+  }
+  #WfTabs--{{ section.id }} .wf-card__badge--soldout {
+    background: #2A4D1F;
+  }
+  #WfTabs--{{ section.id }} .wf-card:has(.wf-card__badge--soldout) .wf-card__img img {
+    opacity: 0.8;
+  }
+  #WfTabs--{{ section.id }} .wf-card__badge--sale {
+    background: #000;
+  }
+  #WfTabs--{{ section.id }} .wf-card__badge--backorder {
+    background: #FF8800;
+  }
+  @media (min-width: 750px) {
+    #WfTabs--{{ section.id }} .wf-card__badge {
+      font-size: 10px;
+      font-weight: 700;
+    }
+  }
+  #WfTabs--{{ section.id }} .wf-card__swatches {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+    align-items: center;
+  }
+  #WfTabs--{{ section.id }} .wf-card__swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  #WfTabs--{{ section.id }} .wf-card__swatch:hover,
+  #WfTabs--{{ section.id }} .wf-card__swatch.is-active {
+    transform: scale(1.2);
+    border-color: #333;
+  }
+  #WfTabs--{{ section.id }} .wf-card__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 1000;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    line-height: 1.2;
+  }
+  #WfTabs--{{ section.id }} .wf-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  #WfTabs--{{ section.id }} .wf-card__variants {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+    margin-top: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  #WfTabs--{{ section.id }} .wf-card__variant-item {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  #WfTabs--{{ section.id }} .wf-card__price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 1000;
+    margin-top: 3px;
+  }
+  #WfTabs--{{ section.id }} .wf-card__price .old-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-left: 4px;
+    font-weight: 400;
+    font-size: 9px;
+  }
+  /* Hide load more and arrows on desktop */
+  #WfTabs--{{ section.id }} .wf-tabs__load-more {
+    display: none;
+  }
+  @media (max-width: 749px) {
+    #WfTabs--{{ section.id }} .wf-tabs__bar {
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__bar::-webkit-scrollbar {
+      display: none;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__tab {
+      font-size: 10px;
+      padding-bottom: 6px;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__inner {
+      margin: 0 16px;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      overflow-x: visible;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__grid .wf-card {
+      flex: none !important;
+      min-width: 0 !important;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__arrow {
+      display: none !important;
+    }
+    /* Hide cards beyond 8 on mobile, revealed by Load More */
+    #WfTabs--{{ section.id }} .wf-card[data-card-index] {
+      display: block;
+    }
+    #WfTabs--{{ section.id }} .wf-card.is-mobile-hidden {
+      display: none !important;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__load-more {
+      grid-column: 1 / -1;
+      display: block;
+      width: 100%;
+      padding: 14px 0;
+      margin-top: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #000;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    #WfTabs--{{ section.id }} .wf-tabs__load-more:hover {
+      background: #333;
+    }
+  }
+</style>
+
+<section id="WfTabs--{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="wf-collection-tabs">
+  <div class="wf-tabs__inner">
+    <div class="wf-tabs__bar">
+      {%- for block in section.blocks -%}
+        <button class="wf-tabs__tab{% if forloop.first %} is-active{% endif %}"
+          data-wf-tab="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}>
+          {{ block.settings.label }}
+        </button>
+      {%- endfor -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- assign col = block.settings.collection -%}
+      <div class="wf-tabs__panel-wrap{% if forloop.first %} is-active{% endif %}" data-wf-panel="{{ forloop.index0 }}">
+      <button class="wf-tabs__arrow wf-tabs__arrow--prev" data-wf-arrow="prev" aria-label="Previous">&#8249;</button>
+      <button class="wf-tabs__arrow wf-tabs__arrow--next" data-wf-arrow="next" aria-label="Next">&#8250;</button>
+      <div class="wf-tabs__grid" data-collection-handle="{{ col.handle }}" data-mobile-limit="6">
+        {%- if col != blank -%}
+          {%- assign render_limit = section.settings.products_per_tab -%}
+          {%- if render_limit < 50 -%}{%- assign render_limit = 50 -%}{%- endif -%}
+          {%- assign visible_count = 0 -%}
+          {%- for product in col.products limit: render_limit -%}
+            {%- unless product.tags contains 'hide' -%}
+              {%- comment -%}Resolve redirect metafield to get master product data{%- endcomment -%}
+              {%- assign display_product = product -%}
+              {%- assign redirect_meta = product.metafields.custom.master_reference -%}
+              {%- if redirect_meta != blank -%}
+                {%- if redirect_meta.value and redirect_meta.value.handle -%}
+                  {%- assign display_product = redirect_meta.value -%}
+                {%- else -%}
+                  {%- assign redirect_value = redirect_meta.value | default: redirect_meta -%}
+                  {%- assign redirect_parts = redirect_value | split: '/products/' -%}
+                  {%- if redirect_parts.size > 1 -%}
+                    {%- assign redirect_handle = redirect_parts[1] | split: '?' | first | split: '/' | first -%}
+                    {%- if redirect_handle != blank and all_products[redirect_handle] -%}
+                      {%- assign display_product = all_products[redirect_handle] -%}
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endif -%}
+
+              {%- comment -%}Find hover image (-1) and second image (-2) from redirect product{%- endcomment -%}
+              {%- assign card_variant_color = product.options_by_name['Color'].values | first -%}
+              {%- assign card_variant_handle = card_variant_color | handleize -%}
+              {%- assign hover_image_url = '' -%}
+              {%- assign second_image_url = '' -%}
+              {%- assign match_1 = card_variant_handle | append: '-1' -%}
+              {%- assign match_2 = card_variant_handle | append: '-2' -%}
+              {%- for media in display_product.media -%}
+                {%- assign media_alt_handle = media.alt | handleize -%}
+                {%- if media_alt_handle == match_1 -%}
+                  {%- assign hover_image_url = media | image_url: width: 600 -%}
+                {%- elsif media_alt_handle == match_2 -%}
+                  {%- assign second_image_url = media | image_url: width: 600 -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- assign visible_count = visible_count | plus: 1 -%}
+              <div class="wf-card" data-card-index="{{ visible_count }}">
+                <a href="{{ product.url }}" class="wf-card__img"{% if hover_image_url != '' %} data-hover-src="{{ hover_image_url }}"{% endif %}{% if second_image_url != '' %} data-second-src="{{ second_image_url }}"{% endif %}>
+                  {%- if product.featured_media -%}
+                    {%- assign original_img_url = product.featured_media | image_url: width: 600 -%}
+                    <img src="{{ original_img_url }}"
+                      data-original-src="{{ original_img_url }}"
+                      alt="{{ product.title | escape }}"
+                      width="{{ product.featured_media.width }}"
+                      height="{{ product.featured_media.height }}"
+                      loading="lazy">
+                  {%- endif -%}
+                  {%- comment -%}
+                    Badge: sold out / backorder / sale
+                    For redirect products, parse the variant ID from master_reference,
+                    find the color, then check only that color's variants on the master.
+                    Matches the pattern in product-grid-item.liquid lines 642-689.
+                  {%- endcomment -%}
+                  {%- assign card_sold_out = false -%}
+                  {%- assign card_backorder = false -%}
+                  {%- if redirect_meta != blank -%}
+                    {%- assign ref_value = redirect_meta.value | default: redirect_meta -%}
+                    {%- assign variant_part = ref_value | split: 'variant=' -%}
+                    {%- if variant_part.size > 1 -%}
+                      {%- assign master_variant_id = variant_part[1] | split: '&' | first | plus: 0 -%}
+                    {%- else -%}
+                      {%- assign master_variant_id = 0 -%}
+                    {%- endif -%}
+                    {%- assign style_value = nil -%}
+                    {%- if master_variant_id > 0 -%}
+                      {%- for v in display_product.variants -%}
+                        {%- if v.id == master_variant_id -%}
+                          {%- assign style_value = v.option1 -%}
+                          {%- break -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endif -%}
+                    {%- if style_value -%}
+                      {%- assign any_color_available = false -%}
+                      {%- assign any_color_continue = false -%}
+                      {%- for v in display_product.variants -%}
+                        {%- if v.option1 == style_value -%}
+                          {%- if v.available -%}
+                            {%- assign any_color_available = true -%}
+                          {%- endif -%}
+                          {%- if v.inventory_policy == 'continue' -%}
+                            {%- assign any_color_continue = true -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                      {%- unless any_color_available -%}
+                        {%- if any_color_continue -%}
+                          {%- assign card_backorder = true -%}
+                        {%- else -%}
+                          {%- assign card_sold_out = true -%}
+                        {%- endif -%}
+                      {%- endunless -%}
+                    {%- else -%}
+                      {%- unless display_product.available -%}
+                        {%- assign card_sold_out = true -%}
+                      {%- endunless -%}
+                    {%- endif -%}
+                  {%- else -%}
+                    {%- unless product.available -%}
+                      {%- assign any_continue = false -%}
+                      {%- for v in product.variants -%}
+                        {%- if v.inventory_policy == 'continue' -%}
+                          {%- assign any_continue = true -%}
+                          {%- break -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+                      {%- if any_continue -%}
+                        {%- assign card_backorder = true -%}
+                      {%- else -%}
+                        {%- assign card_sold_out = true -%}
+                      {%- endif -%}
+                    {%- endunless -%}
+                  {%- endif -%}
+                  {%- if card_sold_out -%}
+                    <span class="wf-card__badge wf-card__badge--soldout">Sold Out</span>
+                  {%- elsif card_backorder -%}
+                    <span class="wf-card__badge wf-card__badge--backorder">Backorder</span>
+                  {%- elsif display_product.compare_at_price > display_product.price -%}
+                    <span class="wf-card__badge wf-card__badge--sale">Sale</span>
+                  {%- endif -%}
+                </a>
+
+                <div class="wf-card__info">
+                {%- assign color_option = display_product.options_by_name['Color'] -%}
+                {%- if color_option and color_option.values.size > 1 -%}
+                  <div class="wf-card__swatches">
+                    {%- for value in color_option.values limit: 6 -%}
+                      {%- assign val_handle = value | handleize -%}
+                      {%- assign val_down = value | downcase -%}
+
+                      {%- comment -%}Map color names to hex codes or Shopify file URLs{%- endcomment -%}
+                      {%- assign swatch_bg = '#ddd' -%}
+                      {%- assign swatch_is_file = false -%}
+                      {%- if val_down == 'black' -%}
+                        {%- assign swatch_bg = '#000000' -%}
+                      {%- elsif val_down == 'white' -%}
+                        {%- assign swatch_bg = '#ffffff' -%}
+                      {%- elsif val_down == 'blank' -%}
+                        {%- assign swatch_bg = 'blank.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'skull' -%}
+                        {%- assign swatch_bg = 'skull.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'blue camo' -%}
+                        {%- assign swatch_bg = 'blue.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'cotton candy' -%}
+                        {%- assign swatch_bg = 'cool_jersey_1.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'sky' -%}
+                        {%- assign swatch_bg = 'clouds_1.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'statue of liberty' -%}
+                        {%- assign swatch_bg = 'statue.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'fire' -%}
+                        {%- assign swatch_bg = 'red.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'ice' -%}
+                        {%- assign swatch_bg = 'ice.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'usa' -%}
+                        {%- assign swatch_bg = 'red_blue3.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'camo' -%}
+                        {%- assign swatch_bg = 'camo1.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'storm' -%}
+                        {%- assign swatch_bg = 'stormimage.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'yellow' -%}
+                        {%- assign swatch_bg = 'yellow1234.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- elsif val_down == 'yellow jacket' -%}
+                        {%- assign swatch_bg = 'yellow1234.png' -%}{%- assign swatch_is_file = true -%}
+                      {%- endif -%}
+
+                      {%- comment -%}Find the -1 image for this color variant{%- endcomment -%}
+                      {%- assign swatch_image_url = '' -%}
+                      {%- for media in display_product.media -%}
+                        {%- assign media_alt_handle = media.alt | handleize -%}
+                        {%- assign match_string = val_handle | append: '-1' -%}
+                        {%- if media_alt_handle == match_string -%}
+                          {%- assign swatch_image_url = media | image_url: width: 600 -%}
+                          {%- break -%}
+                        {%- endif -%}
+                      {%- endfor -%}
+
+                      {%- if swatch_is_file -%}
+                        <span class="wf-card__swatch" style="background: #ddd url('{{ swatch_bg | file_url }}') center/cover no-repeat;"{% if swatch_image_url != '' %} data-swatch-image="{{ swatch_image_url }}"{% endif %}></span>
+                      {%- else -%}
+                        <span class="wf-card__swatch" style="background: {{ swatch_bg }};"{% if swatch_image_url != '' %} data-swatch-image="{{ swatch_image_url }}"{% endif %}></span>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+
+                <div class="wf-card__title"><a href="{{ product.url }}">{{ display_product.title }}</a></div>
+
+                {%- assign card_color_option = product.options_by_name['Color'] -%}
+                {%- if card_color_option and card_color_option.values.size > 0 -%}
+                  {%- assign has_real_values = false -%}
+                  {%- for value in card_color_option.values -%}
+                    {%- assign trimmed = value | strip -%}
+                    {%- assign trimmed_down = trimmed | downcase -%}
+                    {%- if trimmed != '' and trimmed != 'Default Title' and trimmed != 'Default' and trimmed_down != 'nothing' -%}
+                      {%- assign has_real_values = true -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if has_real_values -%}
+                    <div class="wf-card__variants">
+                      {%- for value in card_color_option.values -%}
+                        {%- assign trimmed = value | strip -%}
+                        {%- assign trimmed_down = trimmed | downcase -%}
+                        {%- if trimmed != '' and trimmed != 'Default Title' and trimmed != 'Default' and trimmed_down != 'nothing' -%}
+                          <span class="wf-card__variant-item">{{ value }}</span>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- endif -%}
+                {%- endif -%}
+
+                <div class="wf-card__price">
+                  {%- if display_product.available -%}
+                    {{ display_product.price | money }}
+                    {%- if display_product.compare_at_price > display_product.price -%}
+                      <span class="old-price">{{ display_product.compare_at_price | money }}</span>
+                    {%- endif -%}
+                  {%- else -%}
+                    {{ display_product.price | money }}
+                  {%- endif -%}
+                </div>
+                </div>
+              </div>
+            {%- endunless -%}
+          {%- endfor -%}
+          {%- if visible_count > 6 -%}
+            <button class="wf-tabs__load-more" data-wf-load-more="{{ forloop.index0 }}" data-total="{{ visible_count }}">Load More</button>
+          {%- endif -%}
+        {%- else -%}
+          <p style="font-family:'Montserrat',sans-serif;font-size:9px;color:#999;grid-column:1/-1;text-align:center;padding:40px 0;">Select a collection in the theme editor</p>
+        {%- endif -%}
+      </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    var section = document.getElementById('WfTabs--{{ section.id }}');
+    if (!section) return;
+
+    /* Tab switching */
+    var tabs = section.querySelectorAll('[data-wf-tab]');
+    var panelWraps = section.querySelectorAll('.wf-tabs__panel-wrap[data-wf-panel]');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        var idx = this.getAttribute('data-wf-tab');
+        tabs.forEach(function(t) { t.classList.remove('is-active'); });
+        panelWraps.forEach(function(p) { p.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        var target = section.querySelector('.wf-tabs__panel-wrap[data-wf-panel="' + idx + '"]');
+        if (target) target.classList.add('is-active');
+        /* Re-check arrow visibility after tab switch (defer for layout) */
+        if (!isMobile.matches) {
+          requestAnimationFrame(function() { updateArrows(); });
+        }
+      });
+    });
+
+    /* Preload hover and swatch images on page load */
+    var swatches = section.querySelectorAll('.wf-card__swatch[data-swatch-image]');
+    swatches.forEach(function(swatch) {
+      var preload = new Image();
+      preload.src = swatch.getAttribute('data-swatch-image');
+    });
+
+    var cardImgs = section.querySelectorAll('.wf-card__img');
+    cardImgs.forEach(function(cardImg) {
+      var hoverSrc = cardImg.getAttribute('data-hover-src');
+      var secondSrc = cardImg.getAttribute('data-second-src');
+      if (hoverSrc) { var p1 = new Image(); p1.src = hoverSrc; }
+      if (secondSrc) { var p2 = new Image(); p2.src = secondSrc; }
+    });
+
+    /* Hover on product image: left half = -1, right half = -2 (desktop only) */
+    var isTouchDevice = window.matchMedia('(max-width: 749px)').matches;
+    if (!isTouchDevice) {
+      cardImgs.forEach(function(cardImg) {
+        var img = cardImg.querySelector('img');
+        if (!img) return;
+        var hoverSrc = cardImg.getAttribute('data-hover-src');
+        var secondSrc = cardImg.getAttribute('data-second-src');
+        if (!hoverSrc) return;
+
+        cardImg.addEventListener('mouseenter', function() {
+          img.src = hoverSrc;
+        });
+
+        if (secondSrc) {
+          cardImg.addEventListener('mousemove', function(e) {
+            var rect = cardImg.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            if (x > rect.width / 2) {
+              img.src = secondSrc;
+            } else {
+              img.src = hoverSrc;
+            }
+          });
+        }
+
+        cardImg.addEventListener('mouseleave', function() {
+          var original = img.getAttribute('data-original-src');
+          if (original) img.src = original;
+        });
+      });
+
+      /* Color swatch hover → swap product image (desktop only) */
+      swatches.forEach(function(swatch) {
+        var card = swatch.closest('.wf-card');
+        if (!card) return;
+        var img = card.querySelector('.wf-card__img img');
+        if (!img) return;
+
+        swatch.addEventListener('mouseenter', function() {
+          img.src = this.getAttribute('data-swatch-image');
+          card.querySelectorAll('.wf-card__swatch').forEach(function(s) { s.classList.remove('is-active'); });
+          this.classList.add('is-active');
+        });
+
+        swatch.addEventListener('mouseleave', function() {
+          var original = img.getAttribute('data-original-src');
+          if (original) img.src = original;
+          this.classList.remove('is-active');
+        });
+      });
+    }
+
+    /* Mobile: Load More functionality */
+    var mobileLimit = 6;
+    var isMobile = window.matchMedia('(max-width: 749px)');
+    var grids = section.querySelectorAll('.wf-tabs__grid');
+
+    /* Desktop slider: arrow click handlers */
+    section.querySelectorAll('.wf-tabs__arrow').forEach(function(arrow) {
+      arrow.addEventListener('click', function() {
+        var wrap = arrow.closest('.wf-tabs__panel-wrap');
+        var grid = wrap.querySelector('.wf-tabs__grid');
+        var scrollAmount = grid.offsetWidth * 0.75;
+        if (arrow.getAttribute('data-wf-arrow') === 'prev') {
+          grid.scrollLeft -= scrollAmount;
+        } else {
+          grid.scrollLeft += scrollAmount;
+        }
+      });
+    });
+
+    /* Update arrow visibility based on scroll position */
+    function updateArrows() {
+      panelWraps.forEach(function(wrap) {
+        var grid = wrap.querySelector('.wf-tabs__grid');
+        var prevBtn = wrap.querySelector('.wf-tabs__arrow--prev');
+        var nextBtn = wrap.querySelector('.wf-tabs__arrow--next');
+        /* Skip hidden panels — can't measure dimensions */
+        if (!wrap.classList.contains('is-active')) return;
+        var canScroll = grid.scrollWidth > grid.offsetWidth + 5;
+        if (prevBtn) {
+          prevBtn.classList.toggle('is-visible', canScroll && grid.scrollLeft > 5);
+        }
+        if (nextBtn) {
+          nextBtn.classList.toggle('is-visible', canScroll && grid.scrollLeft < grid.scrollWidth - grid.offsetWidth - 5);
+        }
+      });
+    }
+
+    /* Listen for scroll on each grid to update arrows */
+    grids.forEach(function(grid) {
+      grid.addEventListener('scroll', function() {
+        if (!isMobile.matches) updateArrows();
+      });
+    });
+
+    function applyLayout() {
+      if (!isMobile.matches) {
+        /* Desktop: show all cards, setup slider */
+        grids.forEach(function(grid) {
+          var cards = grid.querySelectorAll('.wf-card[data-card-index]');
+          cards.forEach(function(card) {
+            card.classList.remove('is-mobile-hidden');
+          });
+        });
+        updateArrows();
+        return;
+      }
+      /* Mobile: hide cards beyond limit, show Load More */
+      grids.forEach(function(grid) {
+        var limit = parseInt(grid.getAttribute('data-mobile-limit')) || mobileLimit;
+        var cards = grid.querySelectorAll('.wf-card[data-card-index]');
+        cards.forEach(function(card) {
+          var idx = parseInt(card.getAttribute('data-card-index'));
+          if (idx > limit) {
+            card.classList.add('is-mobile-hidden');
+          } else {
+            card.classList.remove('is-mobile-hidden');
+          }
+        });
+        var btn = grid.querySelector('.wf-tabs__load-more');
+        if (btn) {
+          var total = parseInt(btn.getAttribute('data-total')) || 0;
+          btn.style.display = (limit >= total) ? 'none' : '';
+        }
+      });
+      /* Hide arrows on mobile */
+      section.querySelectorAll('.wf-tabs__arrow').forEach(function(a) {
+        a.classList.remove('is-visible');
+      });
+    }
+
+    section.querySelectorAll('.wf-tabs__load-more').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var grid = btn.closest('.wf-tabs__grid');
+        if (!grid) return;
+        var currentLimit = parseInt(grid.getAttribute('data-mobile-limit')) || mobileLimit;
+        var newLimit = currentLimit + 6;
+        grid.setAttribute('data-mobile-limit', newLimit);
+        var total = parseInt(btn.getAttribute('data-total')) || 0;
+        var cards = grid.querySelectorAll('.wf-card[data-card-index]');
+        cards.forEach(function(card) {
+          var idx = parseInt(card.getAttribute('data-card-index'));
+          if (idx <= newLimit) {
+            card.classList.remove('is-mobile-hidden');
+          }
+        });
+        if (newLimit >= total) {
+          btn.style.display = 'none';
+        }
+      });
+    });
+
+    applyLayout();
+    isMobile.addEventListener('change', applyLayout);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "WF Collection Tabs",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_tab",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "label": "Products per tab",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tab label",
+          "default": "Collection"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "WF Collection Tabs",
+      "category": "Collection",
+      "blocks": [
+        { "type": "tab", "settings": { "label": "Capsule _0001" } },
+        { "type": "tab", "settings": { "label": "Golf" } },
+        { "type": "tab", "settings": { "label": "Lifestyle" } },
+        { "type": "tab", "settings": { "label": "Posters" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

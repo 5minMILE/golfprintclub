@@ -1,0 +1,41 @@
+{%- comment -%}
+  Splash loader rendered as CSS background-image instead of <img> so search engines
+  don't pick the loader as the page's primary thumbnail. Previously this was a
+  1000x1000 loading.gif loaded eagerly with fetchpriority: high — Google's image
+  picker often chose it over og:image, leading to blank or wrong thumbnails on
+  poster search results.
+{%- endcomment -%}
+{%- liquid
+  assign image_1 = settings.loading_image_1
+  assign image_2 = settings.loading_image_2
+  assign image_width = settings.loading_image_width
+  assign image_width_retina = settings.loading_image_width | times: 2
+  assign two_images_exist = false
+  if image_1 != blank and image_2 != blank
+    assign two_images_exist = true
+  endif
+  assign loading_url_1 = ''
+  assign loading_url_2 = ''
+  if image_1 != blank
+    assign loading_url_1 = image_1 | image_url: width: image_width_retina
+  endif
+  if image_2 != blank
+    assign loading_url_2 = image_2 | image_url: width: image_width_retina
+  endif
+-%}
+{%- if image_1 != blank or image_2 != blank -%}
+  <div class="loading{% if two_images_exist %} loading--animate{% endif %}" role="presentation" aria-hidden="true">
+    {%- if image_1 != blank -%}
+      <div class="loading__image__holder">
+        <div class="loading__image" style="background-image: url('{{ loading_url_1 }}'); width: {{ image_width }}px; height: {{ image_width }}px; background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+      </div>
+    {%- endif -%}
+
+    {%- if image_2 != blank -%}
+      <div class="loading__image__holder">
+        <div class="loading__image" style="background-image: url('{{ loading_url_2 }}'); width: {{ image_width }}px; height: {{ image_width }}px; background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+      </div>
+    {%- endif -%}
+  </div>
+  <link rel="preload" as="image" href="{{ loading_url_1 }}">
+{%- endif -%}

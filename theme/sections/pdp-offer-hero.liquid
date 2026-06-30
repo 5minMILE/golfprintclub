@@ -1,0 +1,121 @@
+<div class="rc-offer-hero">
+  <div class="rc-offer-hero__inner">
+    <div class="rc-offer-hero__eyebrow">{{ section.settings.eyebrow }}</div>
+    <h2 class="rc-offer-hero__deal">{{ section.settings.headline_1 }}<br><span class="rc-offer-hero__deal-em">{{ section.settings.headline_2 }}</span></h2>
+    <div class="rc-offer-hero__sub">{{ section.settings.subheading }}</div>
+    <div class="rc-offer-hero__proof">
+      <span class="rc-offer-hero__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="rc-offer-hero__proof-text">{{ section.settings.proof_text }}</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .rc-offer-hero {
+    background: #0A0A0A;
+    padding: 20px 16px 24px;
+    color: #fff;
+  }
+  .rc-offer-hero__inner {
+    max-width: 600px;
+  }
+  .rc-offer-hero__eyebrow {
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #FF2D2D;
+    margin-bottom: 8px;
+  }
+  .rc-offer-hero__deal {
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 42px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin: 0 0 12px;
+    color: #fff;
+  }
+  .rc-offer-hero__deal-em {
+    color: #3D6E2E;
+  }
+  .rc-offer-hero__sub {
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .rc-offer-hero__proof {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rc-offer-hero__stars {
+    color: #3D6E2E;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+  .rc-offer-hero__proof-text {
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  /* Desktop */
+  @media (min-width: 992px) {
+    .rc-offer-hero {
+      padding: 32px 40px 36px;
+      padding-left: calc(calc(50vh * 0.8) + 40px);
+    }
+    .rc-offer-hero__deal {
+      font-size: 56px;
+    }
+    .rc-offer-hero__sub {
+      font-size: 15px;
+      max-width: 500px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PDP Offer Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Limited -- Buy 2 Get 1 Free"
+    },
+    {
+      "type": "text",
+      "id": "headline_1",
+      "label": "Headline line 1",
+      "default": "3 pairs."
+    },
+    {
+      "type": "text",
+      "id": "headline_2",
+      "label": "Headline line 2 (accent color)",
+      "default": "$120."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "MD Golf Posters -- built for track sessions, tempos, and race efforts. Pick any 3 designs."
+    },
+    {
+      "type": "text",
+      "id": "proof_text",
+      "label": "Social proof text",
+      "default": "4.81 . 16 reviews . 4,000+ golfers"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Offer Hero"
+    }
+  ]
+}
+{% endschema %}

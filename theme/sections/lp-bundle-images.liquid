@@ -1,0 +1,57 @@
+<div class="lp-page-wrap">
+  <div class="lp-bundle-images" style="max-width:390px;margin:0 auto;">
+    {% for block in section.blocks %}
+      <div class="lp-img-block lp-bundle-images__cell" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.image.alt | default: block.settings.label }}" loading="lazy">
+        {% endif %}
+        <span class="lp-img-label">{{ block.settings.label }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .lp-bundle-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .lp-bundle-images__cell { height: 160px; }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Image Grid",
+  "blocks": [
+    {
+      "type": "grid_image",
+      "name": "Grid Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Placeholder label",
+          "default": "Design 1"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Image Grid",
+      "blocks": [
+        { "type": "grid_image", "settings": { "label": "Design 1" } },
+        { "type": "grid_image", "settings": { "label": "Design 2" } },
+        { "type": "grid_image", "settings": { "label": "Design 3" } },
+        { "type": "grid_image", "settings": { "label": "Design 4" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

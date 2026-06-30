@@ -1,0 +1,225 @@
+{%- comment -%}
+  PDP Content Accordion
+  Renders configurable accordion items via theme editor blocks.
+  Each block can pull product.description or render custom richtext.
+{%- endcomment -%}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+{%- if section.blocks.size > 0 -%}
+<div class="pdp-accordion pdp-accordion--{{ section.id }}">
+  {%- for block in section.blocks -%}
+    <div class="pdp-accordion__item" {{ block.shopify_attributes }}>
+      <button
+        class="pdp-accordion__toggle{% if block.settings.open_by_default %} active{% endif %}"
+        aria-expanded="{{ block.settings.open_by_default }}"
+        aria-controls="pdp-acc-{{ block.id }}"
+      >
+        {{ block.settings.heading | escape }}
+      </button>
+      <div
+        id="pdp-acc-{{ block.id }}"
+        class="pdp-accordion__content{% if block.settings.open_by_default %} open{% endif %}"
+        {% if block.settings.open_by_default %}style="max-height: none;"{% endif %}
+      >
+        <div class="pdp-accordion__inner">
+          {%- if block.settings.content_source == 'product_description' -%}
+            <div class="pdp-accordion__description">
+              {{ product.description }}
+            </div>
+          {%- else -%}
+            {{ block.settings.content }}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+{%- endif -%}
+
+<style>
+  .pdp-accordion {
+    border-top: 1px solid #ddd;
+    font-family: inherit;
+  }
+
+  .pdp-accordion__item {
+    border-bottom: 1px solid #ddd;
+  }
+
+  .pdp-accordion__toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 18px 0;
+    font-weight: 1000;
+    text-align: left;
+    font-size: 14px;
+    text-transform: uppercase;
+    position: relative;
+    cursor: pointer;
+    font-family: var(--BTN-FONT-STACK);
+  }
+
+  .pdp-accordion__toggle.active {
+    padding-bottom: 0px !important;
+  }
+
+  .pdp-accordion__toggle::after {
+    content: '\203A';
+    position: absolute;
+    right: 0;
+    padding-bottom: 0;
+    font-weight: normal;
+    font-size: 16px;
+    transition: transform 0.2s ease;
+  }
+
+  .pdp-accordion__toggle.active::after {
+    padding-bottom: 0px;
+    transform: rotate(90deg);
+  }
+
+  .pdp-accordion__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    padding: 0;
+  }
+
+  .pdp-accordion__content.open {
+    padding: 0;
+  }
+
+  .pdp-accordion__inner {
+    padding-bottom: 16px;
+  }
+
+  .pdp-accordion__description h2,
+  .pdp-accordion__description h3 {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-family: var(--BTN-FONT-STACK);
+  }
+</style>
+
+<script>
+  (function () {
+    var section = document.querySelector('.pdp-accordion--{{ section.id }}');
+    if (!section) return;
+
+    var toggles = section.querySelectorAll('.pdp-accordion__toggle');
+
+    toggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        var content = toggle.nextElementSibling;
+        var isActive = toggle.classList.contains('active');
+
+        /* Collapse all within this section */
+        toggles.forEach(function (t) {
+          t.classList.remove('active');
+          t.setAttribute('aria-expanded', 'false');
+        });
+        section.querySelectorAll('.pdp-accordion__content').forEach(function (c) {
+          c.classList.remove('open');
+          c.style.maxHeight = null;
+        });
+
+        if (!isActive) {
+          toggle.classList.add('active');
+          toggle.setAttribute('aria-expanded', 'true');
+          content.classList.add('open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "PDP Accordion",
+  "tag": "section",
+  "class": "pdp-accordion-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 60,
+      "step": 2,
+      "default": 0,
+      "unit": "px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accordion_item",
+      "name": "Accordion item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Accordion heading"
+        },
+        {
+          "type": "select",
+          "id": "content_source",
+          "label": "Content source",
+          "options": [
+            { "value": "custom", "label": "Custom content" },
+            { "value": "product_description", "label": "Product description" }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Custom content",
+          "info": "Used when content source is \"Custom content\""
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Accordion",
+      "blocks": [
+        {
+          "type": "accordion_item",
+          "settings": {
+            "heading": "Description",
+            "content_source": "product_description"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

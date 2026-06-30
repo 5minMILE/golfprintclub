@@ -1,0 +1,362 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "order": [
+    "section_hero",
+    "section_css_global",
+    "section_category_cards",
+    "section_tab_collections",
+    "section_promo_b2g1",
+    "section_heading_drops",
+    "section_prior_drops",
+    "section_main_collection",
+    "section_description",
+    "section_heading_faq",
+    "section_faq_accordion",
+    "section_quick_links",
+    "section_recently_viewed"
+  ],
+  "sections": {
+    "section_hero": {
+      "type": "section-hero",
+      "blocks": {
+        "code_hero_h1": {
+          "type": "code",
+          "settings": {
+            "code": "<h1>{{ collection.title }}</h1>"
+          }
+        },
+        "heading_disabled": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "title": "{{ collection.title }}",
+            "heading_size": 8
+          }
+        }
+      },
+      "block_order": [
+        "code_hero_h1",
+        "heading_disabled"
+      ],
+      "settings": {
+        "height": "screen-height-one-half",
+        "width": "wrapper--full",
+        "image_1": "{{ collection.image }}",
+        "link": "",
+        "mobile_height": "screen-height-one-half--mobile",
+        "flex_align_desktop": "align--bottom-center-desktop",
+        "flex_align_mobile": "align--bottom-center-mobile",
+        "overlay_opacity": 30,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "#ffffff",
+        "show_placeholder": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_css_global": {
+      "type": "section-custom-code",
+      "name": "Global CSS",
+      "settings": {
+        "code": "<style>\n/* ===== Wireframe Bold — Global CSS ===== */\n/* Typography: Montserrat, uppercase, bold */\n/* Accent: #3D6E2E */\n\n/* ===== Hero Typography ===== */\n.hero__content h1 {\n  font-size: 42px;\n  font-weight: 900;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  color: #fff;\n  padding: 0;\n  text-transform: uppercase;\n  letter-spacing: 0.04em;\n}\n.hero__content p {\n  font-size: 14px;\n  font-weight: 600;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  color: rgba(255, 255, 255, 0.9);\n  padding: 0;\n  text-transform: uppercase;\n  letter-spacing: 0.04em;\n  line-height: 1.6;\n}\n\n/* ===== Desktop Layout (763px–3000px) ===== */\n@media (min-width: 763px) and (max-width: 3000px) {\n  .hero__content p { width: 30vw; }\n  .wrapper--full,\n  .hero__content,\n  .wrapper--full-padded,\n  .grid-outer,\n  .grid__items-holder {\n    max-width: 90vw;\n    min-width: 90vw;\n    margin: 0 auto;\n  }\n  .index-hero .wrapper--full,\n  .hero__video {\n    max-width: 100vw !important;\n    min-width: 100vw !important;\n  }\n  .index-hero { padding-top: 0; }\n  .grid-outer { padding: 0; }\n  .frame__item { height: 90vh !important; }\n}\n\n/* ===== Ultra-wide (3000px+) ===== */\n@media (min-width: 3000px) {\n  .index-hero { padding-top: 0; }\n  .wrapper--full,\n  .hero__content,\n  .wrapper--full-padded,\n  .grid-outer,\n  .index-hero .wrapper--full,\n  .hero__video {\n    max-width: 3000px !important;\n    min-width: 3000px !important;\n  }\n  .collection__products {\n    padding-left: calc((100vw - 3000px) / 2);\n  }\n}\n\n/* ===== Collection & Grid Shared ===== */\n.collection__products,\n.grid__items-holder {\n  padding-left: 5vw;\n  padding-right: 5vw;\n}\n.wrapper--full-padded { padding: 0; }\n.collection__products .grid-outer { padding: 0; }\n.grid { gap: 16px; }\n.collection__products .product-item__info { padding-left: 0; }\n\n/* ===== Product Card Typography ===== */\n.product-item--centered .product-information { text-align: left; }\n.product-information p { padding-top: 4px; }\n.product-information p,\n.product-information span {\n  text-transform: uppercase !important;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  font-size: 13px;\n  line-height: 1.4;\n  margin: 0;\n  font-weight: 600;\n  color: #333;\n  letter-spacing: 0.03em;\n}\n.product-information p a,\n.product-information p a:visited {\n  font-weight: 700;\n  color: #1a1a1a;\n  text-decoration: none;\n  text-transform: uppercase;\n}\n.sub {\n  font-size: 11px !important;\n  text-transform: uppercase !important;\n  color: #888;\n  padding-bottom: 2px;\n  letter-spacing: 0.03em;\n}\n.custom-rating .star {\n  margin-top: -3px;\n  font-size: 13px !important;\n  margin-right: 1px !important;\n  color: #3D6E2E;\n}\n\n/* ===== Product Card — Clean ===== */\n.product-information {\n  border: none;\n  padding: 8px 0;\n}\n.product-item__bg {\n  border: none;\n}\n\n/* ===== Quick-Add Button — Blue ===== */\n.quick-add__button {\n  color: #fff;\n  background: #3D6E2E;\n  border: none;\n  border-top: none;\n  font-size: 12px;\n  font-weight: 700;\n  letter-spacing: 0.06em;\n  text-transform: uppercase;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  transition: background 0.2s ease;\n}\n.quick-add__button:hover {\n  background: #0056b3;\n}\n\n/* ===== Sold Out State — Bold ===== */\n.product-item--sold-out .product-item__bg,\n.product-item--sold-out .product-item__bg__inner img,\n.product-item--sold-out .product-item__bg img {\n  filter: grayscale(50%);\n  opacity: 0.85;\n}\n.product-item__sold-out-overlay {\n  position: absolute;\n  top: 10px;\n  left: 10px;\n  right: auto;\n  bottom: auto;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  pointer-events: none;\n  z-index: 2;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  font-size: 11px;\n  font-weight: 800;\n  letter-spacing: 0.06em;\n  text-transform: uppercase;\n  background-color: #000;\n  border: none;\n  border-radius: 0;\n  padding: 6px 12px;\n  width: auto;\n  height: auto;\n  inset: auto;\n}\n.product-item__sold-out-overlay span {\n  color: #ffffff;\n  font-weight: 800;\n  font-size: 11px;\n  text-transform: uppercase;\n}\n\n/* ===== Swatch — Blue Checked ===== */\n.radio__fieldset .radio__button input:checked~label {\n  border-color: #3D6E2E;\n  background: #3D6E2E;\n  color: white;\n}\n.radio__fieldset .radio__button input:hover~label {\n  border-color: #3D6E2E;\n  background: transparent;\n  color: inherit;\n}\n.swatch__button .swatch__label {\n  width: 18px !important;\n  height: 18px !important;\n  border-radius: 50%;\n  border: 1px solid #ddd;\n  transition: border-color 0.2s ease;\n}\n.swatch__button .swatch__label:hover {\n  border-color: #3D6E2E;\n}\n\n/* ===== Quick-Add Drawer ===== */\n.product-quick-add__content {\n  position: absolute;\n  bottom: 0;\n  z-index: 2;\n  overflow-x: hidden;\n  overflow-y: auto;\n  min-width: 30vw !important;\n  width: 600px;\n  max-width: none !important;\n  max-height: 100%;\n  background-color: #fff;\n  border-left: 1px solid #e5e5e5;\n}\ndialog {\n  background: rgba(0, 0, 0, 0.4);\n  backdrop-filter: blur(8px);\n  -webkit-backdrop-filter: blur(8px);\n}\n.product-quick-add__form__inner { flex: 0 1 100%; }\n.radio__fieldset .radio__button label { padding: 10px auto; width: 100%; }\n.radio__button { padding: 0; width: calc(33% - 3px); }\n.radio__fieldset { gap: 0; }\n.radio__buttons { gap: 5px; }\n.drawer__close { --icon-size: 18px; padding: 4px; }\n.drawer__close .icon { stroke-width: 2; }\n.product-quick-add__close { background: #3D6E2E; }\n.product__submit__item .btn {\n  width: 100%;\n  border: 1px solid #3D6E2E;\n  color: #fff;\n  background: #3D6E2E;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  font-weight: 700;\n  text-transform: uppercase;\n  letter-spacing: 0.06em;\n}\n.product__submit__item .btn:hover { background: #0056b3; border-color: #0056b3; }\n.product-quick-add__form h1 {\n  font-weight: 700;\n  font-size: 18px;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  text-align: center;\n  text-transform: uppercase;\n  letter-spacing: 0.04em;\n}\n.product__price__wrap {\n  font-weight: 600;\n  font-size: 16px;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  text-align: center;\n  justify-content: center;\n  text-transform: uppercase;\n}\n.product__price__wrap .hidden { display: none; }\n.product__selectors .selector-wrapper {\n  display: flex !important;\n  flex-direction: column !important;\n  align-items: center !important;\n  width: 100%;\n}\n.product__selectors .radio__fieldset--swatches .radio__buttons[data-variant-buttons] {\n  display: flex !important;\n  justify-content: center !important;\n  width: 100%;\n}\n.product__selectors legend,\n.product__selectors .radio__legend { text-align: center !important; width: 100%; }\nshopify-payment-terms, .shop-pay-terms { display: none !important; }\n.selector-wrapper fieldset { width: 100%; }\n.product__selectors .radio__fieldset { padding: 0; }\n.radio__fieldset--swatches .swatch__button { padding: 0; }\n.product-quick-add__description { font-size: 13px; color: #555; }\n.product-quick-add__inner { display: grid; grid-template-rows: 73% 27%; height: 100%; }\n.product-quick-add__images .product__slide { height: 75vh; }\n.block-padding { margin-top: var(--block-padding-top, 0px); margin-bottom: var(--block-padding-bottom, 5px); }\n.radio__fieldset--swatches .radio__legend__label--text { display: none; }\n.radio__legend__label--text {\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  font-weight: 600;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  font-size: 12px;\n  color: #555;\n  padding-bottom: 16px;\n  text-transform: uppercase;\n  letter-spacing: 0.03em;\n}\n\n/* ===== Tab Heading — Bold Uppercase ===== */\n.tab-link h2 {\n  font-size: 13px;\n  font-weight: 700;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  color: #333;\n  letter-spacing: 0.06em;\n  text-transform: uppercase;\n}\n\n/* ===== Section Headings — Uppercase Bold ===== */\n.section-rich-text h2,\n.rich-text__heading {\n  font-family: 'Montserrat', var(--BTN-FONT-STACK) !important;\n  font-weight: 800 !important;\n  text-transform: uppercase !important;\n  letter-spacing: 0.04em !important;\n}\n\n/* ===== Filters & Sort ===== */\n.collection__sidebar,\n.collection__sort {\n  border: none;\n}\n.collection__filters__toggle {\n  border: 1px solid #3D6E2E;\n  font-weight: 700;\n  text-transform: uppercase;\n  font-size: 12px;\n  letter-spacing: 0.06em;\n  font-family: 'Montserrat', var(--BTN-FONT-STACK);\n  color: #3D6E2E;\n}\n.collection__filters__toggle:hover {\n  background: #3D6E2E;\n  color: #fff;\n}\n\n/* ===== Mobile ===== */\n@media (max-width: 763px) {\n  .grid-item { margin-right: 0 !important; max-width: none; }\n  .grid-outer { padding: 0 10px; }\n  .hero__content .btn { padding-bottom: 10px; }\n  .quick-add__holder { display: none; }\n  .hero__content h1 { font-size: 28px; padding: 0 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.04em; }\n  .grid--mobile-slider { padding-left: 16px; }\n  .grid--mobile-slider .grid-item { margin-right: 0; }\n  .grid { gap: 10px; }\n}\n@media (min-width: 763px) {\n  .grid-item { max-width: none; margin-right: 0; }\n}\n</style>\n\n<link href=\"https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap\" rel=\"stylesheet\">\n\n<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    const colorFieldset = document.querySelector(\".radio__fieldset--swatches\");\n    if (!colorFieldset) return;\n    const swatches = colorFieldset.querySelectorAll(\"radio-swatch\");\n    if (swatches.length <= 1) {\n      colorFieldset.style.display = \"none\";\n    }\n  });\n</script>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_category_cards": {
+      "type": "section-custom-code",
+      "custom_css": [
+        "@media (min-width: 762px) {.wrapper--full {padding-top: 20px; }}"
+      ],
+      "name": "Category Cards",
+      "settings": {
+        "code": "<style>\n  .rcp-feat-grid {\n    display: grid;\n    gap: 12px;\n    grid-template-columns: repeat(4, 1fr);\n    margin: 0 auto;\n    max-width: 3000px;\n    padding: 0;\n  }\n  .rcp-feat-card {\n    border-radius: 0;\n    overflow: hidden;\n    position: relative;\n    aspect-ratio: 4/5;\n    background: #f5f5f5;\n    border: none;\n    cursor: pointer;\n    flex: 0 0 auto;\n    scroll-snap-align: start;\n  }\n  .rcp-feat-card img {\n    width: 100%; height: 100%; object-fit: cover; display: block;\n    transform: scale(1);\n    transition: transform 6s cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  @media (hover: hover) {\n    .rcp-feat-card:hover img { transform: scale(1.08); }\n  }\n  .rcp-feat-card::after {\n    content: \"\"; position: absolute; inset: 0;\n    background: linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,.6) 100%);\n    z-index: 1;\n  }\n  .rcp-feat-text {\n    position: absolute; left: 14px; right: 14px; bottom: 14px;\n    z-index: 2; color: #fff;\n  }\n  .rcp-feat-title {\n    font-family: 'Montserrat', var(--BTN-FONT-STACK); font-weight: 800;\n    margin: 0; font-size: 18px; line-height: 1.2;\n    text-transform: uppercase;\n    letter-spacing: 0.04em;\n  }\n  .rcp-feat-sub { margin: 4px 0 0; font-size: 12px; font-weight: 500; letter-spacing: 0.02em; line-height: 1.5; opacity: .9; text-transform: uppercase; font-family: 'Montserrat', var(--BTN-FONT-STACK); }\n  @media (min-width: 763px) and (max-width: 1199px) {\n    .rcp-feat-grid { grid-template-columns: repeat(2, 1fr); padding: 10px; }\n  }\n  @media (max-width: 762px) {\n    .rcp-feat-grid {\n      display: flex; overflow-x: auto; gap: 10px; padding: 0 10px 10px;\n      scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scroll-padding: 10px;\n    }\n    .rcp-feat-grid::-webkit-scrollbar { display: none; }\n    .rcp-feat-card { min-width: 80%; max-width: 85%; aspect-ratio: 3/4; }\n    .rcp-feat-card:first-child { margin-left: 10px; }\n    .rcp-feat-card:last-child { margin-right: 10px; }\n  }\n</style>\n<div class=\"rcp-feat-wrap\">\n  <div class=\"rcp-feat-grid\">\n    <a href=\"https://golfprintclub.net/collections/golf-half-tights\" class=\"rcp-feat-card\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/running_84dbb173-fb2a-44cd-b3de-d32a8625792e.png?v=1720132215\" alt=\"Golf Posters\" loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Golf Posters</h3>\n        <p class=\"rcp-feat-sub\">Compression-style golf golf posters built for speed.</p>\n      </div>\n    </a>\n    <a href=\"https://golfprintclub.net/collections/golf-split-shorts\" class=\"rcp-feat-card\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/whitesplit.png?v=1757027817\" alt=\"Golf Posters\" loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Golf Posters</h3>\n        <p class=\"rcp-feat-sub\">Ultra-light shorts designed for racing and training.</p>\n      </div>\n    </a>\n    <a href=\"https://golfprintclub.net/collections/golf posters\" class=\"rcp-feat-card\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/blue_back.png?v=1720286550\" alt=\"Golf Golf Posters\" loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Golf Posters</h3>\n        <p class=\"rcp-feat-sub\">Breathable golf golf posters for tournament day performance.</p>\n      </div>\n    </a>\n    <a href=\"https://golfprintclub.net/collections/golf-shirts\" class=\"rcp-feat-card\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/1_50015157-fe53-4593-a4b3-84c84c7c1846.png?v=1719083725\" alt=\"Golf Shirts\" loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Shirts</h3>\n        <p class=\"rcp-feat-sub\">Lightweight, moisture-wicking shirts for training.</p>\n      </div>\n    </a>\n  </div>\n</div>",
+        "width": "wrapper--full",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_tab_collections": {
+      "type": "section-tab-collections",
+      "blocks": {
+        "tab_half_tights": {
+          "type": "collection",
+          "settings": {
+            "title": "Golf Posters",
+            "featured_collection": "golf-half-tights",
+            "show_image": false,
+            "align_with_product_images": false,
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "description": "",
+            "color": "#ffffff",
+            "link_text": "View products",
+            "link": "",
+            "button_type": "btn--white",
+            "button_size": "",
+            "button_style": "btn--outline",
+            "show_arrow": false
+          }
+        },
+        "tab_split_shorts": {
+          "type": "collection",
+          "settings": {
+            "title": "Golf Posters",
+            "featured_collection": "golf-split-shorts",
+            "show_image": false,
+            "align_with_product_images": false,
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "description": "",
+            "color": "#ffffff",
+            "link_text": "View products",
+            "link": "",
+            "button_type": "btn--white",
+            "button_size": "",
+            "button_style": "btn--outline",
+            "show_arrow": false
+          }
+        },
+        "tab_golf posters": {
+          "type": "collection",
+          "settings": {
+            "title": "Golf Posters",
+            "featured_collection": "golf-golf posters",
+            "show_image": false,
+            "align_with_product_images": false,
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "description": "",
+            "color": "#ffffff",
+            "link_text": "View products",
+            "link": "",
+            "button_type": "btn--white",
+            "button_size": "",
+            "button_style": "btn--outline",
+            "show_arrow": false
+          }
+        },
+        "tab_shirts": {
+          "type": "collection",
+          "settings": {
+            "title": "Shirts",
+            "featured_collection": "golf-shirts",
+            "show_image": false,
+            "align_with_product_images": false,
+            "overlay_opacity": 0,
+            "overlay_color": "#000000",
+            "description": "",
+            "color": "#ffffff",
+            "link_text": "View products",
+            "link": "",
+            "button_type": "btn--white",
+            "button_size": "",
+            "button_style": "btn--outline",
+            "show_arrow": false
+          }
+        }
+      },
+      "block_order": [
+        "tab_half_tights",
+        "tab_split_shorts",
+        "tab_golf posters",
+        "tab_shirts"
+      ],
+      "custom_css": [
+        "@media (min-width: 763px) and (min-width: 3000px) {.grid-outer {margin: auto; max-width: 3000px; }}",
+        "@media only screen and (max-width: 763px) {.grid__heading-holder {padding: 0 10px; } .tabs .current {text-decoration: none !important; background-color: #3D6E2E; color: #fff; } .tabs > li span {text-decoration: none !important; } .tabs {padding: 0; } .tabs.text-center > li {display: block; margin: 0; margin-bottom: 3px; padding: 0px; border-radius: 0; border: 1px solid #e5e5e5; } .tabs__arrow {display: none; } .grid-outer {padding-left: 10px; padding-right: 10px; }}"
+      ],
+      "name": "Tab collections",
+      "settings": {
+        "title": "",
+        "heading_size": 5,
+        "text": "",
+        "text_size": 3,
+        "layout": "stacked",
+        "show_product_count": false,
+        "layout_desktop": "grid",
+        "layout_mobile": "2",
+        "product_limit": 12,
+        "grid": 4,
+        "rows": 3,
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    },
+    "section_promo_b2g1": {
+      "type": "section-custom-code",
+      "name": "Buy 2 Get 1 Promo",
+      "settings": {
+        "code": "<div class=\"b2g1-box\" aria-labelledby=\"b2g1-heading\">\n  <h2 id=\"b2g1-heading\" class=\"b2g1-heading\">Buy Any 2 Shorts, Get 1 Free</h2>\n  <div class=\"b2g1-grid\">\n    <div class=\"b2g1-item\">\n      <a href=\"https://golfprintclub.net/collections/golf-posters\">\n        <video class=\"b2g1-video\" muted loop playsinline preload=\"auto\">\n          <source src=\"https://cdn.shopify.com/videos/c/o/v/28789f00563443d5ae48b95d2cfc40be.mp4\" type=\"video/mp4\">\n        </video>\n      </a>\n    </div>\n    <div class=\"b2g1-item hide-mobile\">\n      <a href=\"https://golfprintclub.net/collections/golf-posters\">\n        <video class=\"b2g1-video\" muted loop playsinline preload=\"auto\">\n          <source src=\"https://cdn.shopify.com/videos/c/o/v/95dfe6afd0674f9d9e5e26ff69151e20.mp4\" type=\"video/mp4\">\n        </video>\n      </a>\n    </div>\n    <div class=\"b2g1-item hide-mobile\">\n      <a href=\"https://golfprintclub.net/collections/golf-posters\">\n        <video class=\"b2g1-video\" muted loop playsinline preload=\"auto\">\n          <source src=\"https://cdn.shopify.com/videos/c/o/v/8d96fb84c17a475582411d22377af2e0.mp4\" type=\"video/mp4\">\n        </video>\n      </a>\n    </div>\n  </div>\n  <p class=\"b2g1-sub\">This offer is excluded from other discounts. Discount applies automatically in cart.</p>\n</div>\n<style>\n  .b2g1-box { border: 2px solid #3D6E2E; padding: 24px; border-radius: 0; margin-top: 20px; background: #fff; }\n  .b2g1-heading {\n    font-weight: 800; font-size: 22px; margin: 0 0 12px;\n    letter-spacing: 0.04em; text-align: left; text-transform: uppercase;\n    font-family: 'Montserrat', var(--BTN-FONT-STACK);\n    color: #3D6E2E;\n  }\n  .b2g1-sub { margin: 16px 0 0; font-size: 12px; color: #888; text-align: center; text-transform: uppercase; letter-spacing: 0.03em; font-family: 'Montserrat', var(--BTN-FONT-STACK); }\n  .b2g1-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: auto; width: 1300px; }\n  .b2g1-item { aspect-ratio: 4/5; border-radius: 0; overflow: hidden; position: relative; }\n  .b2g1-item a { display: block; width: 100%; height: 100%; }\n  .b2g1-video { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; pointer-events: none; }\n  .b2g1-item:hover .b2g1-video { transform: scale(1.03); }\n  @media (max-width: 768px) { .b2g1-box { margin: 10px; padding: 16px; } .b2g1-grid { grid-template-columns: repeat(2, 1fr); width: 100%; } }\n  @media (max-width: 520px) { .b2g1-grid { grid-template-columns: 1fr; width: 100%; } .hide-mobile { display: none !important; } }\n</style>\n<script>\n  document.addEventListener(\"DOMContentLoaded\", () => {\n    const videos = document.querySelectorAll(\".b2g1-video\");\n    let loaded = 0;\n    videos.forEach(video => {\n      video.addEventListener(\"canplaythrough\", () => {\n        loaded++;\n        if (loaded === videos.length) { videos.forEach(v => { v.currentTime = 0; v.play(); }); }\n      });\n    });\n  });\n</script>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_heading_drops": {
+      "type": "section-rich-text",
+      "blocks": {
+        "heading_drops": {
+          "type": "heading",
+          "settings": {
+            "title": "Shop by Drop",
+            "text_size": 8,
+            "padding_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_drops"
+      ],
+      "custom_css": [
+        "h2 {font-family: 'Montserrat', var(--BTN-FONT-STACK); font-weight: 800; width: auto; color: #1a1a1a; font-size: 20px; border-bottom: 2px solid #3D6E2E; padding-bottom: 12px; text-transform: uppercase; letter-spacing: 0.04em;}",
+        "@media (max-width: 762px) {h2 {font-size: 18px; text-align: left; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "width": "wrapper--full-padded",
+        "align_text": "text-left",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "#1a1a1a",
+        "padding_top": 30,
+        "padding_bottom": 0
+      }
+    },
+    "section_prior_drops": {
+      "type": "section-custom-code",
+      "custom_css": [
+        "@media (min-width: 762px) {.wrapper--full {padding-top: 20px; }}"
+      ],
+      "name": "Prior Drops",
+      "settings": {
+        "code": "<style>\n  .rcp-drops-grid { display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); max-width: 3000px; margin: 0 auto; padding: 0; }\n  .rcp-drop-card { position: relative; display: block; border-radius: 0; overflow: hidden; aspect-ratio: 4/5; background: #f5f5f5; border: none; flex: 0 0 auto; scroll-snap-align: start; }\n  .rcp-drop-media { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(1.01); transform: scale(1); transition: transform 6s cubic-bezier(0.215, 0.61, 0.355, 1); }\n  @media (hover: hover) { .rcp-drop-card:hover .rcp-drop-media { transform: scale(1.08); } }\n  .rcp-drop-card::after { content: \"\"; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.6) 100%); pointer-events: none; }\n  .rcp-drop-meta { position: absolute; left: 14px; right: 14px; bottom: 14px; z-index: 2; color: #fff; display: flex; flex-direction: column; gap: 4px; }\n  .rcp-drop-eyebrow { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: .85; font-weight: 700; font-family: 'Montserrat', var(--BTN-FONT-STACK); }\n  .rcp-drop-title { font-family: 'Montserrat', var(--BTN-FONT-STACK); font-weight: 800; margin: 0; font-size: 20px; line-height: 1.2; text-transform: uppercase; letter-spacing: 0.04em; }\n  .rcp-drop-row { display: flex; gap: 8px; align-items: center; opacity: .9; font-size: 12px; line-height: 1.35; text-transform: uppercase; letter-spacing: 0.03em; font-family: 'Montserrat', var(--BTN-FONT-STACK); }\n  .rcp-dot { width: 3px; height: 3px; border-radius: 50%; background: #ffffffcc; display: inline-block; }\n  @media (max-width: 900px) {\n    .rcp-drops-grid { display: flex; overflow-x: auto; gap: 10px; padding: 0 10px 10px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scroll-padding: 10px; }\n    .rcp-drops-grid::-webkit-scrollbar { display: none; }\n    .rcp-drop-card { min-width: 80%; max-width: 85%; aspect-ratio: 3/4; }\n    .rcp-drop-card:first-child { margin-left: 10px; }\n    .rcp-drop-card:last-child { margin-right: 10px; }\n  }\n</style>\n<div class=\"rcp-drops-wrap\">\n  <div class=\"rcp-drops-grid\">\n    <a class=\"rcp-drop-card\" href=\"https://golfprintclub.net/collections/storm\">\n      <img class=\"rcp-drop-media\" src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/storm_1.png?v=1755797660\" alt=\"Storm Drop\" loading=\"lazy\">\n      <div class=\"rcp-drop-meta\">\n        <span class=\"rcp-drop-eyebrow\">Drop</span>\n        <h3 class=\"rcp-drop-title\">Storm</h3>\n        <div class=\"rcp-drop-row\"><span>Release Date</span><span class=\"rcp-dot\"></span><span>Sep 5, 2025</span></div>\n      </div>\n    </a>\n    <a class=\"rcp-drop-card\" href=\"https://golfprintclub.net/collections/2-worlds\">\n      <img class=\"rcp-drop-media\" src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/27_6b2888e8-8b82-48d0-a107-b78aedeb775b.png?v=1745517484\" alt=\"Two Worlds Drop\" loading=\"lazy\">\n      <div class=\"rcp-drop-meta\">\n        <span class=\"rcp-drop-eyebrow\">Drop</span>\n        <h3 class=\"rcp-drop-title\">Two Worlds</h3>\n        <div class=\"rcp-drop-row\"><span>Release Date</span><span class=\"rcp-dot\"></span><span>Apr 25, 2025</span></div>\n      </div>\n    </a>\n    <a class=\"rcp-drop-card\" href=\"https://golfprintclub.net/collections/fire-ice\">\n      <img class=\"rcp-drop-media\" src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/IMG_4110_1.jpg?v=1739814062\" alt=\"Fire and Ice Drop\" loading=\"lazy\">\n      <div class=\"rcp-drop-meta\">\n        <span class=\"rcp-drop-eyebrow\">Drop</span>\n        <h3 class=\"rcp-drop-title\">Fire & Ice</h3>\n        <div class=\"rcp-drop-row\"><span>Release Date</span><span class=\"rcp-dot\"></span><span>Feb 28, 2025</span></div>\n      </div>\n    </a>\n  </div>\n</div>",
+        "width": "wrapper--full",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_main_collection": {
+      "type": "collection",
+      "settings": {
+        "enable_sort": true,
+        "enable_filters": true,
+        "filter_layout": "inline-open",
+        "collection_linklist": "",
+        "grid": 4,
+        "grid_mobile": "2",
+        "products_per_page": 24,
+        "border_color": "#fbfbfb",
+        "padding_top": 0,
+        "padding_bottom": 100
+      }
+    },
+    "section_description": {
+      "type": "section-custom-code",
+      "custom_css": [
+        "p {font-size: 14px; line-height: 1.7; color: #555;}"
+      ],
+      "name": "Collection Description",
+      "settings": {
+        "code": "<p id=\"collection-desc\" class=\"desc1\">\n{{ collection.description }}</p>\n\n<script>\n(function () {\n  const BASELINE = 100;\n  function truncateWordSafe(s, max) {\n    s = (s || '').replace(/\\s+/g, ' ').trim();\n    if (s.length <= max) return s;\n    let cut = s.slice(0, max);\n    const i = cut.lastIndexOf(' ');\n    if (i > 0) cut = cut.slice(0, i);\n    return cut;\n  }\n  const escapeHTML = (s) => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };\n  function collectParagraphs(anchor) {\n    if (!anchor) return [];\n    let inside = anchor.querySelectorAll && anchor.querySelectorAll('p');\n    if (inside && inside.length) return Array.from(inside);\n    if (anchor.tagName === 'P') {\n      const ps = [anchor]; let n = anchor.nextElementSibling;\n      while (n && n.tagName === 'P') { ps.push(n); n = n.nextElementSibling; }\n      return ps;\n    }\n    if (anchor.textContent && anchor.textContent.trim().length) return [anchor];\n    return [];\n  }\n  function applyInlineEllipsis(anchor) {\n    if (!anchor || anchor.dataset.rcpDone === '1') return;\n    const ps = collectParagraphs(anchor).filter(p => (p.textContent || '').trim().length);\n    if (!ps.length) return;\n    const first = ps[0], rest = ps.slice(1);\n    const fullFirstHTML = first.innerHTML;\n    const firstText = first.textContent.replace(/\\s+/g, ' ').trim();\n    let shortHTML;\n    if (rest.length >= 1) {\n      if (firstText.length > BASELINE) {\n        shortHTML = `${escapeHTML(truncateWordSafe(firstText, BASELINE))}&hellip; `;\n      } else {\n        shortHTML = `${fullFirstHTML} &hellip; `;\n      }\n    } else {\n      if (firstText.length > BASELINE) {\n        shortHTML = `${escapeHTML(truncateWordSafe(firstText, BASELINE))}&hellip; `;\n      } else {\n        anchor.dataset.rcpDone = '1'; return;\n      }\n    }\n    rest.forEach(p => p.classList.add('rcp-hidden'));\n    first.dataset.fullHtml = fullFirstHTML;\n    first.innerHTML = `${shortHTML}<button type=\"button\" class=\"rcp-toggle\">Read more</button>`;\n    first.querySelector('.rcp-toggle').addEventListener('click', () => {\n      first.innerHTML = first.dataset.fullHtml;\n      rest.forEach(p => p.classList.remove('rcp-hidden'));\n    });\n    anchor.dataset.rcpDone = '1';\n  }\n  function init() {\n    const anchor = document.getElementById('collection-desc');\n    if (anchor) { applyInlineEllipsis(anchor); return; }\n    const main = document.querySelector('main') || document;\n    const firstP = main.querySelector('p');\n    if (firstP) applyInlineEllipsis(firstP);\n  }\n  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }\n})();\n</script>\n<style>\n  .rcp-toggle {\n    background: #3D6E2E; border: 0; padding: 6px 16px; margin-left: 10px;\n    border-radius: 0; cursor: pointer; color: white;\n    font-family: 'Montserrat', var(--BTN-FONT-STACK); font-weight: 700;\n    text-transform: uppercase; font-size: 11px;\n    letter-spacing: 0.06em;\n    transition: background 0.2s ease;\n  }\n  .rcp-toggle:hover { background: #0056b3; }\n  .rcp-hidden { display: none !important; }\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "section_heading_faq": {
+      "type": "section-rich-text",
+      "blocks": {
+        "heading_faq": {
+          "type": "heading",
+          "settings": {
+            "title": "FAQ",
+            "text_size": 8,
+            "padding_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "heading_faq"
+      ],
+      "custom_css": [
+        "h2 {font-family: 'Montserrat', var(--BTN-FONT-STACK); font-weight: 800; width: auto; color: #1a1a1a; font-size: 20px; padding-bottom: 0px; text-transform: uppercase; letter-spacing: 0.04em;}",
+        "@media (max-width: 762px) {h2 {font-size: 18px; text-align: left; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "width": "wrapper--full-padded",
+        "align_text": "text-left",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "#1a1a1a",
+        "padding_top": 30,
+        "padding_bottom": 0
+      }
+    },
+    "section_faq_accordion": {
+      "type": "section-custom-code",
+      "custom_css": [
+        ".section-padding {padding: 0 10px;}"
+      ],
+      "name": "FAQ Accordion",
+      "settings": {
+        "code": "<div class=\"product-accordion\">\n  <div class=\"accordion-item\">\n    <button class=\"accordion-toggle\">Half tights vs. golf posters — which should I pick?</button>\n    <div class=\"accordion-content\">\n      <div class=\"delivery-returns\">\n        <p><strong>Half tights</strong> give light compression, zero flap, and pocket security—great for speed work and tournament day. <strong>Split shorts</strong> maximize airflow and freedom of movement, ideal for hot weather and long runs. If you train in heat or want the breeziest feel, go splits; if you want support and a locked-in fit, go golf posters.</p>\n      </div>\n    </div>\n  </div>\n  <div class=\"accordion-item\">\n    <button class=\"accordion-toggle\">How should a golf singlet fit?</button>\n    <div class=\"accordion-content\">\n      <div class=\"delivery-returns\">\n        <p>Skimming, not tight. Armholes shouldn’t rub; the hem should sit near the hips so it won’t bunch. For racing, choose true-to-measurement; for relaxed training, consider one size up.</p>\n      </div>\n    </div>\n  </div>\n  <div class=\"accordion-item\">\n    <button class=\"accordion-toggle\">What inseam should I choose for shorts?</button>\n    <div class=\"accordion-content\">\n      <div class=\"delivery-returns\">\n        <p><strong>2–3&quot;</strong> = race feel &amp; max mobility. <strong>4–5&quot;</strong> = everyday training balance. <strong>6–7&quot;</strong> = more coverage/cooler weather. If you’re between lengths, pick the shorter for range of motion, longer for modesty/versatility.</p>\n      </div>\n    </div>\n  </div>\n  <div class=\"accordion-item\">\n    <button class=\"accordion-toggle\">Best fabrics for performance shirts &amp; tights?</button>\n    <div class=\"accordion-content\">\n      <div class=\"delivery-returns\">\n        <p>Look for lightweight, moisture-wicking poly/nylon blends (~90–120gsm) with mesh zones for ventilation. For tights, add elastane for 4-way stretch and recovery. Avoid heavy cotton for anything beyond easy jogs—it traps moisture and chafes.</p>\n      </div>\n    </div>\n  </div>\n  <div class=\"accordion-item\">\n    <button class=\"accordion-toggle\">Sizing &amp; returns for golf wall art</button>\n    <div class=\"accordion-content\">\n      <div class=\"delivery-returns\">\n        <p>Use waist/hip for bottoms and chest for tops. If you’re between sizes: choose your measured size for a compressive half-tight fit; consider sizing up for relaxed shorts/shirts. Golf gear ships within <strong>5 business days</strong> and typically arrives in <strong>3–4 business days</strong> after shipping. Returns accepted within <strong>30 days</strong> if items are <strong>unworn with original tags/packaging</strong>.</p>\n      </div>\n    </div>\n  </div>\n</div>\n<style>\n  .product-accordion { border-top: 2px solid #3D6E2E; font-family: 'Montserrat', var(--BTN-FONT-STACK); }\n  .accordion-item { border-bottom: 0; }\n  .accordion-toggle {\n    width: 100%; background: none; border: none; padding: 18px 0;\n    font-weight: 700; text-align: left; font-size: 14px;\n    text-transform: uppercase; position: relative; cursor: pointer;\n    border-bottom: 1px solid #e5e5e5;\n    color: #1a1a1a;\n    font-family: 'Montserrat', var(--BTN-FONT-STACK);\n    letter-spacing: 0.03em;\n    transition: color 0.2s ease;\n  }\n  .accordion-toggle:hover { color: #3D6E2E; }\n  .accordion-toggle::after { content: '\\203A'; position: absolute; right: 0; font-size: 16px; transition: transform 0.2s ease; color: #3D6E2E; }\n  .accordion-toggle.active::after { transform: rotate(90deg); color: #3D6E2E; }\n  .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; font-size: 14px; line-height: 1.6; color: #555; padding: 0; }\n  @media (max-width: 763px) { .product-accordion { padding: 0; margin-top: 10px; } }\n  @media (min-width: 763px) { .product-accordion { margin-top: 20px; } }\n</style>\n<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    document.querySelectorAll(\".accordion-toggle\").forEach(toggle => {\n      toggle.addEventListener(\"click\", () => {\n        const content = toggle.nextElementSibling;\n        const isActive = toggle.classList.contains(\"active\");\n        document.querySelectorAll(\".accordion-toggle\").forEach(t => t.classList.remove(\"active\"));\n        document.querySelectorAll(\".accordion-content\").forEach(c => { c.classList.remove(\"open\"); c.style.maxHeight = null; });\n        if (!isActive) { toggle.classList.add(\"active\"); content.classList.add(\"open\"); content.style.maxHeight = content.scrollHeight + \"px\"; }\n      });\n    });\n  });\n</script>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_quick_links": {
+      "type": "section-custom-code",
+      "name": "Quick Links",
+      "settings": {
+        "code": "<section class=\"rcp-quicklinks\" aria-label=\"Quick links\">\n  <nav class=\"rcp-ql-nav\">\n    <ul class=\"rcp-ql-line\">\n      <li><a href=\"/collections/golf-half-tights\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-split-shorts\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-golf posters\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-shirts\">Golf Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Graphic Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Hoodies</a></li>\n      <li><a href=\"/collections/golf-posters\">Posters</a></li>\n      <li><a href=\"/collections/golf-stickers\">Stickers</a></li>\n    </ul>\n  </nav>\n</section>\n<style>\n  .rcp-quicklinks { background: #fff; padding: 10px 0; }\n  .rcp-ql-nav { max-width: 3000px; margin: 0 auto; padding: 0 10px; }\n  .rcp-ql-line {\n    list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: nowrap;\n    gap: 8px; justify-content: center; align-items: center; overflow: auto; scrollbar-width: none;\n  }\n  .rcp-ql-line::-webkit-scrollbar { display: none; }\n  .rcp-ql-line a {\n    display: inline-block; min-width: 140px; padding: 10px 20px;\n    border: 2px solid #e5e5e5; border-radius: 50px; text-decoration: none;\n    text-align: center; font-weight: 700; font-size: 12px; letter-spacing: 0.06em;\n    text-transform: uppercase; color: #333; background: #fff;\n    font-family: 'Montserrat', var(--BTN-FONT-STACK);\n    transition: all 0.2s ease;\n  }\n  .rcp-ql-line a:hover, .rcp-ql-line a:active { background: #3D6E2E; color: #fff; border-color: #3D6E2E; }\n  .rcp-ql-line a:focus-visible { outline: 2px solid #3D6E2E; outline-offset: 2px; }\n  @media (max-width: 763px) {\n    .rcp-ql-line { flex-direction: column; align-items: stretch; gap: 6px; overflow: visible; }\n    .rcp-ql-line a { width: 100%; }\n  }\n</style>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_recently_viewed": {
+      "type": "section-recent-products",
+      "settings": {
+        "layout_mobile": "slider",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    }
+  }
+}

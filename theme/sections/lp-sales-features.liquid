@@ -1,0 +1,130 @@
+<div class="lp-page-wrap">
+  <div class="lp-section-gap"></div>
+  <div class="lp-sales-features__header">
+    <div class="lp-sec-head">{{ section.settings.heading }}</div>
+    <div class="lp-sales-features__sub">{{ section.settings.subheading }}</div>
+  </div>
+  <div class="lp-sales-features__cards">
+    {% for block in section.blocks %}
+      <div class="lp-sales-feat-card" {{ block.shopify_attributes }}>
+        <div class="lp-img-block" style="height:{{ block.settings.image_height }}px;">
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: 780 }}" alt="{{ block.settings.image.alt | default: block.settings.image_label }}" loading="lazy">
+          {% endif %}
+          <span class="lp-img-label">{{ block.settings.image_label }}</span>
+        </div>
+        <div class="lp-sales-feat-card__body">
+          <div class="lp-sales-feat-card__title">{{ block.settings.title }}</div>
+          <div class="lp-sales-feat-card__desc">{{ block.settings.description }}</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .lp-sales-features__header {
+    padding: 20px 16px 0;
+
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-sales-features__sub {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+  .lp-sales-features__cards {
+    padding: 14px 16px 0;
+
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-sales-feat-card {
+    border: 1px solid var(--lp-border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .lp-sales-feat-card__body { padding: 14px; }
+  .lp-sales-feat-card__title {
+    font-family: var(--lp-font-head);
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+  }
+  .lp-sales-feat-card__desc { font-size: 13px; color: #555; line-height: 1.5; }
+</style>
+
+{% schema %}
+{
+  "name": "LP Sales — Features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why golfers trust the MD Half Tight"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Not marketing copy. Things that actually matter when you're at pace."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_label",
+          "label": "Image placeholder label",
+          "default": "Feature Shot"
+        },
+        {
+          "type": "range",
+          "id": "image_height",
+          "label": "Image height (px)",
+          "min": 100,
+          "max": 300,
+          "step": 10,
+          "default": 180
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Feature description goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Sales — Features",
+      "blocks": [
+        { "type": "feature", "settings": { "image_label": "No Ride Up Shot", "title": "No Ride Up", "description": "Stays locked through full stride. No adjusting mid-rep, mid-interval, or mid-race." } },
+        { "type": "feature", "settings": { "image_label": "Pocket Detail Shot", "title": "No Bounce Pocket", "description": "Rear pocket holds your phone tight. Doesn't move. Period." } },
+        { "type": "feature", "settings": { "image_label": "Compression Stretch Shot", "title": "Real Compression", "description": "Support where it matters — without feeling restrictive or cheap. Ribbed stretch adapts to your stride." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

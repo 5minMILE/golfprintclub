@@ -1,0 +1,22 @@
+{% assign drop_variants = product.metafields.custom.master_reference | newline_to_br | split: '<br />' %}
+
+<ul class="false-variant-grid">
+  {% for entry in drop_variants %}
+    {% assign clean = entry | strip | remove: '[' | remove: ']' | remove: '"' %}
+    {% assign parts = clean | split: ',' %}
+    {% assign variant_url = parts[0] | strip %}
+    {% assign variant_color = parts[1] | strip | downcase %}
+
+    <li class="false-variant-card">
+      <a href="/{{ variant_url }}">
+        <div class="image">
+          <img src="{{ 'placeholder.jpg' | asset_url }}" alt="{{ variant_color | capitalize }}">
+        </div>
+        <div class="info">
+          <div class="title">{{ product.title }} — {{ variant_color | capitalize }}</div>
+          <div class="price">{{ product.price | money }}</div>
+        </div>
+      </a>
+    </li>
+  {% endfor %}
+</ul>

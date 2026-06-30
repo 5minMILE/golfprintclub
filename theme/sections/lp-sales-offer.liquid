@@ -1,0 +1,1118 @@
+<div class="lp-page-wrap">
+  <div class="lp-offer">
+    <!-- Hero header -->
+    <div class="lp-offer__header">
+      <div class="lp-offer__eyebrow">{{ section.settings.eyebrow }}</div>
+      <h2 class="lp-offer__heading">{{ section.settings.heading }}</h2>
+      <div class="lp-offer__price">{{ section.settings.price_text }}</div>
+      <div class="lp-offer__sub">{{ section.settings.subheading }}</div>
+    </div>
+
+    <!-- Rotation slots -->
+    <div class="lp-offer__slots">
+      <div class="lp-offer__slots-label">{{ section.settings.slots_label }}</div>
+      <div class="lp-offer__slots-row" id="lp-rotation-slots">
+        <div class="lp-offer__slot lp-offer__slot--empty" data-slot="1"><span>+</span></div>
+        <div class="lp-offer__slot lp-offer__slot--empty" data-slot="2"><span>+</span></div>
+        <div class="lp-offer__slot lp-offer__slot--free" data-slot="3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A2.99 2.99 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 12 7.4l3.38 4.6L17 10.83 14.92 8H20v6z"/></svg>
+          <span class="lp-offer__slot-free-tag">FREE</span>
+        </div>
+      </div>
+      <div class="lp-offer__slots-hint" id="lp-slots-hint">{{ section.settings.slots_hint }}</div>
+    </div>
+
+    <!-- Design grid -->
+    <div class="lp-offer__designs">
+      <div class="lp-offer__designs-label">{{ section.settings.design_label }}</div>
+      <div class="lp-offer__design-grid">
+        {% assign collection = collections[section.settings.collection] %}
+        {%- comment -%} Build variant map for all master products {%- endcomment -%}
+        {%- liquid
+          assign master_handles_seen = ''
+          assign variant_json_parts = ''
+        -%}
+        {% for product in collection.products %}
+          {% if product.tags contains 'hide' or product.tags contains 'outofstock' %}{% continue %}{% endif %}
+
+          {%- liquid
+            assign thumb_img = nil
+            assign card_master_handle = ''
+            assign card_style = ''
+            assign card_variant_id = ''
+            assign master_ref_raw = product.metafields.custom.master_reference
+
+            if master_ref_raw != blank
+              assign after_products = master_ref_raw | split: '/products/' | last
+              assign master_handle = after_products | split: '?' | first
+              assign variant_part = master_ref_raw | split: 'variant=' | last
+              assign variant_id_str = variant_part | split: '&' | first
+              assign master_variant_id = variant_id_str | plus: 0
+              assign master_product = all_products[master_handle]
+              assign card_master_handle = master_handle
+
+              if master_product and master_variant_id > 0
+                for v in master_product.variants
+                  if v.id == master_variant_id
+                    assign style_value = v.option1
+                    assign card_style = v.option1
+                    assign card_variant_id = v.id
+                    break
+                  endif
+                endfor
+
+                if style_value
+                  assign alt_handle = style_value | handleize | append: '-1'
+                  assign alt_lower = style_value | downcase | append: '-1'
+                  assign alt_spaces = style_value | downcase | replace: ' ', ' ' | append: '-1'
+                  for img in master_product.images
+                    assign img_alt_down = img.alt | downcase
+                    if img_alt_down == alt_handle or img_alt_down == alt_lower or img.alt == alt_handle
+                      assign thumb_img = img
+                      break
+                    endif
+                  endfor
+                endif
+              endif
+            endif
+
+            unless thumb_img
+              assign thumb_img = product.featured_image
+            endunless
+          -%}
+
+          {%- liquid
+            assign thumb_url = thumb_img | image_url: width: 300
+          -%}
+
+          <div class="lp-offer__design-card"
+               data-design="{{ product.title }}"
+               data-product-id="{{ product.id }}"
+               data-master-handle="{% if card_master_handle != blank %}{{ card_master_handle }}{% else %}{{ product.handle }}{% endif %}"
+               data-style="{{ card_style }}"
+               data-thumb="{{ thumb_url }}">
+            <div class="lp-offer__design-img" {% if thumb_img %}style="background-image:url('{{ thumb_url }}');"{% endif %}>
+              <button class="lp-offer__design-add" type="button" aria-label="Add {{ product.title }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+              </button>
+            </div>
+            <div class="lp-offer__design-name">{{ product.title }}</div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Size selector -->
+    <div class="lp-offer__size">
+      <div class="lp-offer__size-header">
+        <div class="lp-offer__designs-label">{{ section.settings.size_label }}</div>
+        {% if section.settings.fit_quiz_text != blank %}
+          <a href="{{ section.settings.fit_quiz_url }}" class="lp-offer__fit-link" id="lp-fit-quiz-link">{{ section.settings.fit_quiz_text }}</a>
+        {% endif %}
+      </div>
+      <div class="lp-offer__size-grid" id="lp-size-grid">
+        {%- comment -%} Auto-populate from first master product's option2 values {%- endcomment -%}
+        {%- liquid
+          assign size_options = ''
+          assign collection_ref = collections[section.settings.collection]
+          for p in collection_ref.products
+            if p.tags contains 'hide' or p.tags contains 'outofstock'
+              continue
+            endif
+            assign ref_raw = p.metafields.custom.master_reference
+            if ref_raw != blank
+              assign ap = ref_raw | split: '/products/' | last
+              assign mh = ap | split: '?' | first
+              assign mp = all_products[mh]
+              if mp
+                for v in mp.variants
+                  unless size_options contains v.option2
+                    if size_options != ''
+                      assign size_options = size_options | append: '|||' | append: v.option2
+                    else
+                      assign size_options = v.option2
+                    endif
+                  endunless
+                endfor
+              endif
+            else
+              for v in p.variants
+                assign sz = v.option1
+                unless size_options contains sz
+                  if size_options != ''
+                    assign size_options = size_options | append: '|||' | append: sz
+                  else
+                    assign size_options = sz
+                  endif
+                endunless
+              endfor
+            endif
+            break
+          endfor
+          assign size_arr = size_options | split: '|||'
+        -%}
+        {% for sz in size_arr %}
+          <button class="lp-offer__size-btn" type="button" data-size="{{ sz }}">{{ sz }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Bundle summary -->
+    <div class="lp-offer__summary">
+      <div class="lp-offer__summary-row" data-summary-slot="1">
+        <span>Pair 1</span><span class="lp-offer__summary-value">&mdash;</span>
+      </div>
+      <div class="lp-offer__summary-row" data-summary-slot="2">
+        <span>Pair 2</span><span class="lp-offer__summary-value">&mdash;</span>
+      </div>
+      <div class="lp-offer__summary-row" data-summary-slot="3">
+        <span>Pair 3 <span class="lp-offer__free-badge">FREE</span></span><span class="lp-offer__summary-value">&mdash;</span>
+      </div>
+      <div class="lp-offer__summary-total">
+        <span>Total</span><span class="lp-offer__summary-total-value">&mdash;</span>
+      </div>
+      <div class="lp-offer__summary-hint" id="lp-summary-hint">{{ section.settings.summary_hint }}</div>
+    </div>
+
+    <!-- CTA -->
+    <div class="lp-offer__cta">
+      <div class="lp-offer__cta-nudge" id="lp-cta-nudge">{{ section.settings.cta_nudge }}</div>
+      <button type="button" class="lp-btn-primary lp-offer__atc-btn" id="lp-atc-btn" disabled>{{ section.settings.atc_text }}</button>
+      {% if section.settings.single_text != blank %}
+        <div class="lp-offer__single-text">{{ section.settings.single_text }}</div>
+      {% endif %}
+      <div class="lp-offer__trust-row">
+        <span class="lp-offer__trust-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          Fast Shipping
+        </span>
+        <span class="lp-offer__trust-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          Easy Exchanges
+        </span>
+        <span class="lp-offer__trust-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Secure
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Fit Quiz Modal -->
+<div id="lp-fit-modal" class="lp-fit-modal" aria-hidden="true">
+  <div class="lp-fit-modal__sheet-wrap">
+    <div class="lp-fit-modal__sheet">
+      <div class="lp-fit-modal__handle"><span></span></div>
+      <div class="lp-fit-modal__header">
+        <span class="lp-fit-modal__title">Size Guide</span>
+        <button class="lp-fit-modal__close" type="button" aria-label="Close">&times;</button>
+      </div>
+      <iframe id="lp-fit-iframe" class="lp-fit-modal__iframe" src="" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Variant data for JS -->
+<script type="application/json" id="lp-offer-variant-data">
+{
+  {% assign collection = collections[section.settings.collection] %}
+  {%- liquid
+    assign master_handles_output = ''
+  -%}
+  {% for product in collection.products %}
+    {% if product.tags contains 'hide' or product.tags contains 'outofstock' %}{% continue %}{% endif %}
+    {%- liquid
+      assign master_ref_raw = product.metafields.custom.master_reference
+      if master_ref_raw != blank
+        assign after_products = master_ref_raw | split: '/products/' | last
+        assign m_handle = after_products | split: '?' | first
+        unless master_handles_output contains m_handle
+          if master_handles_output != ''
+            assign master_handles_output = master_handles_output | append: ',' | append: m_handle
+          else
+            assign master_handles_output = m_handle
+          endif
+        endunless
+      else
+        unless master_handles_output contains product.handle
+          if master_handles_output != ''
+            assign master_handles_output = master_handles_output | append: ',' | append: product.handle
+          else
+            assign master_handles_output = product.handle
+          endif
+        endunless
+      endif
+    -%}
+  {% endfor %}
+  {%- assign master_handle_arr = master_handles_output | split: ',' -%}
+  {%- for mh in master_handle_arr -%}
+    {%- assign mp = all_products[mh] -%}
+    {%- if mp -%}
+      {% unless forloop.first %},{% endunless %}
+      "{{ mh }}": [
+        {%- for v in mp.variants -%}
+          {% unless forloop.first %},{% endunless %}
+          {"id":{{ v.id }},"option1":{{ v.option1 | json }},"option2":{{ v.option2 | json }},"available":{{ v.available }},"price":{{ v.price }}}
+        {%- endfor -%}
+      ]
+    {%- endif -%}
+  {%- endfor -%}
+}
+</script>
+
+<script>
+(function() {
+  var section = document.querySelector('.lp-offer');
+  if (!section) return;
+
+  var variantData = {};
+  try {
+    variantData = JSON.parse(document.getElementById('lp-offer-variant-data').textContent);
+  } catch(e) {}
+
+  var slots = [null, null, null]; // {design, masterHandle, style, thumb}
+  var selectedSize = null;
+  var pairPrice = {{ section.settings.pair_price | default: 6000 }};
+
+  // Init selected size from default
+  var activeBtn = section.querySelector('.lp-offer__size-btn--active');
+  if (activeBtn) selectedSize = activeBtn.getAttribute('data-size');
+
+  // Design card click
+  section.querySelectorAll('.lp-offer__design-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+      var design = card.getAttribute('data-design');
+      var masterHandle = card.getAttribute('data-master-handle');
+      var style = card.getAttribute('data-style');
+      var thumb = card.getAttribute('data-thumb');
+
+      // Find next empty slot
+      var slotIdx = -1;
+      for (var i = 0; i < 3; i++) {
+        if (!slots[i]) { slotIdx = i; break; }
+      }
+      if (slotIdx === -1) return; // all full
+
+      slots[slotIdx] = { design: design, masterHandle: masterHandle, style: style, thumb: thumb };
+      card.classList.add('lp-offer__design-card--added');
+      updateUI();
+    });
+  });
+
+  // Slot click to remove
+  document.getElementById('lp-rotation-slots').addEventListener('click', function(e) {
+    var slotEl = e.target.closest('.lp-offer__slot');
+    if (!slotEl) return;
+    var idx = parseInt(slotEl.getAttribute('data-slot')) - 1;
+    if (!slots[idx]) return;
+
+    var removedDesign = slots[idx].design;
+    slots[idx] = null;
+
+    // Re-enable the design card
+    section.querySelectorAll('.lp-offer__design-card').forEach(function(card) {
+      if (card.getAttribute('data-design') === removedDesign) {
+        card.classList.remove('lp-offer__design-card--added');
+      }
+    });
+
+    // Compact slots: shift items left to fill gaps
+    var compacted = slots.filter(function(s) { return s !== null; });
+    while (compacted.length < 3) compacted.push(null);
+    slots = compacted;
+
+    updateUI();
+  });
+
+  // Size button click
+  section.querySelectorAll('.lp-offer__size-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      section.querySelectorAll('.lp-offer__size-btn').forEach(function(b) {
+        b.classList.remove('lp-offer__size-btn--active');
+      });
+      btn.classList.add('lp-offer__size-btn--active');
+      selectedSize = btn.getAttribute('data-size');
+      updateUI();
+    });
+  });
+
+  // ATC button
+  document.getElementById('lp-atc-btn').addEventListener('click', function() {
+    var btn = this;
+    if (btn.disabled) return;
+
+    if (!selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+
+    // Find variant IDs
+    var items = [];
+    for (var i = 0; i < 3; i++) {
+      if (!slots[i]) return;
+      var s = slots[i];
+      var variants = variantData[s.masterHandle];
+      if (!variants) continue;
+
+      var vid = null;
+      var sizeLC = selectedSize.toLowerCase().trim();
+      var styleLC = s.style ? s.style.toLowerCase().trim() : '';
+      for (var j = 0; j < variants.length; j++) {
+        var v = variants[j];
+        var o1 = v.option1 ? v.option1.toLowerCase().trim() : '';
+        var o2 = v.option2 ? v.option2.toLowerCase().trim() : null;
+
+        if (styleLC && o2) {
+          // Master product: option1=style, option2=size
+          if (o1 === styleLC && o2 === sizeLC) { vid = v.id; break; }
+        } else if (styleLC && !o2) {
+          // Single-option product where option1=size: match by size only
+          if (o1 === sizeLC) { vid = v.id; break; }
+        } else if (!styleLC) {
+          // No style info: match by size in option1 or option2
+          if (o1 === sizeLC || (o2 && o2 === sizeLC)) { vid = v.id; break; }
+        }
+      }
+
+      if (!vid) {
+        alert('Size ' + selectedSize + ' is not available for ' + s.design + '. Please choose a different size.');
+        return;
+      }
+
+      items.push({ id: vid, quantity: 1 });
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Adding...';
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: items })
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error('Failed to add to cart');
+      return res.json();
+    })
+    .then(function() {
+      btn.textContent = 'Added!';
+      if (window.RC_CART && typeof window.RC_CART.open === 'function') {
+        window.RC_CART.open();
+      } else {
+        window.location.href = '/cart';
+      }
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.textContent = '{{ section.settings.atc_text | escape }}';
+      }, 1500);
+    })
+    .catch(function(err) {
+      alert('Something went wrong. Please try again.');
+      btn.disabled = false;
+      btn.textContent = '{{ section.settings.atc_text | escape }}';
+    });
+  });
+
+  function updateUI() {
+    var slotEls = section.querySelectorAll('.lp-offer__slot');
+    var filledCount = 0;
+
+    for (var i = 0; i < 3; i++) {
+      var el = slotEls[i];
+      if (slots[i]) {
+        filledCount++;
+        el.classList.remove('lp-offer__slot--empty', 'lp-offer__slot--free');
+        el.classList.add('lp-offer__slot--filled');
+        el.style.backgroundImage = "url('" + slots[i].thumb + "')";
+        el.innerHTML = '<button class="lp-offer__slot-remove" type="button" aria-label="Remove">&times;</button>';
+        if (i === 2) {
+          el.innerHTML += '<span class="lp-offer__slot-free-tag">FREE</span>';
+        }
+      } else {
+        el.classList.remove('lp-offer__slot--filled');
+        el.style.backgroundImage = '';
+        if (i === 2) {
+          el.classList.add('lp-offer__slot--free');
+          el.classList.remove('lp-offer__slot--empty');
+          el.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.11-.31.18-.65.18-1a3 3 0 00-3-3c-1.05 0-1.95.56-2.47 1.37L12 4.13l-.53-.76A2.99 2.99 0 009 2a3 3 0 00-3 3c0 .35.07.69.18 1H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5-2c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM9 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm11 15H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 12 7.4l3.38 4.6L17 10.83 14.92 8H20v6z"/></svg><span class="lp-offer__slot-free-tag">FREE</span>';
+        } else {
+          el.classList.add('lp-offer__slot--empty');
+          el.classList.remove('lp-offer__slot--free');
+          el.innerHTML = '<span>+</span>';
+        }
+      }
+    }
+
+    // Update summary rows
+    for (var i = 0; i < 3; i++) {
+      var row = section.querySelector('[data-summary-slot="' + (i + 1) + '"]');
+      var valueEl = row.querySelector('.lp-offer__summary-value');
+      if (slots[i]) {
+        if (i === 2) {
+          valueEl.innerHTML = '<s class="lp-offer__strikethrough">' + formatPrice(pairPrice) + '</s> <span style="color:#c00;font-weight:700;">FREE</span>';
+        } else {
+          valueEl.textContent = formatPrice(pairPrice);
+        }
+        // Update pair label with design name
+        var labelEl = row.querySelector('span:first-child');
+        if (i === 2) {
+          labelEl.innerHTML = slotLabel(i) + ' <span class="lp-offer__free-badge">FREE</span>';
+        } else {
+          labelEl.textContent = slotLabel(i);
+        }
+      } else {
+        valueEl.innerHTML = '&mdash;';
+        var labelEl = row.querySelector('span:first-child');
+        if (i === 2) {
+          labelEl.innerHTML = 'Pair 3 <span class="lp-offer__free-badge">FREE</span>';
+        } else {
+          labelEl.textContent = 'Pair ' + (i + 1);
+        }
+      }
+    }
+
+    // Update total
+    var totalEl = section.querySelector('.lp-offer__summary-total-value');
+    if (filledCount >= 2) {
+      var total = 2 * pairPrice; // 3rd is free
+      totalEl.textContent = formatPrice(total);
+    } else if (filledCount === 1) {
+      totalEl.textContent = formatPrice(pairPrice);
+    } else {
+      totalEl.innerHTML = '&mdash;';
+    }
+
+    // Update hint
+    var hint = document.getElementById('lp-slots-hint');
+    if (filledCount === 3) {
+      hint.textContent = 'Bundle ready! Select your size and add to cart.';
+      hint.style.color = 'var(--lp-blue)';
+    } else {
+      hint.textContent = 'Add ' + (3 - filledCount) + ' design' + (3 - filledCount !== 1 ? 's' : '') + ' to unlock your bundle';
+      hint.style.color = '';
+    }
+
+    // Update ATC button state
+    var atcBtn = document.getElementById('lp-atc-btn');
+    atcBtn.disabled = filledCount < 3 || !selectedSize;
+    atcBtn.textContent = '{{ section.settings.atc_text | escape }}';
+
+    // Update nudge
+    var nudge = document.getElementById('lp-cta-nudge');
+    if (filledCount < 3) {
+      nudge.textContent = 'Tap designs above to build your rotation';
+    } else if (!selectedSize) {
+      nudge.textContent = 'Select a size to continue';
+    } else {
+      nudge.textContent = 'Your bundle is ready!';
+    }
+  }
+
+  function slotLabel(i) {
+    var s = slots[i];
+    if (!s) return '';
+    return s.style ? s.design + ' - ' + s.style : s.design;
+  }
+
+  function formatPrice(cents) {
+    return '$' + (cents / 100).toFixed(0);
+  }
+})();
+
+// Fit Quiz Modal
+(function() {
+  var link = document.getElementById('lp-fit-quiz-link');
+  var modal = document.getElementById('lp-fit-modal');
+  if (!link || !modal) return;
+
+  var iframe = document.getElementById('lp-fit-iframe');
+  var closeBtn = modal.querySelector('.lp-fit-modal__close');
+
+  function openModal(e) {
+    e.preventDefault();
+    var url = link.getAttribute('href');
+    if (iframe.src !== url) iframe.src = url;
+    modal.classList.add('isOpen');
+    modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('isOpen');
+    modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+  }
+
+  link.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+})();
+</script>
+
+<style>
+  .lp-offer {
+    margin: 0 auto;
+    background: #fff;
+    color: #000;
+  }
+
+  /* Header */
+  .lp-offer__header { padding: 24px 16px 16px; }
+  .lp-offer__eyebrow {
+    font-family: var(--lp-font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lp-blue);
+    margin-bottom: 6px;
+  }
+  .lp-offer__heading {
+    font-family: var(--lp-font-head);
+    font-size: 42px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.0;
+    margin-bottom: 4px;
+  }
+  .lp-offer__price {
+    font-family: var(--lp-font-head);
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--lp-blue);
+    line-height: 1.0;
+    margin-bottom: 10px;
+  }
+  .lp-offer__sub {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* Rotation slots */
+  .lp-offer__slots {
+    padding: 16px;
+    margin: 0 16px 16px;
+    border: 1px solid var(--lp-border);
+    border-radius: 10px;
+  }
+  .lp-offer__slots-label {
+    font-family: var(--lp-font-head);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: 10px;
+  }
+  .lp-offer__slots-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .lp-offer__slot {
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    position: relative;
+  }
+  .lp-offer__slot--empty {
+    border: 2px dashed #ccc;
+    color: #ccc;
+    font-size: 24px;
+  }
+  .lp-offer__slot--free {
+    border: 2px dashed #ccc;
+    color: #f0a030;
+  }
+  .lp-offer__slot--filled {
+    border: 2px solid var(--lp-blue);
+  }
+  .lp-offer__slot-remove {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lp-offer__slot-free-tag {
+    font-family: var(--lp-font-head);
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #c00;
+    color: #fff;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-top: 4px;
+  }
+  .lp-offer__slot--filled .lp-offer__slot-free-tag {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0;
+  }
+  .lp-offer__slots-hint {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #666;
+  }
+
+  /* Design grid */
+  .lp-offer__designs { padding: 16px; background: var(--lp-gray); }
+  .lp-offer__designs-label {
+    font-family: var(--lp-font-head);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+  .lp-offer__design-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .lp-offer__design-card {
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .lp-offer__design-card--added {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .lp-offer__design-img {
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    background-color: #eee;
+    position: relative;
+    overflow: hidden;
+  }
+  .lp-offer__design-add {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--lp-blue);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lp-offer__design-name {
+    font-family: var(--lp-font-head);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 6px;
+    color: #555;
+  }
+
+  /* Size selector */
+  .lp-offer__size { padding: 16px; }
+  .lp-offer__size-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .lp-offer__size-header .lp-offer__designs-label { margin-bottom: 0; }
+  .lp-offer__fit-link {
+    font-size: 11px;
+    color: var(--lp-blue);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .lp-offer__size-grid {
+    display: flex;
+    gap: 8px;
+  }
+  .lp-offer__size-btn {
+    flex: 1;
+    padding: 12px 4px;
+    border: 2px solid var(--lp-border);
+    border-radius: 6px;
+    font-family: var(--lp-font-head);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    background: transparent;
+    color: #000;
+  }
+  .lp-offer__size-btn--active {
+    border-color: var(--lp-blue);
+    background: rgba(0,123,255,0.15);
+    color: var(--lp-blue);
+  }
+
+  /* Summary */
+  .lp-offer__summary {
+    margin: 0 16px;
+    padding: 16px;
+    background: rgba(0,123,255,0.06);
+    border-radius: 10px;
+  }
+  .lp-offer__summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--lp-border);
+  }
+  .lp-offer__summary-value { color: #555; }
+  .lp-offer__strikethrough { color: #999; text-decoration: line-through; }
+  .lp-offer__free-badge {
+    font-size: 9px;
+    font-weight: 700;
+    background: #c00;
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .lp-offer__summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--lp-font-head);
+    font-size: 18px;
+    font-weight: 900;
+    padding: 10px 0 4px;
+  }
+  .lp-offer__summary-total-value { color: #000; }
+  .lp-offer__summary-hint {
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+    margin-top: 6px;
+  }
+
+  /* CTA */
+  .lp-offer__cta { padding: 20px 16px 24px; text-align: center; }
+  .lp-offer__cta-nudge {
+    font-family: var(--lp-font-head);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+    color: #555;
+  }
+  .lp-offer__atc-btn { margin-bottom: 10px; }
+  .lp-offer__atc-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .lp-offer__single-text {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 14px;
+  }
+  .lp-offer__trust-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .lp-offer__trust-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+  }
+  .lp-offer__trust-item svg { color: #888; }
+
+  /* Fit Quiz Modal */
+  .lp-fit-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    background: rgba(0,0,0,.55);
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease;
+  }
+  .lp-fit-modal.isOpen {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .lp-fit-modal__sheet-wrap {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .lp-fit-modal__sheet {
+    width: 100%;
+    max-width: 560px;
+    height: min(86vh, 760px);
+    background: #fff;
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+    box-shadow: 0 -20px 60px rgba(0,0,0,.28);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .lp-fit-modal__handle {
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fbfbfb;
+  }
+  .lp-fit-modal__handle span {
+    width: 36px;
+    height: 4px;
+    border-radius: 2px;
+    background: #ccc;
+  }
+  .lp-fit-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px 10px;
+    border-bottom: 1px solid #eee;
+  }
+  .lp-fit-modal__title {
+    font-family: var(--lp-font-head);
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .lp-fit-modal__close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+  }
+  .lp-fit-modal__iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Sales — Offer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Build Your Rotation"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "3 Pairs."
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Price text",
+      "default": "$120."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Pick any 3 designs. Pair 3 is on us. Mix and match any way you want."
+    },
+    {
+      "type": "header",
+      "content": "Rotation Slots"
+    },
+    {
+      "type": "text",
+      "id": "slots_label",
+      "label": "Slots label",
+      "default": "Your Rotation"
+    },
+    {
+      "type": "text",
+      "id": "slots_hint",
+      "label": "Slots hint",
+      "default": "Add 3 designs to unlock your bundle"
+    },
+    {
+      "type": "header",
+      "content": "Design Grid"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Designs collection"
+    },
+    {
+      "type": "text",
+      "id": "design_label",
+      "label": "Design section label",
+      "default": "Choose Your Designs"
+    },
+    {
+      "type": "header",
+      "content": "Size Selector"
+    },
+    {
+      "type": "text",
+      "id": "size_label",
+      "label": "Size label",
+      "default": "Select Size"
+    },
+    {
+      "type": "text",
+      "id": "fit_quiz_text",
+      "label": "Fit quiz link text",
+      "default": "10-sec Fit Quiz →"
+    },
+    {
+      "type": "text",
+      "id": "fit_quiz_url",
+      "label": "Fit quiz link URL"
+    },
+    {
+      "type": "header",
+      "content": "Pricing"
+    },
+    {
+      "type": "number",
+      "id": "pair_price",
+      "label": "Price per pair (cents)",
+      "default": 6000
+    },
+    {
+      "type": "header",
+      "content": "Summary & CTA"
+    },
+    {
+      "type": "text",
+      "id": "summary_hint",
+      "label": "Summary hint",
+      "default": "Add 3 designs to see your savings"
+    },
+    {
+      "type": "text",
+      "id": "cta_nudge",
+      "label": "CTA nudge text",
+      "default": "Tap designs above to build your rotation"
+    },
+    {
+      "type": "text",
+      "id": "atc_text",
+      "label": "Add to Cart text",
+      "default": "Add Bundle to Cart"
+    },
+    {
+      "type": "text",
+      "id": "single_text",
+      "label": "Single pair text",
+      "default": "Just buy 1 pair — $60"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "design",
+      "name": "Design",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Design name",
+          "default": "Blackout"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Design image"
+        },
+        {
+          "type": "color",
+          "id": "color",
+          "label": "Fallback color",
+          "default": "#1a1a1a"
+        }
+      ]
+    },
+    {
+      "type": "size_option",
+      "name": "Size Option",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Size label",
+          "default": "M"
+        },
+        {
+          "type": "checkbox",
+          "id": "default",
+          "label": "Selected by default",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Sales — Offer",
+      "blocks": [
+        { "type": "size_option", "settings": { "label": "S" } },
+        { "type": "size_option", "settings": { "label": "M", "default": true } },
+        { "type": "size_option", "settings": { "label": "L" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

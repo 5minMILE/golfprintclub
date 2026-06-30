@@ -1,0 +1,129 @@
+<div class="rc-offer-reminder-wrap">
+  <div class="rc-offer-reminder">
+    <div class="rc-offer-reminder__eyebrow">{{ section.settings.eyebrow }}</div>
+    <div class="rc-offer-reminder__row">
+      <div class="rc-offer-reminder__price">{{ section.settings.price_text }} <span class="rc-offer-reminder__sub">{{ section.settings.price_sub }}</span></div>
+      <button class="rc-offer-reminder__btn" type="button" id="rc-reminder-atc">{{ section.settings.button_text }}</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var btn = document.getElementById('rc-reminder-atc');
+  if (!btn) return;
+  btn.addEventListener('click', function() {
+    var mainBtn = document.querySelector('button[data-add-to-cart]');
+    if (mainBtn && !mainBtn.disabled) {
+      mainBtn.click();
+    } else {
+      var title = document.querySelector('h1');
+      if (title) {
+        var y = title.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.2;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  });
+})();
+</script>
+
+<style>
+  .rc-offer-reminder-wrap {
+    padding: 8px 16px 16px;
+    background: #fff;
+  }
+  .rc-offer-reminder {
+    background: #0A0A0A;
+    border-radius: 10px;
+    padding: 14px;
+    max-width: 600px;
+  }
+  .rc-offer-reminder__eyebrow {
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #FF2D2D;
+    margin-bottom: 6px;
+  }
+  .rc-offer-reminder__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .rc-offer-reminder__price {
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .rc-offer-reminder__sub {
+    font-size: 13px;
+    color: #aaa;
+    font-weight: 400;
+  }
+  .rc-offer-reminder__btn {
+    white-space: nowrap;
+    background: #3D6E2E;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 18px;
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* Desktop */
+  @media (min-width: 992px) {
+    .rc-offer-reminder-wrap {
+      padding: 12px 40px 20px;
+      padding-left: calc(calc(50vh * 0.8) + 40px);
+    }
+    .rc-offer-reminder__price {
+      font-size: 32px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PDP Offer Reminder",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Buy 2 Get 1 Free"
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Price text",
+      "default": "$120"
+    },
+    {
+      "type": "text",
+      "id": "price_sub",
+      "label": "Price subtext",
+      "default": "for 3 pairs"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add to Cart"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Offer Reminder"
+    }
+  ]
+}
+{% endschema %}

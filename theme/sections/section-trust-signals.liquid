@@ -1,0 +1,222 @@
+<!-- /sections/section-trust-signals.liquid -->
+{%- style -%}
+  #TrustSignals--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  #TrustSignals--{{ section.id }} {
+    padding-top: var(--PT);
+    padding-bottom: var(--PB);
+  }
+  #TrustSignals--{{ section.id }} .trust-signals__inner {
+    max-width: 3000px;
+    margin: 0 50px;
+    padding: 24px 0;
+    border-top: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    justify-items: center;
+  }
+  #TrustSignals--{{ section.id }} .trust-signal {
+    text-align: center;
+  }
+  #TrustSignals--{{ section.id }} .trust-signal__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #F0F0F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+  #TrustSignals--{{ section.id }} .trust-signal__icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #000;
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  #TrustSignals--{{ section.id }} .trust-signal__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 1000;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  #TrustSignals--{{ section.id }} .trust-signal__desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #888;
+    line-height: 1.4;
+    margin-top: 5px;
+  }
+  @media (max-width: 749px) {
+    #TrustSignals--{{ section.id }} .trust-signals__inner {
+      margin: 0 16px;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      padding: 16px 0;
+    }
+    #TrustSignals--{{ section.id }} .trust-signal {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      gap: 8px;
+    }
+    #TrustSignals--{{ section.id }} .trust-signal__icon {
+      margin: 0;
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+    }
+    #TrustSignals--{{ section.id }} .trust-signal__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    #TrustSignals--{{ section.id }} .trust-signal__title {
+      font-size: 15px;
+    }
+    #TrustSignals--{{ section.id }} .trust-signal__desc {
+      font-size: 11px;
+    }
+  }
+</style>
+
+<section id="TrustSignals--{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="trust-signals">
+  <div class="trust-signals__inner">
+    <div class="trust-signal">
+      <div class="trust-signal__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 4v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div>
+        <div class="trust-signal__title">{{ section.settings.title_1 }}</div>
+        <div class="trust-signal__desc">{{ section.settings.desc_1 }}</div>
+      </div>
+    </div>
+    <div class="trust-signal">
+      <div class="trust-signal__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+      </div>
+      <div>
+        <div class="trust-signal__title">{{ section.settings.title_2 }}</div>
+        <div class="trust-signal__desc">{{ section.settings.desc_2 }}</div>
+      </div>
+    </div>
+    <div class="trust-signal">
+      <div class="trust-signal__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="15" y2="11"/><circle cx="12" cy="14" r="8"/></svg>
+      </div>
+      <div>
+        <div class="trust-signal__title">{{ section.settings.title_3 }}</div>
+        <div class="trust-signal__desc">{{ section.settings.desc_3 }}</div>
+      </div>
+    </div>
+    <div class="trust-signal">
+      <div class="trust-signal__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div>
+        <div class="trust-signal__title">{{ section.settings.title_4 }}</div>
+        <div class="trust-signal__desc">{{ section.settings.desc_4 }}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Trust Signals",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_1",
+      "label": "Title 1",
+      "default": "Free Shipping"
+    },
+    {
+      "type": "text",
+      "id": "desc_1",
+      "label": "Description 1",
+      "default": "On US orders over $125"
+    },
+    {
+      "type": "text",
+      "id": "title_2",
+      "label": "Title 2",
+      "default": "Easy Returns"
+    },
+    {
+      "type": "text",
+      "id": "desc_2",
+      "label": "Description 2",
+      "default": "30-day hassle-free returns"
+    },
+    {
+      "type": "text",
+      "id": "title_3",
+      "label": "Title 3",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "desc_3",
+      "label": "Description 3",
+      "default": "SSL encrypted payment"
+    },
+    {
+      "type": "text",
+      "id": "title_4",
+      "label": "Title 4",
+      "default": "Real Support"
+    },
+    {
+      "type": "text",
+      "id": "desc_4",
+      "label": "Description 4",
+      "default": "Actual humans. Not bots."
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Signals",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

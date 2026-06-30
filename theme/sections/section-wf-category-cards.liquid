@@ -1,0 +1,429 @@
+<!-- /sections/section-wf-category-cards.liquid -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+{%- style -%}
+  #WfCatCards--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<style>
+  #WfCatCards--{{ section.id }} {
+    padding-top: var(--PT);
+    padding-bottom: var(--PB);
+    background: {{ section.settings.bg_color | default: '#fff' }};
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__inner {
+    max-width: 3000px;
+    margin: 0 50px;
+    position: relative;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000;
+    margin: 0 0 14px;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__strip {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__strip::-webkit-scrollbar {
+    display: none;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card {
+    flex: 0 0 auto;
+    width: 280px;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    border-radius: 0;
+    border: 1px solid #E0E0E0;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: #f0f0f0;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card:hover .wf-cat__card-img img {
+    transform: scale(1.06);
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: linear-gradient(to top right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 40%, transparent 75%);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    display: block;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
+    line-height: 1.4;
+    display: block;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__card-count {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.55);
+    margin-top: 4px;
+    display: block;
+  }
+  /* Desktop slider arrows — same as homepage collection tabs */
+  #WfCatCards--{{ section.id }} .wf-cat__arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #3D6E2E;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__arrow:hover {
+    background: #0069d9;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__arrow {
+    transition: box-shadow 0.3s ease, transform 0.2s ease, background 0.2s ease;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__arrow:hover {
+    background: #0080ff;
+    box-shadow: 0 0 12px rgba(0,123,255,0.5);
+    transform: translateY(-50%) scale(1.1);
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__arrow--prev { left: -16px; }
+  #WfCatCards--{{ section.id }} .wf-cat__arrow--next { right: -16px; }
+  #WfCatCards--{{ section.id }} .wf-cat__arrow.is-visible {
+    display: flex;
+  }
+  @media (min-width: 750px) {
+    #WfCatCards--{{ section.id }} .wf-cat__card {
+      flex: 0 0 calc((100% - 36px) / 4);
+      width: calc((100% - 36px) / 4);
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__card-label {
+      font-size: 20px;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__card-overlay {
+      padding: 50px 12px 12px;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__card-desc {
+      font-size: 11px;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__card-count {
+      font-size: 10px;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__heading {
+      font-size: 12px;
+      letter-spacing: 0;
+    }
+  }
+  /* Mobile arrows (UGC style) */
+  #WfCatCards--{{ section.id }} .wf-cat__mob-arrows {
+    display: none;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__mob-arrow {
+    width: 30px;
+    height: 30px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+  }
+  #WfCatCards--{{ section.id }} .wf-cat__mob-arrow svg {
+    width: 14px;
+    height: 14px;
+    stroke: #000;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @media (max-width: 749px) {
+    #WfCatCards--{{ section.id }} .wf-cat__inner {
+      margin: 0 16px;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__card {
+      width: 75vw;
+      flex: 0 0 75vw;
+      scroll-snap-align: start;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__strip {
+      scroll-snap-type: x mandatory;
+      -webkit-scroll-snap-type: x mandatory;
+      padding: 0 14px;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__card:hover .wf-cat__card-img img {
+      transform: none;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__arrow {
+      display: none !important;
+    }
+    #WfCatCards--{{ section.id }} .wf-cat__mob-arrows {
+      display: flex;
+    }
+  }
+</style>
+
+<section id="WfCatCards--{{ section.id }}">
+  <div class="wf-cat__inner">
+    {%- if section.settings.heading != blank -%}
+      <p class="wf-cat__heading">{{ section.settings.heading }}</p>
+    {%- endif -%}
+    <button class="wf-cat__arrow wf-cat__arrow--prev" aria-label="Previous">&#8249;</button>
+    <button class="wf-cat__arrow wf-cat__arrow--next" aria-label="Next">&#8250;</button>
+    <div class="wf-cat__strip">
+      {%- for block in section.blocks -%}
+        {%- assign cat_col = block.settings.collection -%}
+        {%- assign cat_label = block.settings.label -%}
+        {%- assign cat_link = block.settings.link -%}
+        {%- if cat_col != blank -%}
+          {%- if cat_label == blank -%}{%- assign cat_label = cat_col.title -%}{%- endif -%}
+          {%- if cat_link == blank -%}{%- assign cat_link = cat_col.url -%}{%- endif -%}
+        {%- endif -%}
+        <a href="{{ cat_link }}" class="wf-cat__card" {{ block.shopify_attributes }}>
+          <div class="wf-cat__card-img">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 400 }}"
+                alt="{{ cat_label | escape }}"
+                loading="lazy"
+                width="400"
+                height="533">
+            {%- elsif cat_col != blank and cat_col.image -%}
+              <img src="{{ cat_col.image | image_url: width: 400 }}"
+                alt="{{ cat_label | escape }}"
+                loading="lazy"
+                width="400"
+                height="533">
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+          <div class="wf-cat__card-overlay">
+            <span class="wf-cat__card-label">{{ cat_label }}</span>
+            {%- if cat_col != blank and cat_col.description != blank -%}
+              <span class="wf-cat__card-desc">{{ cat_col.description | strip_html | truncate: 150 }}</span>
+            {%- endif -%}
+            {%- if cat_col != blank -%}
+              {%- assign visible_product_count = 0 -%}
+              {%- for p in cat_col.products -%}
+                {%- unless p.tags contains 'hide' -%}
+                  {%- assign visible_product_count = visible_product_count | plus: 1 -%}
+                {%- endunless -%}
+              {%- endfor -%}
+              <span class="wf-cat__card-count">{{ visible_product_count }} Products</span>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+    <div class="wf-cat__mob-arrows">
+      <button class="wf-cat__mob-arrow" data-cat-prev aria-label="Previous">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="wf-cat__mob-arrow" data-cat-next aria-label="Next">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    var section = document.getElementById('WfCatCards--{{ section.id }}');
+    if (!section) return;
+
+    var strip = section.querySelector('.wf-cat__strip');
+    var prevBtn = section.querySelector('.wf-cat__arrow--prev');
+    var nextBtn = section.querySelector('.wf-cat__arrow--next');
+    var mobPrev = section.querySelector('[data-cat-prev]');
+    var mobNext = section.querySelector('[data-cat-next]');
+    var isMobile = window.matchMedia('(max-width: 749px)');
+
+    function updateArrows() {
+      if (isMobile.matches) return;
+      var canScroll = strip.scrollWidth > strip.offsetWidth + 5;
+      if (prevBtn) {
+        prevBtn.classList.toggle('is-visible', canScroll && strip.scrollLeft > 5);
+      }
+      if (nextBtn) {
+        nextBtn.classList.toggle('is-visible', canScroll && strip.scrollLeft < strip.scrollWidth - strip.offsetWidth - 5);
+      }
+    }
+
+    /* Desktop arrows */
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        strip.scrollLeft -= strip.offsetWidth * 0.75;
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        strip.scrollLeft += strip.offsetWidth * 0.75;
+      });
+    }
+
+    /* Mobile arrows — scroll by one card width */
+    function getMobileScrollAmount() {
+      var card = strip.querySelector('.wf-cat__card');
+      return card ? card.offsetWidth + 12 : 260;
+    }
+    if (mobPrev) {
+      mobPrev.addEventListener('click', function() {
+        strip.scrollBy({ left: -getMobileScrollAmount(), behavior: 'smooth' });
+      });
+    }
+    if (mobNext) {
+      mobNext.addEventListener('click', function() {
+        strip.scrollBy({ left: getMobileScrollAmount(), behavior: 'smooth' });
+      });
+    }
+
+    strip.addEventListener('scroll', function() {
+      if (!isMobile.matches) updateArrows();
+    });
+
+    updateArrows();
+    isMobile.addEventListener('change', updateArrows);
+    window.addEventListener('resize', updateArrows);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "WF Category Cards",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop by Category"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image",
+          "info": "Overrides collection image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Custom label",
+          "info": "Overrides collection title"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Custom link",
+          "info": "Overrides collection URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "WF Category Cards",
+      "category": "Collection",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Golf Posters" } },
+        { "type": "category", "settings": { "label": "Golf Posters" } },
+        { "type": "category", "settings": { "label": "Golf Posters" } },
+        { "type": "category", "settings": { "label": "Shirts" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

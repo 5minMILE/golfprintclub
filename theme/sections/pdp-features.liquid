@@ -1,0 +1,180 @@
+<div class="rc-features">
+  <div class="rc-features__inner">
+    <h2 class="rc-features__heading">{{ section.settings.heading }}</h2>
+    {% for block in section.blocks %}
+      <div class="rc-feat-card" {{ block.shopify_attributes }}>
+        {% if block.settings.image != blank %}
+          <div class="rc-feat-card__img">
+            <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title }}" loading="lazy">
+          </div>
+        {% else %}
+          <div class="rc-feat-card__img rc-feat-card__img--placeholder">
+            <span>{{ block.settings.image_label | default: block.settings.title }}</span>
+          </div>
+        {% endif %}
+        <div class="rc-feat-card__body">
+          <h3 class="rc-feat-card__title">{{ block.settings.title }}</h3>
+          <p class="rc-feat-card__desc">{{ block.settings.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .rc-features {
+    padding: 24px 16px 8px;
+    background: #fff;
+  }
+  .rc-features__inner {
+    max-width: 600px;
+  }
+  .rc-features__heading {
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0 0 16px;
+    color: #0A0A0A;
+  }
+  .rc-feat-card {
+    border: 1px solid #E4E4E4;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+  .rc-feat-card__img {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    overflow: hidden;
+  }
+  .rc-feat-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .rc-feat-card__img--placeholder {
+    background: #D0D0D0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rc-feat-card__img--placeholder span {
+    background: rgba(255,255,255,0.9);
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #555;
+  }
+  .rc-feat-card__body {
+    padding: 14px;
+  }
+  .rc-feat-card__title {
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 19px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0 0 4px;
+    color: #0A0A0A;
+  }
+  .rc-feat-card__desc {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Desktop */
+  @media (min-width: 992px) {
+    .rc-features {
+      padding: 32px 40px 12px;
+      padding-left: calc(calc(50vh * 0.8) + 40px);
+    }
+    .rc-features__heading {
+      font-size: 28px;
+    }
+    .rc-feat-card {
+      display: flex;
+      align-items: stretch;
+    }
+    .rc-feat-card__img {
+      width: 50%;
+      flex-shrink: 0;
+      aspect-ratio: auto;
+      min-height: 200px;
+    }
+    .rc-feat-card__body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px 24px;
+    }
+    .rc-feat-card__title {
+      font-size: 22px;
+    }
+    .rc-feat-card__desc {
+      font-size: 14px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "PDP Features",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading",
+      "default": "Built for golfers who run hard"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Feature image"
+        },
+        {
+          "type": "text",
+          "id": "image_label",
+          "label": "Placeholder label (no image)",
+          "default": "Feature Shot"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "No Ride Up"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Stays locked at the thigh through full stride. No adjusting mid-rep."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Features",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "No Ride Up", "description": "Stays locked at the thigh through full stride. No adjusting mid-rep.", "image_label": "No Ride Up Shot" } },
+        { "type": "feature", "settings": { "title": "No Bounce Pocket", "description": "Rear pocket holds your phone tight. It doesn't move. Period.", "image_label": "Pocket Detail Shot" } },
+        { "type": "feature", "settings": { "title": "Real Compression", "description": "Support where it matters -- without feeling restrictive or cheap.", "image_label": "Compression Stretch" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

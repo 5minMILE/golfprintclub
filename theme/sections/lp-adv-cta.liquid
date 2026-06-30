@@ -1,0 +1,157 @@
+<div class="lp-page-wrap">
+  <div class="lp-adv-cta">
+    <div class="lp-adv-cta__eyebrow">{{ section.settings.eyebrow }}</div>
+    <div class="lp-adv-cta__title">{{ section.settings.title }}</div>
+    <div class="lp-adv-cta__stars">
+      <div class="lp-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="lp-adv-cta__rating">{{ section.settings.rating_text }}</div>
+    </div>
+    <div class="lp-adv-cta__price-row">
+      <div class="lp-adv-cta__price">{{ section.settings.price }} <span class="lp-adv-cta__price-unit">{{ section.settings.price_unit }}</span></div>
+      {% if section.settings.compare_price != blank %}
+        <div class="lp-adv-cta__price-old">{{ section.settings.compare_price }}</div>
+      {% endif %}
+    </div>
+    {% if section.settings.offer_text != blank %}
+      <div class="lp-adv-cta__offer">{{ section.settings.offer_text }}</div>
+    {% endif %}
+    <a href="{{ section.settings.button_url }}" class="lp-btn-primary">{{ section.settings.button_text }}</a>
+    {% if section.settings.fine_print != blank %}
+      <div class="lp-adv-cta__fine">{{ section.settings.fine_print }}</div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .lp-adv-cta {
+    background: var(--lp-black);
+    padding: 20px 16px;
+    max-width: 390px;
+    margin: 0 auto;
+  }
+  .lp-adv-cta__eyebrow {
+    font-family: var(--lp-font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lp-blue);
+    margin-bottom: 6px;
+  }
+  .lp-adv-cta__title {
+    font-family: var(--lp-font-head);
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .lp-adv-cta__stars {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .lp-adv-cta__rating { font-size: 12px; color: #aaa; }
+  .lp-adv-cta__price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .lp-adv-cta__price {
+    font-family: var(--lp-font-head);
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .lp-adv-cta__price-unit { font-size: 14px; font-weight: 400; color: #aaa; }
+  .lp-adv-cta__price-old { font-size: 13px; color: #aaa; text-decoration: line-through; }
+  .lp-adv-cta__offer {
+    font-size: 12px;
+    color: var(--lp-red);
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .lp-adv-cta__fine {
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+    margin-top: 10px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Adv — CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "The Gear We're Talking About"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Product title",
+      "default": "MD Golf Posters"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.81 (16 reviews)"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price",
+      "default": "$40"
+    },
+    {
+      "type": "text",
+      "id": "price_unit",
+      "label": "Price unit",
+      "default": "/ each"
+    },
+    {
+      "type": "text",
+      "id": "compare_price",
+      "label": "Compare-at price",
+      "default": "$60"
+    },
+    {
+      "type": "text",
+      "id": "offer_text",
+      "label": "Offer text",
+      "default": "When you buy 2 — get 1 FREE"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop the MD Golf Posters →"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Free shipping over $125 · Easy exchanges"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Adv — CTA"
+    }
+  ]
+}
+{% endschema %}

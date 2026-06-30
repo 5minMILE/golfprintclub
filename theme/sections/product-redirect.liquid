@@ -1,0 +1,28 @@
+{% if product.metafields.custom.master_reference %}
+  <head>
+    <meta http-equiv="refresh" content="0;url={{ product.metafields.custom.master_reference }}">
+    <script>
+      window.location.replace("{{ product.metafields.custom.master_reference }}");
+    </script>
+    <style>
+      body {
+        display: none;
+      }
+    </style>
+  </head>
+{% else %}
+  <section class="product-redirect-message">No master reference found for this product.</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Product Redirect",
+  "tag": "section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Product Redirect"
+    }
+  ]
+}
+{% endschema %}

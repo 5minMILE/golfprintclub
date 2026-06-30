@@ -1,39 +1,738 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+<html class="no-js no-touch supports-no-cookies" lang="{{ request.locale.iso_code }}">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-    <meta name="theme-color" content="{{ settings.color_bg | default: '#0a0a0a' }}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="{{ settings.accent_bright }}">
     <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="preconnect" href="https://cdn.judge.me">
 
-    {%- if settings.favicon != blank -%}
+    {%- comment -%} Hreflang tags for multi-language support {%- endcomment -%}
+    {%- if request.locale and shop.published_locales.size > 1 -%}
+      {%- for locale in shop.published_locales -%}
+        <link rel="alternate" hreflang="{{ locale.iso_code }}" href="{{ canonical_url | replace: request.locale.root_url, locale.root_url }}">
+      {%- endfor -%}
+      <link rel="alternate" hreflang="x-default" href="{{ canonical_url }}">
+    {%- endif -%}
+
+    <!-- ======================= Broadcast Theme V5.8.0 ========================= -->
+
+    {{ 'theme.css' | asset_url | preload_tag: as: 'style' }}
+    {{ 'vendor.js' | asset_url | preload_tag: as: 'script' }}
+    {{ 'theme.js' | asset_url | preload_tag: as: 'script' }}
+
+    {%- assign heading_font_url = settings.type_heading_font | font_url -%}
+    {%- assign base_font_url = settings.type_base_font | font_url -%}
+    {%- if heading_font_url != blank -%}
+      <link rel="preload" href="{{ heading_font_url }}" as="font" type="font/woff2" crossorigin>
+    {%- endif -%}
+    {%- if base_font_url != blank -%}
+      <link rel="preload" href="{{ base_font_url }}" as="font" type="font/woff2" crossorigin>
+    {%- endif -%}
+
+    {%- if settings.loading_image_1 != blank or settings.loading_image_2 != blank -%}
+      {%- style -%}
+        .loading { position: fixed; top: 0; left: 0; z-index: 99999; width: 100%; height: 100%; background: var(--bg); transition: opacity 0.2s ease-out, visibility 0.2s ease-out; }
+        body.is-loaded .loading { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loading__image__holder { position: absolute; top: 0; left: 0; width: 100%; height: 100%; font-size: 0; display: flex; align-items: center; justify-content: center; }
+        .loading__image__holder:nth-child(2) { opacity: 0; }
+        .loading__image { max-width: {{ settings.loading_image_width }}px; max-height: {{ settings.loading_image_width }}px; object-fit: contain; }
+        .loading--animate .loading__image__holder:nth-child(1) { animation: pulse1 2s infinite ease-in-out; }
+        .loading--animate .loading__image__holder:nth-child(2) { animation: pulse2 2s infinite ease-in-out; }
+        @keyframes pulse1 {
+          0% { opacity: 1; }
+          50% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        @keyframes pulse2 {
+          0% { opacity: 0; }
+          50% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+      {%- endstyle -%}
+    {%- endif -%}
+
+    {% if settings.favicon %}
       <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-    {%- endif -%}
+    {% endif %}
 
-    <title>{{ page_title }}{% if current_tags %} | {{ current_tags | join: ', ' }}{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
-    {%- if page_description -%}
+    <!-- Title and description ================================================ -->
+    {% capture seo_title %}
+    {% assign title_content = page_title %}
+    {% if template == 'password' %}
+      {% assign title_content = shop.name %}
+    {%- endif -%}
+    {%- comment -%}
+      Homepage SEO title: use a keyword-rich default unless the merchant
+      has set a custom title in Shopify admin (Online Store > Preferences).
+      page_title falls back to shop.name when no custom title is set, so
+      we detect "no custom title" by checking exact equality with shop.name.
+    {%- endcomment -%}
+    {%- if template.name == 'index' and title_content == shop.name -%}
+      {%- assign title_content = 'Golf Print Club — Golf Wall Art for Competitors | Golf Posters' -%}
+    {%- endif -%}
+    {{ title_content }}
+    {% if current_tags %}
+      {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {% endif %}
+    {% if current_page != 1 %}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {% endif %}
+    {% unless page_title contains shop.name or title_content contains shop.name %}
+      &ndash; {{ shop.name }}
+    {% endunless %}
+  {% endcapture %}
+    <title>{{ seo_title | strip_newlines | replace: '    ', ' ' | replace: '   ', ' ' | replace: '  ', ' ' | strip }}</title>
+
+    {% if template.name == 'index' %}
+      <meta name="description" content="Golf apparel and golf posters for competitors — golf posters, golf posters, golf posters, and premium golf wall art. Designed by golfers, priced for golfers.">
+    {% elsif page_description %}
       <meta name="description" content="{{ page_description | escape }}">
+    {% else %}
+      <meta name="description" content="{{ shop.description | escape }}">
+    {% endif %}
+
+    {% render 'seo-head' %}
+    {% render 'json-ld-supplements' %}
+
+    {%- comment -%} Force header dropdown panels to render solid white with dark, readable links {%- endcomment -%}
+    <style>
+      .header__dropdown,
+      .header__dropdown .header__dropdown__wrapper,
+      .header__dropdown .header__dropdown__inner {
+        background-color: #ffffff !important;
+      }
+      .header__dropdown {
+        --bg: #ffffff;
+        --text: #111111;
+        --text-dark: #111111;
+        --text-light: #111111;
+        --link-hover: #3D6E2E;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+        border: 1px solid #ececec;
+      }
+      .header__dropdown a,
+      .header__dropdown .header__link,
+      .header__dropdown .header__dropdown__inner a {
+        color: #111111 !important;
+      }
+      .header__dropdown a:hover,
+      .header__dropdown .header__link:hover,
+      .header__dropdown .header__dropdown__inner a:hover {
+        color: #3D6E2E !important;
+      }
+
+      /* Full-width mega menu (menu items that have image blocks) */
+      @media only screen and (min-width: 990px) {
+        /* backdrop-filter on the nav pill traps position:fixed; drop it while a mega menu is open */
+        .header__wrapper.meganav--visible .together {
+          backdrop-filter: none !important;
+          -webkit-backdrop-filter: none !important;
+        }
+        /* keep the nav links sitting ON TOP of the white panel, and dark so they're readable on white */
+        .header__wrapper .navlink--toplevel,
+        .header__wrapper .menu__item > .navlink {
+          position: relative;
+          z-index: 30;
+        }
+        .header__wrapper.meganav--visible .navlink--toplevel,
+        .header__wrapper.meganav--visible .navlink--toplevel .navtext {
+          color: #111111 !important;
+        }
+        /* keep account + cart icons above the white panel and dark/visible when mega is open */
+        .header__wrapper .navlink--cart,
+        .header__wrapper .header__icons,
+        .header__wrapper .header__icons a,
+        .header__wrapper .header__desktop__buttons,
+        .header__wrapper .header__desktop__button,
+        .header__wrapper .header__desktop__button a,
+        .header__wrapper a[href$="/cart"],
+        .header__wrapper a[href*="/account"],
+        .header__wrapper a[href*="account."],
+        .header__wrapper a[href*="customer."],
+        .header__wrapper a[href*="/login"] {
+          position: relative;
+          z-index: 30;
+        }
+        /* force EVERY header action icon (search, account/login, cart) dark on the white panel */
+        .header__wrapper.meganav--visible .navlink--cart,
+        .header__wrapper.meganav--visible .navlink--cart svg,
+        .header__wrapper.meganav--visible .header__icons a,
+        .header__wrapper.meganav--visible .header__icons svg,
+        .header__wrapper.meganav--visible .header__desktop__button a,
+        .header__wrapper.meganav--visible .header__desktop__button svg,
+        .header__wrapper.meganav--visible .header__desktop__buttons a,
+        .header__wrapper.meganav--visible .header__desktop__buttons svg,
+        .header__wrapper.meganav--visible a[href$="/cart"] svg,
+        .header__wrapper.meganav--visible a[href*="/account"] svg,
+        .header__wrapper.meganav--visible a[href*="account."] svg,
+        .header__wrapper.meganav--visible a[href*="customer."] svg,
+        .header__wrapper.meganav--visible a[href*="/login"] svg {
+          color: #111111 !important;
+          stroke: #111111 !important;
+        }
+        .header__wrapper.meganav--visible .navlink--cart svg [fill]:not([fill="none"]),
+        .header__wrapper.meganav--visible .header__icons svg [fill]:not([fill="none"]),
+        .header__wrapper.meganav--visible .header__desktop__button svg [fill]:not([fill="none"]),
+        .header__wrapper.meganav--visible .header__desktop__buttons svg [fill]:not([fill="none"]) {
+          fill: #111111 !important;
+        }
+        /* the white panel: full width, up to the announcement bar, behind the nav */
+        .menu__item.grandparent .header__dropdown {
+          position: fixed !important;
+          top: 24px !important;
+          left: 0 !important;
+          right: 0 !important;
+          width: 100vw !important;
+          max-width: 100vw !important;
+          transform: none !important;
+          background-color: #ffffff !important;
+          box-shadow: 0 18px 32px rgba(0, 0, 0, 0.10);
+          z-index: 5 !important;
+        }
+        /* content fills the full width: images = left 50%, nav links = right 50% */
+        .menu__item.grandparent .header__dropdown__wrapper {
+          max-width: 100vw !important;
+          width: 100vw !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        .menu__item.grandparent .header__dropdown__inner {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: stretch !important;
+          gap: 0 !important;
+          background-color: #ffffff !important;
+          padding: 0 !important;
+        }
+        /* IMAGES: left 50%, two side-by-side (25% each), flush, zero padding */
+        .menu__item.grandparent .menu__blocks {
+          order: 0 !important;
+          display: flex !important;
+          flex-direction: row !important;
+          gap: 0 !important;
+          flex: 0 0 50% !important;
+          width: 50% !important;
+          max-width: 50% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          align-items: stretch !important;
+        }
+        .menu__item.grandparent .menu__block,
+        .menu__item.grandparent .menu__block--narrow,
+        .menu__item.grandparent .menu__block--wide {
+          flex: 1 1 100% !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+        .menu__item.grandparent .header__dropdown__image {
+          height: 50vh !important;
+          min-height: 50vh;
+          border-radius: 0 !important;
+          margin: 0 !important;
+          position: relative !important;
+          overflow: hidden !important;
+        }
+        /* make the image (and its lazy-load wrapper) fill the whole panel — kills the white bar at the bottom.
+           The wrapper is a FIGURE.lazy-image--backfill that sets height via aspect-ratio padding, so we
+           force it absolute/full-height and zero its padding. */
+        .menu__item.grandparent .header__dropdown__image .image-wrapper,
+        .menu__item.grandparent .header__dropdown__image figure,
+        .menu__item.grandparent .header__dropdown__image .lazy-image,
+        .menu__item.grandparent .header__dropdown__image .lazy-image--backfill,
+        .menu__item.grandparent .header__dropdown__image a.link-over-image,
+        .menu__item.grandparent .header__dropdown__image img,
+        .menu__item.grandparent .header__dropdown__image picture,
+        .menu__item.grandparent .header__dropdown__image picture img {
+          position: absolute !important;
+          inset: 0 !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          min-height: 100% !important;
+          max-height: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          object-fit: cover !important;
+          transform: none !important;
+        }
+        /* MENU LINKS: right 50%, beside the images */
+        .menu__item.grandparent .header__grandparent__links {
+          order: 1 !important;
+          flex: 1 1 50% !important;
+          width: 50% !important;
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: center !important;
+          gap: 16px !important;
+          padding: 64px 40px 24px 48px !important;
+        }
+        .menu__item.grandparent .header__grandparent__links .navlink--child h5,
+        .menu__item.grandparent .header__grandparent__links .navtext {
+          font-size: 15px !important;
+          letter-spacing: 0.04em !important;
+        }
+      }
+    </style>
+
+
+    <!-- CSS ================================================================== -->
+    {% style %}
+      {%- liquid
+        assign heading_font = settings.type_heading_font
+        assign base_font = settings.type_base_font
+
+        assign heading_font_bold = heading_font | font_modify: 'weight', 'bolder'
+        assign base_font_bold = base_font | font_modify: 'weight', 'bolder'
+
+        assign base_font_100 = base_font | font_modify: 'weight', '+100'
+        assign base_font_200 = base_font | font_modify: 'weight', '+200'
+        assign base_font_300 = base_font | font_modify: 'weight', '+300'
+        assign base_font_400 = base_font | font_modify: 'weight', '+400'
+        if base_font_100 and base_font_100.weight > base_font.weight
+          assign base_font_bold = base_font_100
+        elsif base_font_200 and base_font_200.weight > base_font.weight
+          assign base_font_bold = base_font_200
+        elsif base_font_300 and base_font_300.weight > base_font.weight
+          assign base_font_bold = base_font_300
+        elsif base_font_400 and base_font_400.weight > base_font.weight
+          assign base_font_bold = base_font_400
+        endif
+
+        assign heading_font_100 = heading_font | font_modify: 'weight', '+100'
+        assign heading_font_200 = heading_font | font_modify: 'weight', '+200'
+        assign heading_font_300 = heading_font | font_modify: 'weight', '+300'
+        assign heading_font_400 = heading_font | font_modify: 'weight', '+400'
+        if heading_font_100 and heading_font_100.weight > heading_font.weight
+          assign heading_font_bold = heading_font_100
+        elsif heading_font_200 and heading_font_200.weight > heading_font.weight
+          assign heading_font_bold = heading_font_200
+        elsif heading_font_300 and heading_font_300.weight > heading_font.weight
+          assign heading_font_bold = heading_font_300
+        elsif heading_font_400 and heading_font_400.weight > heading_font.weight
+          assign heading_font_bold = heading_font_400
+        endif
+
+        assign btn_font = settings.btn_font
+      -%}
+
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ base_font | font_face: font_display: 'swap' }}
+      {{ btn_font | font_face: font_display: 'swap' }}
+
+      {% if heading_font_bold %}
+        {{ heading_font_bold | font_face: font_display: 'swap' }}
+      {% endif %}
+
+      {% if base_font_bold %}
+        {{ base_font_bold | font_face: font_display: 'swap' }}
+      {% endif %}
+
+      {% assign base_font_italic = base_font | font_modify: 'style', 'italic' %}
+      {% assign base_font_bold_italic = base_font_bold | font_modify: 'style', 'italic' %}
+
+      {% if base_font_italic %}
+        {{ base_font_italic | font_face: font_display: 'swap' }}
+      {% endif %}
+
+      {% if base_font_bold_italic %}
+        {{ base_font_bold_italic | font_face: font_display: 'swap' }}
+      {% endif %}
+    {% endstyle %}
+
+    {% render 'css-variables' %}
+
+    {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {%- if settings.swatches_type != 'disabled' or settings.show_siblings -%}
+      {{ 'swatches.css' | asset_url | preload_tag: as: 'style' }}
+      {{ 'swatches.css' | asset_url | stylesheet_tag: preload: true }}
+      {%- render 'swatch-color-list' -%}
+    {%- endif %}
+
+    {%- if request.design_mode -%}
+      {{ 'design-mode.css' | asset_url | stylesheet_tag }}
     {%- endif -%}
 
-    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+    let root = '{{ routes.root_url }}';
+    if (root[root.length - 1] !== '/') {
+      root = root + '/';
+    }
+
+    window.theme = {
+      routes: {
+        root: root,
+        cart_url: '{{ routes.cart_url }}',
+        cart_add_url: '{{ routes.cart_add_url }}',
+        cart_change_url: '{{ routes.cart_change_url }}',
+        product_recommendations_url: '{{ routes.product_recommendations_url }}',
+        predictive_search_url: '{{ routes.predictive_search_url }}',
+        addresses_url: '{{ routes.account_addresses_url }}'
+      },
+      assets: {
+        photoswipe: '{{ "photoswipe.js" | asset_url }}',
+      },
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        cartAcceptanceError: {{ 'cart.general.accept_terms' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        from: {{ 'products.general.from' | t | json }},
+        preOrder: {{ 'products.product.pre_order' | t | json }},
+        sale: {{ 'products.product.on_sale' | t | json }},
+        subscription: {{ 'products.product.subscription' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        unitPrice: {{ 'products.product.unit_price_label' | t | json }},
+        unitPriceSeparator: {{ 'general.accessibility.unit_price_separator' | t | json }},
+        shippingCalcSubmitButton: {{ 'cart.shipping_calculator.calculate_shipping' | t | json }},
+        shippingCalcSubmitButtonDisabled: {{ 'cart.shipping_calculator.calculating' | t | json }},
+        selectValue: {{ 'products.product.select_value' | t | json }},
+        selectColor: {{ 'products.product.select_color' | t | json }},
+        oneColor: {{ 'collections.general.colors_with_count.one' | t | json }},
+        otherColor: {{ 'collections.general.colors_with_count.other' | t | json }},
+        upsellAddToCart: {{ 'products.general.upsell_add_to_cart' | t | json }},
+        free: {{ 'general.money.free' | t | json }},
+        swatchesColor: {{ 'general.swatches.color' | t | json }},
+        sku: {{ 'products.product.sku' | t | json }},
+      },
+      settings: {
+        cartType: {{ settings.cart_type | json }},
+        customerLoggedIn: {{ customer | json }} ? true : false,
+        enableQuickAdd: {{ settings.quickview_enable | json }},
+        enableAnimations: {{ settings.animations_enable | json }},
+        variantOnSale: {{ settings.variant_on_sale | json }},
+        collectionSwatchStyle: {{ settings.collection_swatch_style | json }},
+        swatchesType: {{ settings.swatches_type | json }}
+      },
+      sliderArrows: {
+        prev: '<button type="button" class="slider__button slider__button--prev" data-button-arrow data-button-prev>' + {{ 'general.pagination.prev' | t | json }} + '</button>',
+        next: '<button type="button" class="slider__button slider__button--next" data-button-arrow data-button-next>' + {{ 'general.pagination.next' | t | json }} + '</button>',
+      },
+      moneyFormat: {{ settings.currency_code_enable | json }} ? {{ shop.money_with_currency_format | json }} : {{ shop.money_format | json }},
+      moneyWithoutCurrencyFormat: {{ shop.money_format | json }},
+      moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+      subtotal: {{ cart.total_price | json }},
+      info: {
+        name: 'broadcast'
+      },
+      version: '5.8.0'
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      function getScrollbarWidth() {
+        const outer = document.createElement('div');
+        outer.style.visibility = 'hidden';
+        outer.style.overflow = 'scroll';
+        document.documentElement.appendChild(outer);
+        const inner = document.createElement('div');
+        outer.appendChild(inner);
+        const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+        outer.parentNode.removeChild(outer);
+        return scrollbarWidth;
+      }
+
+      document.documentElement.style.setProperty('--scrollbar-width', `${getScrollbarWidth()}px`);
+
+      let windowInnerHeight = window.innerHeight;
+      document.documentElement.style.setProperty('--full-height', `${windowInnerHeight}px`);
+      document.documentElement.style.setProperty('--three-quarters', `${windowInnerHeight * 0.75}px`);
+      document.documentElement.style.setProperty('--two-thirds', `${windowInnerHeight * 0.66}px`);
+      document.documentElement.style.setProperty('--one-half', `${windowInnerHeight * 0.5}px`);
+      document.documentElement.style.setProperty('--one-third', `${windowInnerHeight * 0.33}px`);
+      document.documentElement.style.setProperty('--one-fifth', `${windowInnerHeight * 0.2}px`);
+    });
+    </script>
+
+    {% if template.directory == 'customers' or template contains 'cart' %}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+    {% endif %}
+
+    <!-- Theme Javascript ============================================================== -->
+    <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+
+    {%- if request.design_mode -%}
+      <script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>
+    {%- endif -%}
+
+    {%- comment -%}
+      If you need to do some edits in Theme JS use theme.dev.js file
+
+      *** DO NOT EDIT theme.js file ***
+
+      Then call theme.dev.js file by editing the row above from:
+      <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+      to
+      <script src="{{ 'theme.dev.js' | asset_url }}" defer="defer"></script>
+    {%- endcomment -%}
+
+    <!-- Shopify app scripts =========================================================== -->
 
     {{ content_for_header }}
 
-    {{ 'theme.css' | asset_url | stylesheet_tag }}
-    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <style>
+      @media (max-width: 763px) {
+        .free-shipping-mobile {
+          margin-top: 0;
+        }
+      }
+    </style>
+  <!-- RC Affiliate Attribution (30-day cookie) -->
+  <script>
+  (function() {
+    var API = 'https://easygoing-youthfulness-production-999b.up.railway.app/api/tracking';
+    var COOKIE_DAYS = 30;
+
+    function setCookie(name, val, days) {
+      var d = new Date();
+      d.setTime(d.getTime() + days * 86400000);
+      document.cookie = name + '=' + encodeURIComponent(val) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+    }
+
+    function getCookie(name) {
+      var m = document.cookie.match('(^|; )' + name + '=([^;]*)');
+      return m ? decodeURIComponent(m[2]) : null;
+    }
+
+    function genId() {
+      return 'rc_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    function sendEvent(type, extra) {
+      var ref = getCookie('_rc_ref');
+      if (!ref) return;
+      var payload = {
+        type: type,
+        ref: ref,
+        visitorId: getCookie('_rc_vid') || '',
+        page: window.location.pathname,
+        referrer: document.referrer || ''
+      };
+      if (extra) { for (var k in extra) payload[k] = extra[k]; }
+      navigator.sendBeacon ? navigator.sendBeacon(API, JSON.stringify(payload)) :
+        fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), keepalive: true });
+    }
+
+    function updateCartAttributes() {
+      var ref = getCookie('_rc_ref');
+      var vid = getCookie('_rc_vid');
+      if (!ref) return;
+      fetch('/cart/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ attributes: { rc_ref: ref, rc_vid: vid || '' } })
+      });
+    }
+
+    // 1. Capture ref from URL params
+    var params = new URLSearchParams(window.location.search);
+    var refParam = params.get('ref') || params.get('utm_source');
+    if (refParam) {
+      setCookie('_rc_ref', refParam, COOKIE_DAYS);
+      if (!getCookie('_rc_vid')) {
+        setCookie('_rc_vid', genId(), COOKIE_DAYS);
+      }
+      // Clean URL without reload
+      if (window.history.replaceState) {
+        params.delete('ref');
+        var clean = window.location.pathname + (params.toString() ? '?' + params.toString() : '') + window.location.hash;
+        window.history.replaceState(null, '', clean);
+      }
+    }
+
+    // First visit — generate visitor ID if ref exists but no vid yet
+    if (getCookie('_rc_ref') && !getCookie('_rc_vid')) {
+      setCookie('_rc_vid', genId(), COOKIE_DAYS);
+    }
+
+    // 2. If attributed visitor, track session + set cart attributes
+    if (getCookie('_rc_ref')) {
+      sendEvent('SESSION');
+      updateCartAttributes();
+    }
+
+    // 3. Intercept cart/add.js to track ATC
+    var origFetch = window.fetch;
+    window.fetch = function() {
+      var url = arguments[0];
+      if (typeof url === 'string' && url.indexOf('/cart/add') !== -1 && getCookie('_rc_ref')) {
+        sendEvent('ADD_TO_CART');
+        // Re-stamp cart attributes after item is added
+        var result = origFetch.apply(this, arguments);
+        result.then(function() { updateCartAttributes(); });
+        return result;
+      }
+      return origFetch.apply(this, arguments);
+    };
+
+    // 4. Detect checkout initiation
+    document.addEventListener('click', function(e) {
+      var el = e.target.closest ? e.target.closest('a[href*="/checkout"], button[name="checkout"], input[name="checkout"]') : null;
+      if (el && getCookie('_rc_ref')) {
+        sendEvent('CHECKOUT_INITIATED');
+      }
+    });
+
+    // Also catch form-based checkout submissions
+    document.addEventListener('submit', function(e) {
+      if (e.target && e.target.action && e.target.action.indexOf('/checkout') !== -1 && getCookie('_rc_ref')) {
+        sendEvent('CHECKOUT_INITIATED');
+      }
+    });
+  })();
+  </script>
   </head>
-  <body class="template-{{ template | replace: '.', '-' | handle }}">
-    <a href="#MainContent" class="skip-to-content">Skip to content</a>
+  <body
+    id="{{ page_title | handle }}"
+    class="template-{{ template.name | handle }} grid-{{ settings.grid_style }}{% if customer %} customer-logged-in{% endif %}{% if settings.animations_enable %} aos-initialized{% endif %}{% if settings.product_grid_outline %} has-line-design{% endif %}"
+    data-animations="{{ settings.animations_enable }}"
+  >
+    {%- render 'loading' -%}
 
-    {% sections 'header-group' %}
+    <a class="in-page-link visually-hidden skip-link" data-skip-content href="#MainContent">
+      {{- 'general.accessibility.skip_to_content' | t -}}
+    </a>
 
-    <main id="MainContent" role="main">
-      {{ content_for_layout }}
-    </main>
+    <div class="container" data-site-container>
+      <div class="header-sections">
+        {% sections 'group-header' %}
+      </div>
 
-    {% sections 'footer-group' %}
+      {% sections 'group-overlay' %}
+
+      <!-- CONTENT -->
+      <main role="main" id="MainContent" class="main-content">
+        {{ content_for_layout }}
+      </main>
+    </div>
+
+    {% sections 'group-pre-footer' %}
+
+    <footer class="footer-sections">
+      {% sections 'group-footer' %}
+    </footer>
+
+    {% render 'template-swatch' %}
+
+    {% render 'zoom-pswp' %}
+
+    {%- if template.name != 'product' and settings.show_scroll_top_button -%}
+      <button
+        type="button"
+        class="btn btn--scroll-top btn--black btn--solid"
+        aria-label="{{ 'general.accessibility.scroll_to_top' | t }}"
+        data-scroll-top-button
+      >
+        {%- render 'icon-arrow-up' -%}
+      </button>
+    {%- endif -%}
+
+    {%- comment -%}
+      In order to use your custom javascript file at assets/custom.js
+      just cut this next line and paste it outside this comment:
+      <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+    {%- endcomment -%}
+    <!-- Paste marketing code or third party scripts below this comment line ============== -->
+
+    <!-- And above this comment line ================================================== -->
+
+    <!-- Global: auto-add spike bag when RC-3Y2X79-BAG discount is applied (any page) -->
+    <script>
+    (function() {
+      var SPIKE_BAG_VARIANT = 51374584037672;
+      var TRIGGER_CODE = 'RC-3Y2X79-BAG';
+      var norm = function(s) { return (s || '').trim().toUpperCase(); };
+
+      function getCart() {
+        return fetch('/cart.js', { credentials: 'same-origin', cache: 'no-store' })
+          .then(function(r) { if (!r.ok) throw new Error('cart fetch failed'); return r.json(); });
+      }
+
+      function addBag() {
+        return fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ id: SPIKE_BAG_VARIANT, quantity: 1 })
+        });
+      }
+
+      function hasTriggerDiscount(cart) {
+        /* Check Shopify discount_codes */
+        var codes = cart.discount_codes || [];
+        for (var i = 0; i < codes.length; i++) {
+          if (norm(codes[i].code) === TRIGGER_CODE) return true;
+        }
+        var apps = cart.cart_level_discount_applications || [];
+        for (var j = 0; j < apps.length; j++) {
+          if (norm(apps[j].title) === TRIGGER_CODE) return true;
+        }
+        /* Check localStorage flag (set by cart page Apply button) */
+        if (localStorage.getItem('rc_spike_bag_code') === 'true') return true;
+        return false;
+      }
+
+      function bagInCart(cart) {
+        return cart.items.some(function(item) {
+          return Number(item.variant_id) === SPIKE_BAG_VARIANT;
+        });
+      }
+
+      /* Check on page load and add bag if needed */
+      function checkAndAdd() {
+        getCart().then(function(cart) {
+          if (bagInCart(cart)) return;
+          if (hasTriggerDiscount(cart)) {
+            addBag().then(function() {
+              document.dispatchEvent(new Event('cart:refresh'));
+              document.dispatchEvent(new Event('cart:change'));
+              if (/\/cart\b/.test(window.location.pathname)) {
+                window.location.reload();
+              }
+            });
+          }
+        }).catch(function() {});
+      }
+
+      /* Run on page load */
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkAndAdd);
+      } else {
+        checkAndAdd();
+      }
+
+      /* Poll every 1.5s to catch async discount application */
+      var added = false;
+      setInterval(function() {
+        if (added) return;
+        getCart().then(function(cart) {
+          if (bagInCart(cart)) { added = true; return; }
+          if (hasTriggerDiscount(cart)) {
+            added = true;
+            addBag().then(function() {
+              document.dispatchEvent(new Event('cart:refresh'));
+              document.dispatchEvent(new Event('cart:change'));
+              if (/\/cart\b/.test(window.location.pathname)) {
+                window.location.reload();
+              }
+            });
+          }
+        }).catch(function() {});
+      }, 1500);
+    })();
+    </script>
+
+    {%- render 'rc-popup-cart' -%}
+
+    {{ content_for_footer }}
+
   </body>
 </html>

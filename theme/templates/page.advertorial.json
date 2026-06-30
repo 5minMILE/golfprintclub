@@ -1,0 +1,154 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.landing-page",
+  "sections": {
+    "nav": {
+      "type": "lp-adv-nav",
+      "settings": {
+        "logo_text": "Golf Print Club Journal",
+        "subtitle": "Training + Gear"
+      }
+    },
+    "hero_image": {
+      "type": "lp-adv-hero-image",
+      "settings": {
+        "label": "Hero Action Photo",
+        "height": 220
+      }
+    },
+    "article": {
+      "type": "lp-adv-article",
+      "settings": {
+        "tag_text": "Gear",
+        "read_time": "5 min read",
+        "title": "We stopped buying Nike tights. Here's why.",
+        "byline": "By Golf Print Club Team · March 2026",
+        "rating_text": "4.81 · 4,000+ golfers wearing Golf Print Club"
+      },
+      "blocks": {
+        "p1": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>If you've been golf competitively for more than a year, you've probably spent $70–$120 on a pair of tights from Nike, Lululemon, or 2XU. And if you're honest — they're fine. But fine isn't what you're training for.</p>"
+          }
+        },
+        "quote1": {
+          "type": "pull_quote",
+          "settings": {
+            "text": "\"I couldn't justify $110 for shorts that ride up at mile 2. There had to be something built for how I actually train.\""
+          }
+        },
+        "h1": {
+          "type": "heading",
+          "settings": {
+            "text": "The problem with big brand golf wall art"
+          }
+        },
+        "p2": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Big brands design for the broadest possible market. That means safe colorways, conservative fits, and price tags padded by licensing deals and retail overhead. Competitive golfers — the ones doing track workouts at 6am — aren't their priority.</p>"
+          }
+        },
+        "p3": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Golf Print Club started because of that exact frustration. A brand built specifically for the golfer who runs hard, trains often, and wants gear that can keep up.</p>"
+          }
+        },
+        "img1": {
+          "type": "image",
+          "settings": {
+            "label": "Comparison Photo",
+            "height": 180
+          }
+        },
+        "h2": {
+          "type": "heading",
+          "settings": {
+            "text": "What actually matters in a half tight"
+          }
+        },
+        "f1": {
+          "type": "feature_item",
+          "settings": {
+            "number": "1",
+            "text": "<p><strong>No ride-up.</strong> Full stride, every rep. The MD Golf Posters stay locked at the thigh through tempo runs and track intervals.</p>"
+          }
+        },
+        "f2": {
+          "type": "feature_item",
+          "settings": {
+            "number": "2",
+            "text": "<p><strong>Real compression</strong> — not the kind that just feels tight. Ribbed stretch fabric that supports without restricting turnover.</p>"
+          }
+        },
+        "f3": {
+          "type": "feature_item",
+          "settings": {
+            "number": "3",
+            "text": "<p><strong>A pocket that actually works.</strong> Rear bounce-free pocket holds your phone through intervals. No bouncing, no adjusting.</p>"
+          }
+        },
+        "f4": {
+          "type": "feature_item",
+          "settings": {
+            "number": "4",
+            "text": "<p><strong>Designs you won't see everywhere.</strong> Camo, Statue of Liberty, Cotton Candy — gear that looks as competitive as your training.</p>"
+          }
+        },
+        "review1": {
+          "type": "inline_review",
+          "settings": {
+            "text": "\"I have had many different shorts from other brands but have never found any this good at this affordable of a price.\"",
+            "author": "— Logan R., 6'0\" · Size L · Verified Purchase"
+          }
+        },
+        "p4": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>At $60 a pair — or $40 each with the buy 2 get 1 free deal — they're the most competitive-focused half tight on the market at a price that doesn't require a gear budget justification.</p>"
+          }
+        }
+      },
+      "block_order": ["p1", "quote1", "h1", "p2", "p3", "img1", "h2", "f1", "f2", "f3", "f4", "review1", "p4"]
+    },
+    "cta": {
+      "type": "lp-adv-cta",
+      "settings": {
+        "eyebrow": "The Gear We're Talking About",
+        "title": "MD Golf Posters",
+        "rating_text": "4.81 (16 reviews)",
+        "price": "$40",
+        "price_unit": "/ each",
+        "compare_price": "$60",
+        "offer_text": "When you buy 2 — get 1 FREE",
+        "button_text": "Shop the MD Golf Posters →",
+        "fine_print": "Free shipping over $125 · Easy exchanges"
+      }
+    },
+    "footer": {
+      "type": "lp-adv-footer",
+      "settings": {
+        "heading": "Golf Print Club",
+        "subheading": "Built for golfers who run hard."
+      },
+      "blocks": {
+        "link1": { "type": "link", "settings": { "text": "FAQs" } },
+        "link2": { "type": "link", "settings": { "text": "Returns" } },
+        "link3": { "type": "link", "settings": { "text": "Size Chart" } },
+        "link4": { "type": "link", "settings": { "text": "Contact" } }
+      },
+      "block_order": ["link1", "link2", "link3", "link4"]
+    }
+  },
+  "order": ["nav", "hero_image", "article", "cta", "footer"]
+}

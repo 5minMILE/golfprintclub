@@ -1,0 +1,23 @@
+<div data-api-content>
+{%- liquid
+  assign first = true
+  for item in cart.items
+    if item.variant.inventory_management and item.variant.inventory_quantity <= 0 and item.variant.inventory_policy == 'continue'
+      unless first
+        echo ','
+      endunless
+      assign first = false
+      echo '"'
+      echo item.variant_id
+      echo '":true'
+    endif
+  endfor
+-%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart Backorder Map API",
+  "settings": []
+}
+{% endschema %}

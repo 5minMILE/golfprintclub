@@ -1,0 +1,142 @@
+{%- style -%}
+  #SocialProof--{{ section.id }} {
+    --pt: {{ section.settings.padding_top }}px;
+    --pb: {{ section.settings.padding_bottom }}px;
+    background-color: #3D6E2E;
+  }
+  #SocialProof--{{ section.id }} .social-proof__inner {
+    max-width: 3000px;
+    margin: 30px auto 0;
+    padding: var(--pt) 20px var(--pb);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10vw;
+    flex-wrap: wrap;
+  }
+  #SocialProof--{{ section.id }} .social-proof__stat {
+    text-align: center;
+    min-width: 140px;
+  }
+  #SocialProof--{{ section.id }} .social-proof__number {
+    font-family: var(--BTN-FONT-STACK), 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 70px;
+    line-height: 1.1;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  #SocialProof--{{ section.id }} .social-proof__label {
+    font-family: var(--BTN-FONT-STACK), 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+  @media (max-width: 749px) {
+    #SocialProof--{{ section.id }} .social-proof__inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    #SocialProof--{{ section.id }} .social-proof__number {
+      font-size: 70px;
+    }
+    #SocialProof--{{ section.id }} .social-proof__label {
+      font-size: 12px;
+    }
+  }
+{%- endstyle -%}
+
+<section id="SocialProof--{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="social-proof">
+  <div class="social-proof__inner">
+    {%- for block in section.blocks -%}
+      <div class="social-proof__stat" {{ block.shopify_attributes }}>
+        <div class="social-proof__number">{{ block.settings.number }}</div>
+        <div class="social-proof__label">{{ block.settings.label }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social Proof Stats",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 40
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "100+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Stat label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof Stats",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": {
+            "number": "5,000+",
+            "label": "Athletes"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "4.9 ★",
+            "label": "Star Rating"
+          }
+        },
+        {
+          "type": "stat",
+          "settings": {
+            "number": "1M+",
+            "label": "Miles Logged"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

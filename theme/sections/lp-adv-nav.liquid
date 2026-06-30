@@ -1,0 +1,57 @@
+{% render 'lp-base-styles' %}
+<div class="lp-page-wrap">
+  <div class="lp-adv-nav">
+    <div class="lp-adv-nav__logo">{{ section.settings.logo_text }}</div>
+    <div class="lp-adv-nav__sub">{{ section.settings.subtitle }}</div>
+  </div>
+</div>
+
+<style>
+  .lp-adv-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--lp-border);
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-adv-nav__logo {
+    font-family: var(--lp-font-head);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--lp-mid);
+    text-transform: uppercase;
+  }
+  .lp-adv-nav__sub {
+    font-size: 10px;
+    color: var(--lp-mid);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Adv — Nav",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "Golf Print Club Journal"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Training + Gear"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Adv — Nav"
+    }
+  ]
+}
+{% endschema %}

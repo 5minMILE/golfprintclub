@@ -1,0 +1,101 @@
+{
+  "order": [
+    "main",
+    "reviews"
+  ],
+  "sections": {
+    "main": {
+      "type": "pdp-v1-main",
+      "blocks": {
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "title": "No Ride Up",
+            "description": "Stays locked at the thigh through full stride. No adjusting mid-rep.",
+            "image_label": "No Ride Up Shot"
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "title": "No Bounce Pocket",
+            "description": "Rear pocket holds your phone tight. It doesn't move. Period.",
+            "image_label": "Pocket Detail Shot"
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "title": "Real Compression",
+            "description": "Support where it matters -- without feeling restrictive or cheap.",
+            "image_label": "Compression Stretch"
+          }
+        },
+        "comp_1": {
+          "type": "competitor",
+          "settings": {
+            "name": "Budget Shorts",
+            "price": "$35",
+            "description": "Fine for easy runs -- breaks down when pace goes up.",
+            "score": 25,
+            "highlight": false,
+            "chips": "Rides up | Flimsy"
+          }
+        },
+        "comp_2": {
+          "type": "competitor",
+          "settings": {
+            "name": "Golf Print Club",
+            "price": "$40 (B2G1)",
+            "description": "Race-ready fit, locked-in feel, designs you won't see everywhere.",
+            "score": 88,
+            "highlight": true,
+            "chips": "No ride up | Real compression | Fair price"
+          }
+        },
+        "comp_3": {
+          "type": "competitor",
+          "settings": {
+            "name": "Big Brands",
+            "price": "$90",
+            "description": "Good performance -- but you pay for the logo, not the fit.",
+            "score": 60,
+            "highlight": false,
+            "chips": "Brand markup | Safe designs"
+          }
+        }
+      },
+      "block_order": ["feat_1", "feat_2", "feat_3", "comp_1", "comp_2", "comp_3"],
+      "settings": {
+        "eyebrow": "Limited -- Buy 2 Get 1 Free",
+        "headline_1": "3 pairs.",
+        "headline_2": "$120.",
+        "subheading": "MD Golf Posters -- built for track sessions, tempos, and race efforts. Pick any 3 designs.",
+        "proof_text": "4.81 · 16 reviews · 4,000+ golfers",
+        "features_heading": "Built for golfers who run hard",
+        "compare_heading": "How it compares",
+        "reminder_eyebrow": "Buy 2 Get 1 Free",
+        "reminder_price": "$120",
+        "reminder_sub": "for 3 pairs"
+      }
+    },
+    "reviews": {
+      "type": "apps",
+      "blocks": {
+        "judge_me": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": ["judge_me"],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  }
+}

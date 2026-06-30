@@ -1,0 +1,302 @@
+{
+  "sections": {
+    "section_hero_UezJMA": {
+      "type": "section-hero",
+      "blocks": {
+        "heading_cRy3rW": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "title": "{{ article.title }}",
+            "heading_size": 11
+          }
+        },
+        "code_PQVqEN": {
+          "type": "code",
+          "settings": {
+            "code": "<h1>{{ article.title }}</h1>"
+          }
+        },
+        "code_zLntkJ": {
+          "type": "code",
+          "settings": {
+            "code": "<p style=\"text-align: center !important; width:100%;\">{{ article.metafields.custom.date | metafield_text }}</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_cRy3rW",
+        "code_PQVqEN",
+        "code_zLntkJ"
+      ],
+      "name": "Image banner",
+      "settings": {
+        "height": "screen-height-three-quarters",
+        "width": "wrapper--full",
+        "image_1": "{{ article.image }}",
+        "link": "",
+        "mobile_height": "screen-height-three-quarters--mobile",
+        "flex_align_desktop": "align--bottom-center-desktop",
+        "flex_align_mobile": "align--bottom-left-mobile",
+        "overlay_opacity": 55,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "#ffffff",
+        "show_placeholder": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "main": {
+      "type": "article",
+      "custom_css": [
+        ".text-center {display: none;}"
+      ],
+      "settings": {
+        "show_image": false,
+        "height": "screen-height-one-third",
+        "mobile_height": "screen-height-one-third--mobile",
+        "bg_color": "",
+        "show_date": true,
+        "show_author": false,
+        "tags": false,
+        "show_sharing": false,
+        "arrows": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_custom_code_qgjfPA": {
+      "type": "section-custom-code",
+      "name": "CSS",
+      "settings": {
+        "code": "<style>\n\n@media only screen and (min-width: 992px) {\n.hero__content p {\n  width: 25vw;\n}\n}\n\n@media only screen and (min-width: 3000px) {\n\n.wrapper--full {\nmax-width: 3000px;}\n}\n.hero__content h2 {\n  text-transform: uppercase;\n  font-size: 40px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  color: #fbfbfb;\n  padding: 0px 0px;\n}\n.hero__content p {\n  text-transform: uppercase;\n  font-size: 12px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: 400;\n  font-family: var(--BTN-FONT-STACK);\n  color: rgba(251, 251, 251, 0.8);\n  padding: 0px 0px;\n  letter-spacing: 0.2em;\n  line-height: 1.6;\n}\n</style>\n<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    // Select the color selector fieldset\n    const colorFieldset = document.querySelector(\".radio__fieldset--swatches\");\n    if (!colorFieldset) return;\n\n    // Find all visible radio swatches inside it\n    const swatches = colorFieldset.querySelectorAll(\"radio-swatch\");\n\n    // If 0 or 1 swatches, hide the color selector fieldset\n    if (swatches.length <= 1) {\n      colorFieldset.style.display = \"none\";\n    }\n  });\n</script>\n\n\n<style>\n\n@media only screen and (max-width: 749px) {\n    .grid--mobile-slider {\n        padding-left: 20px;\n    }\n    .grid--mobile-slider .grid-item {\n        margin-right: 0px;\n    }\n\n}\n\n.collection__products .grid-outer\n {\n    padding: 10px 10px;\n}\n\n    .grid {\n        gap: 5px;\n    }\n\n    .collection__products .product-item__info {\n        padding-left: 0px;\n    }\n.custom-rating .star {\nmargin-top:-4px;\nfont-size: 14px !important;\nmargin-right: 2px !important;\n}\n\n.product-item--centered .product-information {\n    text-align: left;\n}\n.product-information p {\npadding-top:3px;\n}\n.product-information p, .product-information span{\n\ttext-transform: uppercase !important;\n\tfont-style: var(--BTN-FONT-STYLE);\n  \tfont-weightA: var(--BTN-FONT-WEIGHT);\n  \tfont-family: var(--BTN-FONT-STACK);\n    \tletter-spacing: var(--BTN-FONT-STYLE);\n\tfont-size: 12px; \n    \tline-height: 1;\n    \tmargin: .0em 0;\n    \ttext-transform: var(--FONT-UPPERCASE-HEADING, none);\n\talign-items: center;\n\tfont-size: 12px; \nfont-weight: 100;\n}\n\n.sub {\n\tfont-size: 10px !important;\n\ttext-transform: uppercase;\n\tcolor:grey;\npadding-bottom:3px;\n}\n</style><style>\n\n@media (min-width: 763px) and (max-width: 3000px) {\n.hero__content p {\n  width: 25vw;\n}\n.wrapper--full, .hero__content, .wrapper--full-padded, .grid-outer, .grid__items-holder {\nmax-width: 90vw;\nmin-width: 90vw;\nmargin: 0 auto;\n}\n\n\n.index-hero .wrapper--full, .hero__video {\nmax-width: 100vw !important;\nmin-width: 100vw !important;\n}\n\n.index-hero {\npadding-top: 0vh;\n}\n\n.grid-outer {\npadding:0;\n}\n.frame__item{\nheight: 90vh;\n}\n}\n\n\n\n.collection__products, .grid__items-holder {\npadding-left:5vw;\npadding-right:5vw;\n}\n.wrapper--full-padded {\npadding:0;\n}\n\n\n@media (min-width: 3000px) {\n.index-hero {\npadding-top: 0vh;\n}\n\n.wrapper--full, .hero__content, .wrapper--full-padded, .grid-outer, .index-hero .wrapper--full, .hero__video  {\nmax-width: 3000px !important;\nmin-width: 3000px !important;\n}\n\n.collection__products {\npadding-left: calc((100vw - 3000px) / 2);\n}\n}\n\n.hero__content h2, .hero__content h1 {\n  text-transform: uppercase;\n  font-size: 20px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  color: #fbfbfb;\n  padding: 0px 0px;\n}\n.hero__content p {\n  text-transform: uppercase;\n  font-size: 12px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: 400;\n  font-family: var(--BTN-FONT-STACK);\n  color: rgba(251, 251, 251, 0.8);\n  padding: 0px 0px;\n  letter-spacing: 0.2em;\n  line-height: 1.6;\n}\n\n@media (min-width: 763px) {\n#Rte--template--25036444860712__section_rich_text_gyHydy {\n    --PT: 140px;}\n\n.frame__item{\nheight: 90vh !important;\n}\n\n.wrapper--full-padded .grid__items-holder{\nmargin: auto;\n}\n.collection__products, .grid__items-holder {\n    padding-left: 0;\n    padding-right: 0;\n    margin: auto;\n}\n}\n\n@media (max-width: 763px){\nCustomCode--template--25036444860712__section_custom_code_87HtKP p{\nmargin:0;}\n.hero__content h2 {\n  text-transform: uppercase;\n  font-size: 22px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  color: #fbfbfb;\n  padding: 0px 10px;\n}\n}\n\n\n\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_custom_code_xrftkd": {
+      "type": "section-custom-code",
+      "name": "Article CSS",
+      "settings": {
+        "code": "<style>\n.article-single p, .article-single li{\n\ttext-transform: uppercase !important;\n\tfont-style: var(--BTN-FONT-STYLE);\n  \tfont-weightA: var(--BTN-FONT-WEIGHT);\n  \tfont-family: var(--BTN-FONT-STACK);\n    \tletter-spacing: 0; \n    \tline-height: 2.5;\n    \tmargin: .0em 0;\n\talign-items: center;\n\tfont-size: 20px; \n\tfont-weight: 600;\n}\n.article-single p {\nfont-size:16px !important;\n text-indent: 0;\ntext-transform:none !important;\npadding-bottom:1.6rem;\n}\n\n\n\n\n.article-single h1, .article-single h2, .article-single h3 {\n\ttext-transform: uppercase !important;\n\tfont-style: var(--BTN-FONT-STYLE);\n  \tfont-weightA: var(--BTN-FONT-WEIGHT);\n  \tfont-family: var(--BTN-FONT-STACK);\n    \tletter-spacing: var(--BTN-FONT-STYLE);\n    \tline-height: 2;\n    \tmargin: .0em 0;\n    \ttext-transform: var(--FONT-UPPERCASE-HEADING, none);\n\talign-items: center;\n\tfont-size: 20px; \nfont-weight: 800;\npadding-bottom:.8rem;\n}\n\n.article-single h2{\nfont-weight: 800;\nfont-size: 20px; \n}\n\n.article-single h3{\nfont-weight: 700;\nfont-size: 16px; \ntext-transform: none !important;\n}\n\n.article-single strong{\nfont-weight: 700;\n}\n\n.article__wrapper{\npadding-top:0;}\n\n.article__hero {\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n\tjustify-content:left;\n\tmargin-left:5vw;\n  max-width:90vw;\n  width: 3000px;\n  background-color: #3D6E2E;\n  color: #fbfbfb;\n  padding: var(--btn-top) 50px;\n  border: 2px solid black;\n}\n\n.text-center {\n    text-align: left;\n}\n\n.article__meta{\nletter-spacing: .2rem;\ncolor:white;\nfont-weight: 600;\n}\n\n.article__hero .wrapper {\npadding-top: 20px;\npadding-bottom: 20px;\n}\n\n.article-single .wrapper {\nmax-width:1000px;\nwidth: calc(100vw - 100px);\nmargin:auto;\n}\n\n@media only screen and (min-width: 3000px) {\n.article-single .wrapper {\nmax-width:1000px;\nmin-width: 1000px;\nmargin:auto;\n}\n}\n\n\n\n</style>\n<style>\n/* pull quotes */\n.article-single blockquote{\n  margin:2.6rem 0 1rem;\n  padding:0 0 0 22px;\n  border-left:4px solid #3D6E2E;\n  font-family: var(--BTN-FONT-STACK);\n  font-weight:800;\n  font-size:24px;\n  line-height:1.45;\n  text-transform:none;\n  color:#111;\n}\n@media (max-width:762px){ .article-single blockquote{ font-size:20px; } }\n\n/* in-article product cards */\n.article-single .rc-card{\n  display:flex; gap:20px; align-items:center;\n  border:1px solid #e6e6e6; border-radius:12px;\n  background:#fafafa; padding:18px;\n  max-width:540px; margin:26px auto 30px;\n  text-align:left;\n}\n.article-single .rc-card p{ text-indent:0 !important; padding-bottom:6px !important; margin:0 !important; }\n.article-single .rc-card img{ width:150px; height:auto; display:block; border-radius:8px; }\n.article-single .rc-card a{ border-bottom:none; }\n.article-single .rc-card .rc-card-btn{\n  display:inline-block; background:#3D6E2E; color:#fff;\n  padding:10px 20px; border-radius:6px; text-decoration:none;\n  font-weight:700; font-size:13px; letter-spacing:.06em; text-transform:uppercase;\n  transition: background-color .2s ease-in-out;\n}\n.article-single .rc-card .rc-card-btn:hover{ background:#0a64c8; }\n@media (max-width:600px){\n  .article-single .rc-card{ flex-direction:column; text-align:center; }\n  .article-single .rc-card p{ text-align:center; }\n}\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_blog_Vxjd9E": {
+      "type": "section-blog",
+      "custom_css": [
+        ".page__heading {text-align: left; font-style: var(--BTN-FONT-STYLE); font-weight: var(--BTN-FONT-WEIGHT); font-family: var(--BTN-FONT-STACK); width: auto; color: #000; font-size: 20px; border-bottom: 1px black solid; padding-bottom: 10px;}",
+        "@media (max-width: 762px) {.page__heading {font-size: 22px; }}",
+        ".blog__title {margin: 0 0 20px;}"
+      ],
+      "name": "Blog posts",
+      "settings": {
+        "blog_name": "all",
+        "title": "MORE BLOG POSTS",
+        "heading_size": 5,
+        "width": "wrapper--full",
+        "grid": 3,
+        "rows": 1,
+        "aspect_ratio": 0.6,
+        "title_size": 4,
+        "show_tags": false,
+        "show_author": false,
+        "show_date": true,
+        "show_button": true,
+        "show_comments": false,
+        "bg_color": "",
+        "color": "#000000",
+        "padding_top": 32,
+        "padding_bottom": 0
+      }
+    },
+    "section_rich_text_xTNze6": {
+      "type": "section-rich-text",
+      "blocks": {
+        "buttons_GtRJ7M": {
+          "type": "buttons",
+          "settings": {
+            "button_text": "see all blogs",
+            "button_url": "shopify://blogs/all",
+            "button_type": "btn--black",
+            "button_size": "",
+            "button_style": "btn--solid",
+            "show_arrow": false,
+            "padding_bottom": 16
+          }
+        }
+      },
+      "block_order": [
+        "buttons_GtRJ7M"
+      ],
+      "custom_css": [
+        "a {width: 100%; border: 2px solid black; font-size: var(--BTN-FONT-SIZE) * 2; color: #fff;}",
+        ".btn {background-color: #3D6E2E;}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "width": "wrapper--full-padded",
+        "align_text": "text-center",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
+    },
+    "section_divider_kzfqXE": {
+      "type": "section-divider",
+      "custom_css": [
+        ".divider,hr {border-width: 1px 0 0;}"
+      ],
+      "name": "Divider",
+      "settings": {
+        "show_line": false,
+        "width": "wrapper--full-padded",
+        "border_color": "",
+        "bg_color": "",
+        "padding_top": 0,
+        "padding_bottom": 20
+      }
+    },
+    "section_custom_code_Ctgp6m": {
+      "type": "section-custom-code",
+      "name": "Custom code",
+      "settings": {
+        "code": "<style>\n\n.blog-listing{\n    gap: 30px;\n}\n\n.article__meta{\ncolor:black;\nletter-spacing: .1rem;\ntext-transform:uppercase;\nfont-size: 10px;\nfont-style: var(--BTN-FONT-STYLE);\npadding-top:10px;\npadding-bottom:20px;\nfont-weight: 600 !important;\n  font-family: var(--BTN-FONT-STACK);\n}\n.blog-listing h3 {\nfont-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\nfont-weight: 800 !important;\n  font-family: var(--BTN-FONT-STACK);\ntext-transform: uppercase;\nfont-size: 20px;\n}\n.article__text-wrapper{\npadding-left:0 !important;\n}\n\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_rich_text_YyEPjg": {
+      "type": "section-rich-text",
+      "blocks": {
+        "heading_CN9UmV": {
+          "type": "heading",
+          "settings": {
+            "title": "Explore by category",
+            "text_size": 8,
+            "padding_bottom": 16
+          }
+        }
+      },
+      "block_order": [
+        "heading_CN9UmV"
+      ],
+      "custom_css": [
+        "h2 {text-align: left; font-style: var(--BTN-FONT-STYLE); font-weight: var(--BTN-FONT-WEIGHT); font-family: var(--BTN-FONT-STACK); width: auto; color: #000; font-size: 20px; border-bottom: 1px black solid; padding-bottom: 10px;}",
+        "@media (max-width: 762px) {h2 {font-size: 22px; }}"
+      ],
+      "name": "Rich text",
+      "settings": {
+        "width": "wrapper--full-padded",
+        "align_text": "text-left",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_custom_code_GRwaPn": {
+      "type": "section-custom-code",
+      "name": "Category",
+      "settings": {
+        "code": "<!-- GOLF PRINT CLUB \u2013 Category Grid (responsive 1 \u2192 2 \u2192 4) -->\n<style>\n  .rcp-feat-grid{\n    display:grid;\n    gap:10px;\n    grid-template-columns: repeat(4, 1fr); /* desktop default (>=1200px) */\n    margin:0 auto;\n    max-width:3000px;\n    padding: 0 0px; /* desktop keeps original edge padding */\n  }\n\n  .rcp-feat-card{\n    border-radius: 0px; \n    overflow:hidden; \n    position:relative; \n    aspect-ratio:2/3;\n    background:#0b0b0b;\n    border: 2px solid #000;\n    cursor:pointer;\n  }\n\n  .rcp-feat-card img{ \n    width:100%; \n    height:100%; \n    object-fit:cover; \n    display:block; \n    transform:scale(1);\n    transition:transform 6s cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n\n  @media (hover: hover) {\n    .rcp-feat-card:hover img { transform:scale(1.2); }\n  }\n\n  .rcp-feat-card::after{\n    content:\"\"; position:absolute; inset:0;\n    background:linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,.65) 100%);\n    z-index:1;\n  }\n\n  .rcp-feat-text{ \n    position:absolute; \n    left:10px; right:10px; bottom:10px; \n    z-index:2; \n    color:#fff; \n    text-shadow:0 1px 2px rgba(0,0,0,.4); \n\twidth:60%;\n  }\n  .rcp-feat-title{ \n font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n    margin:0 0 6px; \n    font-size: 20px; \n    font-weight: 800; \n    letter-spacing: 1px; \n    line-height: 1.2; \ntext-transform: uppercase;\n  }\n  .rcp-feat-sub{ \n    margin:0; \n    font-size:12px; \n    font-weight: 400; \n    letter-spacing:.5px; \n    line-height:1.4; \n    opacity:.95; \n  }\n\n  @media (max-width: 762px){\n    .rcp-feat-grid{ grid-template-columns: 1fr;  gap:10px; }\n  }\n  @media (min-width: 763px) and (max-width: 1399px){\n    .rcp-feat-grid{ grid-template-columns: repeat(2, 1fr); gap:10px; }\n  }\n  @media (min-width: 1400px){\n    .rcp-feat-grid{ grid-template-columns: repeat(4, 1fr); padding:0 0px; }\n  }\n</style>\n\n<div class=\"rcp-feat-wrap\" role=\"region\" aria-label=\"Shop categories\">\n  <div class=\"rcp-feat-grid\">\n\n    <!-- Card 1: Newest Release (latest drop of unique designs) -->\n    <a href=\"https://golfprintclub.net/collections/storm\" class=\"rcp-feat-card\" aria-label=\"Newest Release \u2013 latest drop of unique designs\" title=\"Newest Release \u2013 latest drop of unique designs\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/9_9ab1f488-5617-4fa7-927b-37877e37f4f9.png?v=1747155019\"\n           alt=\"Golf Print Club Newest Release \u2013 limited-run golf wall art and lifestyle apparel with bold, unique designs\"\n           loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Newest Release</h3>\n        <p class=\"rcp-feat-sub\">The latest drop of exclusive, bold designs in golf wall art & lifestyle apparel.</p>\n      </div>\n    </a>\n\n    <!-- Card 2: Golf (performance clothes: golf posters, golf posters, golf posters, shirts) -->\n    <a href=\"https://golfprintclub.net/collections/golf-gear\" class=\"rcp-feat-card\" aria-label=\"Golf Wall Art \u2013 performance golf posters\" title=\"Golf Wall Art \u2013 performance golf posters\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/10_6cf9c491-e8bf-4215-a69d-e8e2b0fc99ad.png?v=1747155018\"\n           alt=\"Golf Print Club performance golf posters \u2013 golf posters, golf posters, golf posters and lightweight golf shirts\"\n           loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Golf</h3>\n        <p class=\"rcp-feat-sub\">Performance golf posters built for athletes \u2014 golf posters, golf posters, golf posters & shirts.</p>\n      </div>\n    </a>\n\n    <!-- Card 3: Lifestyle (graphics: tees & hoodies) -->\n    <a href=\"https://golfprintclub.net/collections/lifestyle-clothing\" class=\"rcp-feat-card\" aria-label=\"Lifestyle Gear \u2013 graphic tees and hoodies\" title=\"Lifestyle Gear \u2013 graphic tees and hoodies\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/12_8748a9ce-5776-45e1-82b7-bbedb6b5d340.png?v=1747155021\"\n           alt=\"Golf Print Club lifestyle apparel \u2013 graphic tees and hoodies inspired by golf culture\"\n           loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Lifestlye</h3>\n        <p class=\"rcp-feat-sub\">Graphic tees & hoodies inspired by golf culture \u2014 everyday comfort with bold designs.</p>\n      </div>\n    </a>\n\n    <!-- Card 4: Posters (motivational wall art) -->\n    <a href=\"https://golfprintclub.net/collections/golf-posters\" class=\"rcp-feat-card\" aria-label=\"Golf Posters \u2013 motivational wall art\" title=\"Golf Posters \u2013 motivational wall art\">\n      <img src=\"https://cdn.shopify.com/s/files/1/0772/2041/3736/files/11_1150f655-c623-4765-b0bd-e71469ca484b.png?v=1747155016\"\n           alt=\"Golf Print Club motivational golf posters \u2013 inspirational wall art for athletes and training spaces\"\n           loading=\"lazy\">\n      <div class=\"rcp-feat-text\">\n        <h3 class=\"rcp-feat-title\">Posters</h3>\n        <p class=\"rcp-feat-sub\">Motivational golf posters \u2014 inspirational wall art for athletes and training spaces.</p>\n      </div>\n    </a>\n\n  </div>\n</div>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_divider_dMYyXg": {
+      "type": "section-divider",
+      "name": "Divider",
+      "settings": {
+        "show_line": false,
+        "width": "wrapper--full-padded",
+        "border_color": "",
+        "bg_color": "",
+        "padding_top": 20,
+        "padding_bottom": 0
+      }
+    },
+    "section_collection_GJDbxE": {
+      "type": "section-collection",
+      "custom_css": [
+        "@media only screen and (min-width: 750px) {.grid__heading-holder--inline .grid__heading-text {margin: 0; padding: 0; width: auto; flex: 0 1 100%;}}",
+        ".grid__heading-holder {position: relative; display: block; overflow-wrap: break-word; padding: 0; margin: 0 0 var(--gutter); color: var(--text);}",
+        ".grid__heading {text-align: left; font-style: var(--BTN-FONT-STYLE); font-weight: var(--BTN-FONT-WEIGHT); font-family: var(--BTN-FONT-STACK); width: 100%; color: #000; font-size: 20px; border-bottom: 1px black solid; padding-bottom: 10px; text-transform: uppercase; margin: 0 0 20px;}",
+        "@media (max-width: 762px) {.grid__heading {font-size: 22px;}}",
+        ".collection__products {padding-left: 0; padding-right: 0;}",
+        ".collection__products .grid {gap: 10px; margin: 0;}"
+      ],
+      "name": "Featured collection",
+      "settings": {
+        "heading": "AUTO",
+        "description": "",
+        "layout": "inline",
+        "link_text": "",
+        "link_url": "",
+        "button_type": "btn--primary",
+        "button_size": "",
+        "button_style": "btn--solid",
+        "show_arrow": false,
+        "featured_collection": "{{ article.metafields.custom.collection.value }}",
+        "layout_desktop": "grid",
+        "grid": 5,
+        "rows": 1,
+        "width": "wrapper--full",
+        "layout_mobile": "grid",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 50
+      }
+    },
+    "section_custom_code_rpUCxh": {
+      "type": "section-custom-code",
+      "name": "Custom code",
+      "settings": {
+        "code": "<!-- GOLF PRINT CLUB \u2013 Bottom Quick Links (single-line pills, 3000px max width, .2s fade) -->\n<section class=\"rcp-quicklinks\" aria-label=\"Quick links\">\n  <nav class=\"rcp-ql-nav\">\n    <ul class=\"rcp-ql-line\">\n      <li><a href=\"/collections/golf-half-tights\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-split-shorts\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-golf posters\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-shirts\">Golf Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Graphic Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Hoodies</a></li>\n      <li><a href=\"/collections/golf-posters\">Posters</a></li>\n      <li><a href=\"/collections/golf-stickers\">Stickers</a></li>\n    </ul>\n  </nav>\n</section>\n\n<style>\n  :root{ --rcp-accent:#3D6E2E; }\n\n  .rcp-quicklinks{\n    background:#fbfbfb;\n    border-top:1px solid #e9e9e9;\n    padding:18px 0;\n  }\n  .rcp-ql-nav{\n    max-width:3000px;\n    margin:0 auto;\n    padding:0 20px;\n  }\n\n  .rcp-ql-line{\n    list-style:none;\n    margin:0;\n    padding:0;\n    display:flex;\n    flex-wrap:nowrap;\n    gap:16px;\n    justify-content:center;\n    align-items:center;\n    overflow:auto;\n    scrollbar-width:none;\n  }\n  .rcp-ql-line::-webkit-scrollbar{ display:none; }\n\n  .rcp-ql-line a{\n    display:inline-block;\n    min-width:150px;\n    padding:8px 20px;\n    border:1px solid #ddd;\n    border-radius:3px;\n    text-decoration:none;\n    text-align:center;\n    font-weight:500;\n    font-size:12px;\n    letter-spacing:.08em;\n    text-transform:uppercase;\n    color:#111;\n    background:#fbfbfb;\n    /* .2s fade on bg/text/border */\n    transition: background-color .2s ease-in-out, color .2s ease-in-out, border-color .2s ease-in-out;\n  }\n\n  .rcp-ql-line a:hover,\n  .rcp-ql-line a:active{\n    background:var(--rcp-accent);\n    color:#fbfbfb;\n    border-color:var(--rcp-accent);\n  }\n\n  .rcp-ql-line a:focus-visible{\n    outline:2px solid var(--rcp-accent);\n    outline-offset:2px;\n  }\n\n@media (max-width: 763px) {\n  .rcp-ql-line {\n    flex-direction: column;\n    align-items: stretch;\n    gap: 10px; /* vertical spacing between links */\n    overflow: visible; /* remove horizontal scrolling */\n  }\n\n  .rcp-ql-line a {\n    width: 100%; /* make links full-width */\n  }\n}\n\n</style>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  },
+  "order": [
+    "section_hero_UezJMA",
+    "main",
+    "section_collection_GJDbxE",
+    "section_custom_code_qgjfPA",
+    "section_custom_code_xrftkd",
+    "section_blog_Vxjd9E",
+    "section_rich_text_xTNze6",
+    "section_divider_kzfqXE",
+    "section_custom_code_Ctgp6m",
+    "section_rich_text_YyEPjg",
+    "section_custom_code_GRwaPn",
+    "section_divider_dMYyXg",
+    "section_custom_code_rpUCxh"
+  ]
+}

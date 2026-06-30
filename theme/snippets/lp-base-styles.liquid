@@ -1,0 +1,155 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --lp-blue: #3D6E2E;
+    --lp-black: #000;
+    --lp-white: #FFFFFF;
+    --lp-gray: #F2F2F2;
+    --lp-mid: #888;
+    --lp-red: #FF2D2D;
+    --lp-border: #E0E0E0;
+    --lp-font-head: 'Montserrat', sans-serif;
+    --lp-font-body: 'Montserrat', sans-serif;
+  }
+  .lp-page-wrap {
+    margin: 0 auto;
+    background: var(--lp-white);
+    min-height: 0;
+    font-family: var(--lp-font-body);
+    color: var(--lp-black);
+    -webkit-font-smoothing: antialiased;
+  }
+  .lp-page-wrap * { box-sizing: border-box; }
+  .lp-stars { color: var(--lp-blue); font-size: 14px; letter-spacing: 1px; }
+  .lp-img-block {
+    background: #D8D8D8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 11px;
+    font-family: var(--lp-font-body);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+  .lp-img-block::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.04) 10px, rgba(0,0,0,0.04) 20px);
+  }
+  .lp-img-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+  }
+  .lp-img-block .lp-img-label {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.85);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .lp-btn-primary {
+    display: block;
+    width: 100%;
+    background: var(--lp-blue);
+    color: #fff;
+    text-align: center;
+    padding: 16px;
+    font-family: var(--lp-font-head);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .lp-btn-secondary {
+    display: block;
+    width: 100%;
+    background: var(--lp-black);
+    color: #fff;
+    text-align: center;
+    padding: 14px;
+    font-family: var(--lp-font-head);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .lp-btn-outline {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: var(--lp-blue);
+    text-align: center;
+    padding: 13px;
+    font-family: var(--lp-font-head);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 2px solid var(--lp-blue);
+    cursor: pointer;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+  .lp-section-gap { height: 8px; background: var(--lp-gray); }
+  .lp-sec-head {
+    font-family: var(--lp-font-head);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .lp-design-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 4px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lp-design-scroll::-webkit-scrollbar { display: none; }
+  .lp-design-thumb {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    background-color: #ccc;
+  }
+  .lp-design-thumb.active { border-color: var(--lp-blue); }
+  .lp-size-grid { display: flex; gap: 8px; margin: 10px 0; }
+  .lp-size-btn {
+    flex: 1;
+    padding: 12px 4px;
+    border: 2px solid var(--lp-border);
+    border-radius: 6px;
+    font-family: var(--lp-font-head);
+    font-size: 14px;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+  }
+</style>

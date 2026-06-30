@@ -1,0 +1,1052 @@
+{%- liquid
+  assign cv = product.selected_or_first_available_variant
+
+  assign design_option = nil
+  assign size_option = nil
+  for option in product.options_with_values
+    assign opt_down = option.name | downcase
+    if opt_down == 'color' or opt_down == 'design' or opt_down == 'style' or opt_down == 'pattern'
+      assign design_option = option
+      assign design_index = forloop.index0
+    elsif opt_down == 'size'
+      assign size_option = option
+      assign size_index = forloop.index0
+    endif
+  endfor
+
+  assign feature_blocks = ''
+  assign compare_blocks = ''
+  for block in section.blocks
+    if block.type == 'feature'
+      if feature_blocks != ''
+        assign feature_blocks = feature_blocks | append: ','
+      endif
+      assign feature_blocks = feature_blocks | append: block.id
+    elsif block.type == 'competitor'
+      if compare_blocks != ''
+        assign compare_blocks = compare_blocks | append: ','
+      endif
+      assign compare_blocks = compare_blocks | append: block.id
+    endif
+  endfor
+-%}
+
+<!-- ═══════════════════════════════════════
+     OFFER HERO
+═══════════════════════════════════════ -->
+<div class="v1-hero">
+  <div class="v1-hero__inner">
+    <div class="v1-hero__eyebrow">{{ section.settings.eyebrow }}</div>
+    <h1 class="v1-hero__deal">{{ section.settings.headline_1 }}<br><span class="v1-hero__deal-em">{{ section.settings.headline_2 }}</span></h1>
+    <p class="v1-hero__sub">{{ section.settings.subheading }}</p>
+    <div class="v1-hero__proof">
+      <span class="v1-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="v1-hero__proof-text">{{ section.settings.proof_text }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PRODUCT IMAGES (swipeable mobile, grid desktop)
+═══════════════════════════════════════ -->
+<div class="v1-images" id="v1Images">
+  <div class="v1-images__track" id="v1Track">
+    {%- for image in product.images -%}
+      <div class="v1-images__slide" data-alt="{{ image.alt | escape }}">
+        <img
+          src="{{ image | image_url: width: 800 }}"
+          srcset="{{ image | image_url: width: 400 }} 400w, {{ image | image_url: width: 800 }} 800w, {{ image | image_url: width: 1200 }} 1200w"
+          sizes="(min-width: 992px) 50vw, 100vw"
+          alt="{{ image.alt | escape }}"
+          loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+          width="{{ image.width }}"
+          height="{{ image.height }}"
+        >
+      </div>
+    {%- endfor -%}
+  </div>
+  <div class="v1-images__dots" id="v1Dots"></div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PRODUCT FORM
+═══════════════════════════════════════ -->
+<div class="v1-form-wrap">
+  {% form 'product', product, id: 'v1-product-form', data-product-id: product.id %}
+    <input type="hidden" name="id" id="v1VariantId" value="{{ cv.id }}">
+
+    {%- if design_option -%}
+      <!-- Design Swatches -->
+      <div class="v1-option-label">
+        Design: <span id="v1DesignName" class="v1-option-value">{{ cv.option1 }}</span>
+      </div>
+      <div class="v1-swatches" id="v1Swatches">
+        {%- for value in design_option.values -%}
+          {%- assign swatch_image = nil -%}
+          {%- for variant in product.variants -%}
+            {%- if variant.option1 == value and variant.featured_image -%}
+              {%- assign swatch_image = variant.featured_image -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <button
+            type="button"
+            class="v1-swatch{% if cv.option1 == value %} v1-swatch--active{% endif %}"
+            data-design="{{ value | escape }}"
+            {% if swatch_image %}style="background-image:url({{ swatch_image | image_url: width: 100 }})"{% endif %}
+            aria-label="{{ value }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if size_option -%}
+      <!-- Size Selector -->
+      <div class="v1-size-row">
+        <span class="v1-option-label" style="margin-bottom:0;">Size</span>
+        <a href="#" class="v1-size-link" id="v1SizeChartLink">Size Chart</a>
+      </div>
+      <div class="v1-sizes" id="v1Sizes">
+        {%- for value in size_option.values -%}
+          <button
+            type="button"
+            class="v1-size-btn{% if cv.option2 == value %} v1-size-btn--active{% endif %}"
+            data-size="{{ value | escape }}"
+          >{{ value }}</button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <!-- Price -->
+    <div class="v1-price" id="v1Price">
+      <span class="v1-price__current">{{ cv.price | money_without_trailing_zeros }}</span>
+      <span class="v1-price__per">/each with B2G1</span>
+      {%- if cv.compare_at_price > cv.price -%}
+        <span class="v1-price__compare">{{ cv.compare_at_price | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+    </div>
+    <div class="v1-price-sub" id="v1PriceSub">
+      Or {{ cv.price | times: 1 | money_without_trailing_zeros }} for one. Shop Pay: 4 &times; {{ cv.price | divided_by: 4 | money_without_trailing_zeros }}
+    </div>
+
+    <!-- ATC + Buy Now -->
+    <button type="button" class="v1-btn-atc" id="v1ATC">Add to Cart</button>
+    <button type="button" class="v1-btn-buy" id="v1BuyNow">Buy Now</button>
+
+    <!-- Trust -->
+    <div class="v1-trust">
+      Easy Exchanges &middot; Fast Shipping &middot; Secure Checkout<br>
+      4,000+ golfers wearing Golf Print Club
+    </div>
+  {% endform %}
+</div>
+
+<!-- ═══════════════════════════════════════
+     FEATURES
+═══════════════════════════════════════ -->
+<div class="v1-features">
+  <h2 class="v1-section-heading">{{ section.settings.features_heading }}</h2>
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'feature' -%}
+      <div class="v1-feat-card" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          <div class="v1-feat-card__img">
+            <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title }}" loading="lazy">
+          </div>
+        {%- else -%}
+          <div class="v1-feat-card__img v1-feat-card__img--ph">
+            <span>{{ block.settings.image_label | default: block.settings.title }}</span>
+          </div>
+        {%- endif -%}
+        <div class="v1-feat-card__body">
+          <h3 class="v1-feat-card__title">{{ block.settings.title }}</h3>
+          <p class="v1-feat-card__desc">{{ block.settings.description }}</p>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+<!-- ═══════════════════════════════════════
+     OFFER REMINDER
+═══════════════════════════════════════ -->
+<div class="v1-reminder-wrap">
+  <div class="v1-reminder">
+    <div class="v1-reminder__eyebrow">{{ section.settings.reminder_eyebrow }}</div>
+    <div class="v1-reminder__row">
+      <div class="v1-reminder__price">{{ section.settings.reminder_price }} <span class="v1-reminder__price-sub">{{ section.settings.reminder_sub }}</span></div>
+      <button type="button" class="v1-reminder__btn" id="v1ReminderATC">Add to Cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     COMPARE
+═══════════════════════════════════════ -->
+<div class="v1-compare">
+  <h2 class="v1-section-heading">{{ section.settings.compare_heading }}</h2>
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'competitor' -%}
+      <div class="v1-comp-card{% if block.settings.highlight %} v1-comp-card--hl{% endif %}" {{ block.shopify_attributes }}>
+        <div class="v1-comp-card__head">
+          <div class="v1-comp-card__name{% if block.settings.highlight %} v1-comp-card__name--hl{% endif %}">{{ block.settings.name }}</div>
+          <div class="v1-comp-card__price{% if block.settings.highlight %} v1-comp-card__price--hl{% endif %}">{{ block.settings.price }}</div>
+        </div>
+        <div class="v1-comp-card__body">
+          <div class="v1-comp-card__desc">{{ block.settings.description }}</div>
+          <div class="v1-comp-card__bar"><div class="v1-comp-card__bar-fill{% unless block.settings.highlight %} v1-comp-card__bar-fill--muted{% endunless %}" style="width:{{ block.settings.score }}%;"></div></div>
+          <div class="v1-comp-card__chips">
+            {%- assign chips = block.settings.chips | split: '|' -%}
+            {%- for chip in chips -%}
+              {%- assign trimmed = chip | strip -%}
+              {%- if trimmed != blank -%}
+                <span class="v1-chip {% if block.settings.highlight %}v1-chip--good{% else %}v1-chip--bad{% endif %}">{{ trimmed }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+<!-- ═══════════════════════════════════════
+     BOTTOM CTA
+═══════════════════════════════════════ -->
+<div class="v1-bottom-cta">
+  <button type="button" class="v1-btn-atc" id="v1BottomATC">Add to Cart &mdash; Buy 2 Get 1 Free</button>
+  <button type="button" class="v1-btn-buy" id="v1BottomBuy">Buy Now</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     STICKY ATC BAR
+═══════════════════════════════════════ -->
+<div class="v1-sticky" id="v1Sticky">
+  <div class="v1-sticky__inner">
+    <div class="v1-sticky__info">
+      <div class="v1-sticky__price" id="v1StickyPrice">{{ cv.price | money_without_trailing_zeros }}/each</div>
+      <div class="v1-sticky__deal">Buy 2 Get 1 Free</div>
+    </div>
+    <button type="button" class="v1-sticky__btn" id="v1StickyATC">Add to Cart</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SIZE CHART MODAL
+═══════════════════════════════════════ -->
+<div class="v1-modal-overlay" id="v1SizeModal">
+  <div class="v1-modal">
+    <div class="v1-modal__header">
+      <span class="v1-modal__title">Size Chart</span>
+      <button type="button" class="v1-modal__close" id="v1SizeModalClose">&times;</button>
+    </div>
+    <div class="v1-modal__body" id="v1SizeModalBody">
+      Loading...
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PRODUCT DATA
+═══════════════════════════════════════ -->
+<script type="application/json" id="v1ProductJSON">{{ product | json }}</script>
+
+<!-- ═══════════════════════════════════════
+     STYLES
+═══════════════════════════════════════ -->
+<style>
+/* ── VARIABLES ── */
+:root {
+  --v1-blue: #3D6E2E;
+  --v1-black: #0A0A0A;
+  --v1-red: #FF2D2D;
+  --v1-border: #E4E4E4;
+  --v1-gray: #F3F3F3;
+  --v1-mid: #888;
+}
+
+/* ── OFFER HERO ── */
+.v1-hero {
+  background: var(--v1-black);
+  padding: 20px 16px 24px;
+  color: #fff;
+}
+.v1-hero__inner { max-width: 600px; }
+.v1-hero__eyebrow {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--v1-red); margin-bottom: 8px;
+}
+.v1-hero__deal {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 42px; font-weight: 900;
+  text-transform: uppercase; line-height: 0.95;
+  margin: 0 0 12px; color: #fff;
+}
+.v1-hero__deal-em { color: var(--v1-blue); }
+.v1-hero__sub { font-size: 13px; color: #aaa; line-height: 1.6; margin-bottom: 14px; }
+.v1-hero__proof { display: flex; align-items: center; gap: 8px; }
+.v1-stars { color: var(--v1-blue); font-size: 15px; letter-spacing: 1px; }
+.v1-hero__proof-text { font-size: 12px; color: #aaa; }
+
+/* ── PRODUCT IMAGES ── */
+.v1-images { background: #fff; }
+.v1-images__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.v1-images__track::-webkit-scrollbar { display: none; }
+.v1-images__slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+.v1-images__slide img {
+  width: 100%; height: auto; display: block;
+  aspect-ratio: 1 / 1; object-fit: cover;
+}
+.v1-images__dots {
+  display: flex; justify-content: center; gap: 5px;
+  padding: 10px 0 6px;
+}
+.v1-dot {
+  width: 6px; height: 5px; border-radius: 3px;
+  background: #ddd; transition: all 0.2s;
+}
+.v1-dot--active { width: 20px; background: var(--v1-blue); }
+
+/* ── FORM WRAP ── */
+.v1-form-wrap { padding: 14px 16px 0; background: #fff; }
+
+/* ── OPTION LABELS ── */
+.v1-option-label {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--v1-mid); margin-bottom: 8px;
+}
+.v1-option-value { color: var(--v1-black); }
+
+/* ── SWATCHES ── */
+.v1-swatches {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding-bottom: 4px; margin-bottom: 14px;
+  scrollbar-width: none;
+}
+.v1-swatches::-webkit-scrollbar { display: none; }
+.v1-swatch {
+  flex-shrink: 0; width: 46px; height: 46px;
+  border-radius: 8px; border: 2px solid transparent;
+  cursor: pointer; background-size: cover;
+  background-position: center; background-color: #D0D0D0;
+}
+.v1-swatch--active { border-color: var(--v1-blue); outline: 2px solid rgba(0,123,255,0.2); outline-offset: 1px; }
+
+/* ── SIZES ── */
+.v1-size-row {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 8px;
+}
+.v1-size-link {
+  font-size: 11px; color: var(--v1-blue);
+  font-weight: 600; text-decoration: none;
+}
+.v1-sizes { display: flex; gap: 8px; margin-bottom: 16px; }
+.v1-size-btn {
+  flex: 1; padding: 12px 4px;
+  border: 2px solid var(--v1-border); border-radius: 6px;
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 15px; font-weight: 700;
+  text-align: center; cursor: pointer;
+  background: #fff; color: var(--v1-black);
+  transition: border-color 0.15s;
+}
+.v1-size-btn--active { border-color: var(--v1-blue); background: #f0f5ff; }
+.v1-size-btn--soldout {
+  color: #ccc; text-decoration: line-through;
+  cursor: not-allowed; border-color: #eee;
+}
+
+/* ── PRICE ── */
+.v1-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 4px; }
+.v1-price__current {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 28px; font-weight: 900;
+}
+.v1-price__per { font-size: 14px; color: var(--v1-mid); }
+.v1-price__compare { font-size: 14px; color: var(--v1-mid); text-decoration: line-through; }
+.v1-price-sub { font-size: 11px; color: #555; margin-bottom: 14px; }
+
+/* ── BUTTONS ── */
+.v1-btn-atc {
+  display: block; width: 100%;
+  background: var(--v1-blue); color: #fff;
+  padding: 16px; border: none; border-radius: 6px;
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 18px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; margin-bottom: 8px;
+  transition: opacity 0.15s;
+}
+.v1-btn-atc:disabled { opacity: 0.5; cursor: not-allowed; }
+.v1-btn-buy {
+  display: block; width: 100%;
+  background: var(--v1-black); color: #fff;
+  padding: 14px; border: none; border-radius: 6px;
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 16px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; margin-bottom: 12px;
+}
+.v1-trust {
+  text-align: center; font-size: 11px;
+  color: var(--v1-mid); line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* ── SECTION GAP ── */
+.v1-features,
+.v1-compare,
+.v1-bottom-cta { background: #fff; }
+.v1-features { padding: 24px 16px 8px; border-top: 8px solid var(--v1-gray); }
+.v1-section-heading {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 22px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.02em;
+  margin: 0 0 14px; color: var(--v1-black);
+}
+
+/* ── FEATURE CARDS ── */
+.v1-feat-card {
+  border: 1px solid var(--v1-border);
+  border-radius: 10px; overflow: hidden;
+  margin-bottom: 14px;
+}
+.v1-feat-card__img { width: 100%; aspect-ratio: 2 / 1; overflow: hidden; }
+.v1-feat-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.v1-feat-card__img--ph {
+  background: #D0D0D0;
+  display: flex; align-items: center; justify-content: center;
+}
+.v1-feat-card__img--ph span {
+  background: rgba(255,255,255,0.9);
+  padding: 5px 12px; border-radius: 4px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase; color: #555;
+}
+.v1-feat-card__body { padding: 14px; }
+.v1-feat-card__title {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 19px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.02em;
+  margin: 0 0 4px; color: var(--v1-black);
+}
+.v1-feat-card__desc { font-size: 13px; color: #555; line-height: 1.5; margin: 0; }
+
+/* ── OFFER REMINDER ── */
+.v1-reminder-wrap { padding: 8px 16px 16px; background: #fff; }
+.v1-reminder {
+  background: var(--v1-black); border-radius: 10px; padding: 14px;
+}
+.v1-reminder__eyebrow {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--v1-red); margin-bottom: 6px;
+}
+.v1-reminder__row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.v1-reminder__price {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 26px; font-weight: 900; color: #fff;
+}
+.v1-reminder__price-sub { font-size: 13px; color: #aaa; font-weight: 400; }
+.v1-reminder__btn {
+  white-space: nowrap;
+  background: var(--v1-blue); color: #fff; border: none;
+  border-radius: 6px; padding: 12px 18px;
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 15px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ── COMPARE ── */
+.v1-compare { padding: 4px 16px 16px; }
+.v1-comp-card {
+  border: 1px solid var(--v1-border);
+  border-radius: 10px; overflow: hidden; margin-bottom: 10px;
+}
+.v1-comp-card--hl { border: 2px solid var(--v1-blue); }
+.v1-comp-card__head {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 11px 14px 8px;
+}
+.v1-comp-card__name {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 15px; font-weight: 900; text-transform: uppercase;
+}
+.v1-comp-card__name--hl { color: var(--v1-blue); }
+.v1-comp-card__price {
+  background: #f0f0f0; border-radius: 20px;
+  padding: 3px 10px; font-size: 12px; font-weight: 700;
+}
+.v1-comp-card__price--hl { background: rgba(0,123,255,0.08); color: var(--v1-blue); }
+.v1-comp-card__body { padding: 0 14px 12px; }
+.v1-comp-card__desc { font-size: 12px; color: #555; line-height: 1.4; margin-bottom: 6px; }
+.v1-comp-card__bar {
+  height: 5px; background: #eee; border-radius: 3px;
+  overflow: hidden; margin: 4px 0 8px;
+}
+.v1-comp-card__bar-fill { height: 100%; background: var(--v1-blue); border-radius: 3px; }
+.v1-comp-card__bar-fill--muted { background: #bbb; }
+.v1-comp-card__chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.v1-chip {
+  display: inline-flex; align-items: center;
+  border-radius: 20px; padding: 3px 10px;
+  font-size: 11px; font-weight: 600;
+}
+.v1-chip--good {
+  border: 1.5px solid rgba(0,123,255,0.2);
+  color: var(--v1-blue); background: rgba(0,123,255,0.03);
+}
+.v1-chip--bad {
+  border: 1.5px solid rgba(255,45,45,0.2);
+  color: #cc0000; background: rgba(255,45,45,0.03);
+}
+
+/* ── BOTTOM CTA ── */
+.v1-bottom-cta { padding: 16px; }
+
+/* ── STICKY BAR ── */
+.v1-sticky {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff; border-top: 2px solid var(--v1-blue);
+  padding: 10px 16px 12px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.14);
+  z-index: 50; transform: translateY(100%);
+  transition: transform 0.25s ease;
+}
+.v1-sticky--visible { transform: translateY(0); }
+.v1-sticky__inner {
+  display: flex; align-items: center; gap: 10px;
+  max-width: 600px;
+}
+.v1-sticky__price {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 18px; font-weight: 900; line-height: 1;
+}
+.v1-sticky__deal {
+  font-size: 10px; color: var(--v1-red);
+  font-weight: 600; text-transform: uppercase;
+}
+.v1-sticky__btn {
+  flex: 1; padding: 13px;
+  background: var(--v1-blue); color: #fff;
+  border: none; border-radius: 6px;
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 15px; font-weight: 700;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ── SIZE CHART MODAL ── */
+.v1-modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 200;
+  align-items: flex-end; justify-content: center;
+}
+.v1-modal-overlay--open { display: flex; }
+.v1-modal {
+  background: #fff; border-radius: 16px 16px 0 0;
+  width: 100%; max-width: 600px; max-height: 80vh;
+  display: flex; flex-direction: column;
+  animation: v1SlideUp 0.3s ease;
+}
+@keyframes v1SlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.v1-modal__header {
+  display: flex; justify-content: space-between;
+  align-items: center; padding: 16px 20px;
+  border-bottom: 1px solid var(--v1-border);
+}
+.v1-modal__title {
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 18px; font-weight: 900; text-transform: uppercase;
+}
+.v1-modal__close {
+  background: none; border: none;
+  font-size: 28px; cursor: pointer; color: #333; padding: 0 4px;
+}
+.v1-modal__body {
+  overflow-y: auto; padding: 20px;
+  -webkit-overflow-scrolling: touch;
+}
+.v1-modal__body img { max-width: 100%; height: auto; }
+.v1-modal__body table { width: 100%; border-collapse: collapse; }
+.v1-modal__body th,
+.v1-modal__body td {
+  border: 1px solid var(--v1-border);
+  padding: 8px 12px; text-align: center; font-size: 13px;
+}
+.v1-modal__body th { background: var(--v1-gray); font-weight: 700; }
+
+/* ── DESKTOP LAYOUT ── */
+@media (min-width: 992px) {
+  .v1-hero { padding: 32px 40px 36px; }
+  .v1-hero__inner { max-width: 700px; }
+  .v1-hero__deal { font-size: 56px; }
+  .v1-hero__sub { font-size: 15px; max-width: 500px; }
+
+  .v1-desktop-wrap {
+    display: flex; align-items: flex-start;
+    background: #fff;
+  }
+
+  /* Left column: images */
+  .v1-images {
+    position: sticky; top: 0;
+    width: 50%; flex-shrink: 0;
+    max-height: 100vh; overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .v1-images::-webkit-scrollbar { display: none; }
+  .v1-images__track {
+    flex-direction: column; overflow-x: hidden;
+    scroll-snap-type: none;
+  }
+  .v1-images__slide { flex: 0 0 auto; }
+  .v1-images__slide img { aspect-ratio: auto; }
+  .v1-images__dots { display: none; }
+
+  /* Right column: form + content */
+  .v1-form-wrap { width: 50%; padding: 24px 40px; }
+
+  .v1-features,
+  .v1-reminder-wrap,
+  .v1-compare,
+  .v1-bottom-cta {
+    padding-left: calc(50% + 40px);
+    padding-right: 40px;
+  }
+  .v1-features { padding-top: 32px; }
+
+  .v1-section-heading { font-size: 28px; }
+
+  .v1-feat-card { display: flex; align-items: stretch; }
+  .v1-feat-card__img { width: 50%; flex-shrink: 0; aspect-ratio: auto; min-height: 200px; }
+  .v1-feat-card__body { display: flex; flex-direction: column; justify-content: center; padding: 20px 24px; }
+  .v1-feat-card__title { font-size: 22px; }
+  .v1-feat-card__desc { font-size: 14px; }
+
+  .v1-reminder__price { font-size: 32px; }
+
+  .v1-sticky { display: none; }
+
+  .v1-modal { border-radius: 16px; max-width: 600px; margin-bottom: 10vh; }
+}
+</style>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+(function() {
+  /* ── Product Data ── */
+  var productJSON = JSON.parse(document.getElementById('v1ProductJSON').textContent);
+  var variants = productJSON.variants;
+  var images = productJSON.images;
+
+  /* ── DOM refs ── */
+  var variantInput = document.getElementById('v1VariantId');
+  var designNameEl = document.getElementById('v1DesignName');
+  var priceEl = document.getElementById('v1Price');
+  var priceSubEl = document.getElementById('v1PriceSub');
+  var stickyPriceEl = document.getElementById('v1StickyPrice');
+  var track = document.getElementById('v1Track');
+  var dotsWrap = document.getElementById('v1Dots');
+  var sticky = document.getElementById('v1Sticky');
+
+  var selectedDesign = designNameEl ? designNameEl.textContent.trim() : '';
+  var selectedSize = '';
+
+  /* Find initially selected size */
+  var activeSizeBtn = document.querySelector('.v1-size-btn--active');
+  if (activeSizeBtn) selectedSize = activeSizeBtn.dataset.size;
+
+  /* ── Variant Lookup ── */
+  function findVariant(design, size) {
+    var dLC = design ? design.toLowerCase().trim() : '';
+    var sLC = size ? size.toLowerCase().trim() : '';
+    for (var i = 0; i < variants.length; i++) {
+      var v = variants[i];
+      var o1 = v.option1 ? v.option1.toLowerCase().trim() : '';
+      var o2 = v.option2 ? v.option2.toLowerCase().trim() : '';
+      if (dLC && sLC && o2) {
+        if (o1 === dLC && o2 === sLC) return v;
+      } else if (dLC && !o2) {
+        if (o1 === dLC) return v;
+      } else if (sLC) {
+        if (o1 === sLC || o2 === sLC) return v;
+      }
+    }
+    return null;
+  }
+
+  function updateVariant() {
+    var v = findVariant(selectedDesign, selectedSize);
+    if (!v) return;
+
+    variantInput.value = v.id;
+
+    /* Update price */
+    var price = '$' + (v.price / 100).toFixed(0);
+    var compareHTML = '';
+    if (v.compare_at_price && v.compare_at_price > v.price) {
+      compareHTML = '<span class="v1-price__compare">$' + (v.compare_at_price / 100).toFixed(0) + '</span>';
+    }
+    priceEl.innerHTML = '<span class="v1-price__current">' + price + '</span>' +
+      '<span class="v1-price__per">/each with B2G1</span>' + compareHTML;
+
+    if (stickyPriceEl) stickyPriceEl.textContent = price + '/each';
+
+    /* Update URL */
+    var url = new URL(window.location);
+    url.searchParams.set('variant', v.id);
+    window.history.replaceState({}, '', url);
+  }
+
+  /* ── Design Swatches ── */
+  var swatchBtns = document.querySelectorAll('.v1-swatch');
+  swatchBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      swatchBtns.forEach(function(b) { b.classList.remove('v1-swatch--active'); });
+      btn.classList.add('v1-swatch--active');
+      selectedDesign = btn.dataset.design;
+      if (designNameEl) designNameEl.textContent = selectedDesign;
+
+      /* Filter images by alt text */
+      var slides = track.querySelectorAll('.v1-images__slide');
+      var designLC = selectedDesign.toLowerCase();
+      var anyVisible = false;
+      slides.forEach(function(slide) {
+        var alt = (slide.dataset.alt || '').toLowerCase();
+        if (alt.indexOf(designLC) !== -1 || designLC === '') {
+          slide.style.display = '';
+          anyVisible = true;
+        } else {
+          slide.style.display = 'none';
+        }
+      });
+      /* If no match, show all */
+      if (!anyVisible) {
+        slides.forEach(function(s) { s.style.display = ''; });
+      }
+      buildDots();
+      track.scrollLeft = 0;
+
+      updateVariant();
+    });
+  });
+
+  /* ── Size Buttons ── */
+  var sizeBtns = document.querySelectorAll('.v1-size-btn');
+  sizeBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      if (btn.classList.contains('v1-size-btn--soldout')) return;
+      sizeBtns.forEach(function(b) { b.classList.remove('v1-size-btn--active'); });
+      btn.classList.add('v1-size-btn--active');
+      selectedSize = btn.dataset.size;
+      updateVariant();
+    });
+  });
+
+  /* ── Image Slider Dots ── */
+  function buildDots() {
+    if (!dotsWrap) return;
+    var visible = track.querySelectorAll('.v1-images__slide:not([style*="display: none"])');
+    dotsWrap.innerHTML = '';
+    for (var i = 0; i < visible.length; i++) {
+      var dot = document.createElement('div');
+      dot.className = 'v1-dot' + (i === 0 ? ' v1-dot--active' : '');
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    if (!dotsWrap || !track) return;
+    var visible = track.querySelectorAll('.v1-images__slide:not([style*="display: none"])');
+    var slideWidth = track.offsetWidth;
+    var scrollPos = track.scrollLeft;
+    var idx = Math.round(scrollPos / slideWidth);
+    var dots = dotsWrap.querySelectorAll('.v1-dot');
+    dots.forEach(function(d, i) {
+      d.classList.toggle('v1-dot--active', i === idx);
+    });
+  }
+
+  if (track) {
+    track.addEventListener('scroll', updateDots);
+    buildDots();
+  }
+
+  /* ── Add to Cart ── */
+  function addToCart(callback) {
+    var vid = parseInt(variantInput.value);
+    if (!vid || !selectedSize) {
+      alert('Please select a size');
+      return;
+    }
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: [{ id: vid, quantity: 1 }] })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      if (callback) callback();
+      else if (window.RC_CART) window.RC_CART.open();
+      else window.location.href = '/cart';
+    })
+    .catch(function() { window.location.href = '/cart'; });
+  }
+
+  /* ATC buttons */
+  ['v1ATC', 'v1ReminderATC', 'v1BottomATC', 'v1StickyATC'].forEach(function(id) {
+    var btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', function() { addToCart(); });
+  });
+
+  /* Buy Now buttons */
+  ['v1BuyNow', 'v1BottomBuy'].forEach(function(id) {
+    var btn = document.getElementById(id);
+    if (btn) btn.addEventListener('click', function() {
+      addToCart(function() { window.location.href = '/checkout'; });
+    });
+  });
+
+  /* ── Sticky Bar Visibility ── */
+  function handleSticky() {
+    if (window.innerWidth >= 992) return;
+    var atcBtn = document.getElementById('v1ATC');
+    if (!atcBtn || !sticky) return;
+    var rect = atcBtn.getBoundingClientRect();
+    if (rect.bottom < 0) {
+      sticky.classList.add('v1-sticky--visible');
+    } else {
+      sticky.classList.remove('v1-sticky--visible');
+    }
+  }
+  window.addEventListener('scroll', handleSticky, { passive: true });
+
+  /* ── Size Chart Modal ── */
+  var sizeLink = document.getElementById('v1SizeChartLink');
+  var sizeModal = document.getElementById('v1SizeModal');
+  var sizeModalClose = document.getElementById('v1SizeModalClose');
+  var sizeModalBody = document.getElementById('v1SizeModalBody');
+  var sizeChartLoaded = false;
+
+  if (sizeLink && sizeModal) {
+    sizeLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      sizeModal.classList.add('v1-modal-overlay--open');
+      if (!sizeChartLoaded) {
+        fetch('/pages/ribbed-half-tights-sizing')
+          .then(function(r) { return r.text(); })
+          .then(function(html) {
+            var parser = new DOMParser();
+            var doc = parser.parseFromString(html, 'text/html');
+            var content = doc.querySelector('.rte') || doc.querySelector('.page-content') || doc.querySelector('main') || doc.body;
+            sizeModalBody.innerHTML = content.innerHTML;
+            sizeChartLoaded = true;
+          })
+          .catch(function() { sizeModalBody.innerHTML = '<p>Could not load size chart.</p>'; });
+      }
+    });
+    sizeModalClose.addEventListener('click', function() {
+      sizeModal.classList.remove('v1-modal-overlay--open');
+    });
+    sizeModal.addEventListener('click', function(e) {
+      if (e.target === sizeModal) sizeModal.classList.remove('v1-modal-overlay--open');
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') sizeModal.classList.remove('v1-modal-overlay--open');
+    });
+  }
+
+  /* ── Desktop: wrap images + form ── */
+  if (window.innerWidth >= 992) {
+    var hero = document.querySelector('.v1-hero');
+    var imagesEl = document.getElementById('v1Images');
+    var formWrap = document.querySelector('.v1-form-wrap');
+    if (hero && imagesEl && formWrap) {
+      var deskWrap = document.createElement('div');
+      deskWrap.className = 'v1-desktop-wrap';
+      imagesEl.parentNode.insertBefore(deskWrap, imagesEl);
+      deskWrap.appendChild(imagesEl);
+      deskWrap.appendChild(formWrap);
+    }
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "PDP V1 Main",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Limited -- Buy 2 Get 1 Free"
+    },
+    {
+      "type": "text",
+      "id": "headline_1",
+      "label": "Headline line 1",
+      "default": "3 pairs."
+    },
+    {
+      "type": "text",
+      "id": "headline_2",
+      "label": "Headline line 2 (accent)",
+      "default": "$120."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "MD Golf Posters -- built for track sessions, tempos, and race efforts. Pick any 3 designs."
+    },
+    {
+      "type": "text",
+      "id": "proof_text",
+      "label": "Social proof text",
+      "default": "4.81 · 16 reviews · 4,000+ golfers"
+    },
+    {
+      "type": "text",
+      "id": "features_heading",
+      "label": "Features heading",
+      "default": "Built for golfers who run hard"
+    },
+    {
+      "type": "text",
+      "id": "compare_heading",
+      "label": "Compare heading",
+      "default": "How it compares"
+    },
+    {
+      "type": "text",
+      "id": "reminder_eyebrow",
+      "label": "Reminder eyebrow",
+      "default": "Buy 2 Get 1 Free"
+    },
+    {
+      "type": "text",
+      "id": "reminder_price",
+      "label": "Reminder price",
+      "default": "$120"
+    },
+    {
+      "type": "text",
+      "id": "reminder_sub",
+      "label": "Reminder subtext",
+      "default": "for 3 pairs"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Feature image"
+        },
+        {
+          "type": "text",
+          "id": "image_label",
+          "label": "Placeholder label (no image)",
+          "default": "Feature Shot"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "No Ride Up"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Stays locked at the thigh through full stride. No adjusting mid-rep."
+        }
+      ]
+    },
+    {
+      "type": "competitor",
+      "name": "Competitor",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Brand name",
+          "default": "Budget Shorts"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price label",
+          "default": "$35"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Fine for easy runs -- breaks down when pace goes up."
+        },
+        {
+          "type": "range",
+          "id": "score",
+          "label": "Score bar (%)",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 25
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight (your brand)",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "chips",
+          "label": "Tags (pipe separated)",
+          "default": "Rides up | Flimsy"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP V1 Main",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "No Ride Up", "description": "Stays locked at the thigh through full stride. No adjusting mid-rep.", "image_label": "No Ride Up Shot" } },
+        { "type": "feature", "settings": { "title": "No Bounce Pocket", "description": "Rear pocket holds your phone tight. It doesn't move. Period.", "image_label": "Pocket Detail Shot" } },
+        { "type": "feature", "settings": { "title": "Real Compression", "description": "Support where it matters -- without feeling restrictive or cheap.", "image_label": "Compression Stretch" } },
+        { "type": "competitor", "settings": { "name": "Budget Shorts", "price": "$35", "description": "Fine for easy runs -- breaks down when pace goes up.", "score": 25, "highlight": false, "chips": "Rides up | Flimsy" } },
+        { "type": "competitor", "settings": { "name": "Golf Print Club", "price": "$40 (B2G1)", "description": "Race-ready fit, locked-in feel, designs you won't see everywhere.", "score": 88, "highlight": true, "chips": "No ride up | Real compression | Fair price" } },
+        { "type": "competitor", "settings": { "name": "Big Brands", "price": "$90", "description": "Good performance -- but you pay for the logo, not the fit.", "score": 60, "highlight": false, "chips": "Brand markup | Safe designs" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

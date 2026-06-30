@@ -1,0 +1,215 @@
+{%- comment -%}
+  PDP Size Chart Modal
+  Renders a size chart trigger button and modal overlay.
+  Content pulled from product.metafields.custom.size_chart (Page reference).
+{%- endcomment -%}
+
+{%- assign rc_sc = product.metafields.custom.size_chart -%}
+{%- if rc_sc and rc_sc != blank -%}
+  {%- assign rc_uid = 'rc-sc-' | append: section.id | append: '-' | append: product.id -%}
+
+  <button
+    type="button"
+    class="rc-sc-trigger rc-sc-trigger--{{ section.id }}"
+    aria-haspopup="dialog"
+    aria-controls="{{ rc_uid }}"
+    aria-expanded="false"
+    {% unless section.settings.show_on_desktop %}style="display:none;"{% endunless %}
+  >
+    {{ section.settings.trigger_text }}
+  </button>
+
+  <div class="rc-sc-overlay" data-rc-sc-overlay="{{ rc_uid }}" hidden></div>
+
+  <div
+    id="{{ rc_uid }}"
+    class="rc-sc-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="{{ rc_uid }}-title"
+    hidden
+  >
+    <div class="rc-sc-window" role="document">
+      <div class="rc-sc-header">
+        <h2 id="{{ rc_uid }}-title" class="rc-sc-title">
+          {{ rc_sc.value.title | default: 'Size Chart' }}
+        </h2>
+        <button type="button" class="rc-sc-close" aria-label="Close">&times;</button>
+      </div>
+      <div class="rc-sc-body">
+        {%- assign rc_page = rc_sc.value -%}
+        {%- if rc_page and rc_page.content -%}
+          <div class="rc-sc-content">
+            {{ rc_page.content }}
+          </div>
+        {%- else -%}
+          {%- assign rc_handle = rc_sc | metafield_text -%}
+          {%- if rc_handle and pages[rc_handle] and pages[rc_handle].content -%}
+            <div class="rc-sc-content">
+              {{ pages[rc_handle].content }}
+            </div>
+          {%- else -%}
+            <div class="rc-sc-content">
+              {{ rc_sc | metafield_text }}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .rc-sc-trigger--{{ section.id }} {
+      font: inherit;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: var(--BTN-FONT-STACK);
+      color: #333;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .rc-sc-overlay[hidden],
+    .rc-sc-modal[hidden] { display: none !important; }
+
+    .rc-sc-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.4);
+      z-index: 10000;
+      animation: rc-sc-fade .15s ease-out;
+    }
+
+    .rc-sc-modal {
+      position: fixed; inset: 0;
+      display: grid; place-items: center;
+      z-index: 10001;
+    }
+
+    .rc-sc-window {
+      width: min(900px, 92vw);
+      max-height: min(82vh, 900px);
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      animation: rc-sc-pop .18s ease-out;
+    }
+
+    .rc-sc-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(0,0,0,.08);
+    }
+
+    .rc-sc-title { font-size: 18px; margin: 0; }
+
+    .rc-sc-close {
+      background: none; border: 0; font-size: 24px; line-height: 1;
+      cursor: pointer; padding: 6px 8px;
+    }
+
+    .rc-sc-body {
+      padding: 16px 18px;
+      overflow: auto;
+    }
+
+    .rc-sc-content table { width: 100%; border-collapse: collapse; }
+    .rc-sc-content th, .rc-sc-content td { border: 1px solid #eee; padding: 8px; }
+    .rc-sc-content img { max-width: 100%; height: auto; }
+
+    @keyframes rc-sc-pop {
+      from { transform: translateY(6px) scale(.98); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    @keyframes rc-sc-fade { from { opacity: 0; } to { opacity: 1; } }
+
+    {% unless section.settings.show_on_desktop %}
+      @media (min-width: 769px) {
+        .rc-sc-trigger--{{ section.id }} { display: none !important; }
+      }
+    {% endunless %}
+
+    {% unless section.settings.show_on_mobile %}
+      @media (max-width: 768px) {
+        .rc-sc-trigger--{{ section.id }} { display: none !important; }
+      }
+    {% endunless %}
+  </style>
+
+  <script>
+    (function() {
+      var modal   = document.getElementById('{{ rc_uid }}');
+      var overlay = document.querySelector('[data-rc-sc-overlay="{{ rc_uid }}"]');
+      var openBtn = document.querySelector('[aria-controls="{{ rc_uid }}"]');
+      if (!modal || !overlay || !openBtn) return;
+
+      var closeBtn = modal.querySelector('.rc-sc-close');
+      var lastFocused;
+
+      function openModal() {
+        lastFocused = document.activeElement;
+        modal.hidden = false;
+        overlay.hidden = false;
+        openBtn.setAttribute('aria-expanded', 'true');
+        var title = modal.querySelector('.rc-sc-title');
+        if (title) { title.setAttribute('tabindex', '-1'); title.focus(); }
+        document.addEventListener('keydown', onKey);
+      }
+
+      function closeModal() {
+        modal.hidden = true;
+        overlay.hidden = true;
+        openBtn.setAttribute('aria-expanded', 'false');
+        document.removeEventListener('keydown', onKey);
+        if (lastFocused) lastFocused.focus();
+      }
+
+      function onKey(e) {
+        if (e.key === 'Escape') closeModal();
+      }
+
+      openBtn.addEventListener('click', openModal);
+      overlay.addEventListener('click', closeModal);
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "PDP Size Chart",
+  "tag": "section",
+  "class": "pdp-size-chart-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "trigger_text",
+      "label": "Trigger text",
+      "default": "Size chart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Show on desktop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_mobile",
+      "label": "Show on mobile",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Size Chart"
+    }
+  ]
+}
+{% endschema %}

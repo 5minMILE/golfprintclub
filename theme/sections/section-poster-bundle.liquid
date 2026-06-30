@@ -78,7 +78,7 @@
     font-size: 10px; font-weight: 800;
     color: #fff; letter-spacing: 0.2em; text-transform: uppercase;
     margin-bottom: 16px; padding: 7px 14px;
-    background: #007BFF;
+    background: #3D6E2E;
     border-radius: 999px;
   }
   .pb-{{ section.id }} .pb-eyebrow__dot {
@@ -110,7 +110,7 @@
     font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
     text-transform: uppercase; color: #888;
   }
-  .pb-{{ section.id }} .pb-hero__trust .star { color: #007BFF; letter-spacing: 1px; }
+  .pb-{{ section.id }} .pb-hero__trust .star { color: #3D6E2E; letter-spacing: 1px; }
 
   /* === GRID === */
   .pb-{{ section.id }} .pb-grid-wrap { padding: 28px 16px 48px; max-width: 1100px; margin: 0 auto; }
@@ -123,7 +123,7 @@
   .pb-{{ section.id }} .pb-grid-head .anchor {
     display: inline-block; margin-top: 10px;
     font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; color: #007BFF;
+    text-transform: uppercase; color: #3D6E2E;
     padding: 4px 10px; background: rgba(0,123,255,0.08);
   }
 
@@ -200,7 +200,7 @@
     .pb-{{ section.id }} .pb-guarantees__inner { grid-template-columns: repeat(4, 1fr); gap: 28px; }
   }
   .pb-{{ section.id }} .pb-guarantee { text-align: center; }
-  .pb-{{ section.id }} .pb-guarantee__check { color: #007BFF; font-weight: 800; font-size: 16px; line-height: 1; }
+  .pb-{{ section.id }} .pb-guarantee__check { color: #3D6E2E; font-weight: 800; font-size: 16px; line-height: 1; }
   .pb-{{ section.id }} .pb-guarantee__label {
     font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
     text-transform: uppercase; margin-top: 6px; line-height: 1.3;
@@ -208,7 +208,7 @@
   .pb-{{ section.id }} .pb-guarantee__detail { font-size: 11px; color: #777; margin-top: 4px; line-height: 1.4; }
 
   /* === REVIEWS (BLUE) === */
-  .pb-{{ section.id }} .pb-reviews { padding: 56px 20px 64px; background: #007BFF; color: #fff; }
+  .pb-{{ section.id }} .pb-reviews { padding: 56px 20px 64px; background: #3D6E2E; color: #fff; }
   .pb-{{ section.id }} .pb-reviews__inner { max-width: 1100px; margin: 0 auto; }
   .pb-{{ section.id }} .pb-reviews__header { text-align: center; margin-bottom: 36px; }
   .pb-{{ section.id }} .pb-reviews__header .stars { color: #fff; font-size: 26px; letter-spacing: 4px; margin-bottom: 6px; }
@@ -227,7 +227,7 @@
   @media (min-width: 700px) { .pb-{{ section.id }} .pb-reviews__grid { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 1000px) { .pb-{{ section.id }} .pb-reviews__grid { grid-template-columns: repeat(3, 1fr); } }
   .pb-{{ section.id }} .pb-review { background: #fff; padding: 24px; color: #0A0A0A; }
-  .pb-{{ section.id }} .pb-review__stars { color: #007BFF; font-size: 14px; margin-bottom: 10px; letter-spacing: 2px; }
+  .pb-{{ section.id }} .pb-review__stars { color: #3D6E2E; font-size: 14px; margin-bottom: 10px; letter-spacing: 2px; }
   .pb-{{ section.id }} .pb-review__quote { font-size: 14px; line-height: 1.55; color: #1a1a1a; margin-bottom: 12px; }
   .pb-{{ section.id }} .pb-review__meta { font-size: 11px; color: #777; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 700; }
   .pb-{{ section.id }} .pb-review__product { font-size: 10px; color: #999; margin-top: 2px; letter-spacing: 0.04em; }
@@ -261,7 +261,7 @@
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 10px; font-weight: 800; color: #fff;
     letter-spacing: 0.2em; text-transform: uppercase;
-    margin-bottom: 16px; padding: 7px 13px; background: #007BFF;
+    margin-bottom: 16px; padding: 7px 13px; background: #3D6E2E;
   }
   .pb-{{ section.id }} .pb-final__eyebrow__dot {
     width: 7px; height: 7px; border-radius: 50%; background: #fff;
@@ -364,7 +364,7 @@
     transition: background 0.15s;
   }
   .pb-{{ section.id }} .pb-bar__cta:disabled { background: #ccc; cursor: not-allowed; }
-  .pb-{{ section.id }} .pb-bar__cta:not(:disabled):hover { background: #007BFF; }
+  .pb-{{ section.id }} .pb-bar__cta:not(:disabled):hover { background: #3D6E2E; }
 
   @media (min-width: 700px) {
     .pb-{{ section.id }} .pb-bar { padding: 14px 20px; }
@@ -481,7 +481,7 @@
 
 <section class="pb-{{ section.id }}" data-section-id="{{ section.id }}">
 
-  {%- assign coll_handle = section.settings.collection_handle | default: 'running-posters' -%}
+  {%- assign coll_handle = section.settings.collection_handle | default: 'golf-posters' -%}
   {%- assign poster_col = collections[coll_handle] -%}
 
   {%- comment -%} Helper: try to find a "close" image per product, fall back to second image, then featured. {%- endcomment -%}
@@ -602,7 +602,7 @@
       <div class="pb-reviews__header">
         <div class="stars">★★★★★</div>
         <div class="rating">{{ shop.metafields.judgeme.all_reviews_rating | default: '4.9' }} stars · {{ shop.metafields.judgeme.all_reviews_count | default: '200+' }} reviews</div>
-        <h2>{{ section.settings.reviews_heading | default: 'What runners say' }}</h2>
+        <h2>{{ section.settings.reviews_heading | default: 'What golfers say' }}</h2>
       </div>
       <div class="pb-reviews__grid" id="pb-reviews-grid-{{ section.id }}"></div>
     </div>
@@ -928,7 +928,7 @@
       .catch(function(err) {
         console.error('PB checkout error:', err);
         cta.disabled = false; cta.textContent = 'Checkout';
-        alert('Could not add bundle.\n\n' + (err && err.message ? err.message : 'Unknown error') + '\n\nPlease try again or email info@rnculture.com.');
+        alert('Could not add bundle.\n\n' + (err && err.message ? err.message : 'Unknown error') + '\n\nPlease try again or email info@golfprintclub.com.');
       });
   }
 
@@ -1056,7 +1056,7 @@
         return '<div class="pb-review">' +
           '<div class="pb-review__stars">' + starsHtml + '</div>' +
           '<p class="pb-review__quote">' + esc(r.body) + '</p>' +
-          '<p class="pb-review__meta">' + esc(r.name || 'Verified Runner') + (dateStr ? ' &middot; ' + dateStr : '') + '</p>' +
+          '<p class="pb-review__meta">' + esc(r.name || 'Verified Golfer') + (dateStr ? ' &middot; ' + dateStr : '') + '</p>' +
           (r.ptitle ? '<p class="pb-review__product">on ' + esc(r.ptitle) + '</p>' : '') +
           '</div>';
       }).join('');
@@ -1099,22 +1099,22 @@
     { "type": "header", "content": "Hero" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Limited Time" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Buy Two, Get One Free" },
-    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Make your room look like a runner's room. Made to order." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Make your room look like a golfer's room. Made to order." },
 
     { "type": "header", "content": "Builder" },
-    { "type": "text", "id": "collection_handle", "label": "Source collection", "default": "running-posters" },
+    { "type": "text", "id": "collection_handle", "label": "Source collection", "default": "golf-posters" },
     { "type": "text", "id": "discount_code", "label": "Discount code", "default": "B2G1FREE" },
     { "type": "number", "id": "shipping_cents", "label": "Flat shipping (cents)", "default": 700 },
     { "type": "text", "id": "default_size_hint", "label": "Default size substring", "default": "16" },
     { "type": "text", "id": "savings_anchor", "label": "Savings anchor chip", "default": "Save up to 33% on 3" },
 
     { "type": "header", "content": "Section headings" },
-    { "type": "text", "id": "reviews_heading", "label": "Reviews heading", "default": "What runners say" },
+    { "type": "text", "id": "reviews_heading", "label": "Reviews heading", "default": "What golfers say" },
     { "type": "text", "id": "faq_heading", "label": "FAQ heading", "default": "Quick questions" },
 
     { "type": "header", "content": "Final CTA" },
     { "type": "text", "id": "final_eyebrow", "label": "Eyebrow", "default": "Limited Time" },
-    { "type": "text", "id": "final_heading", "label": "Heading", "default": "Make Your Room Look Like A Runner's Room" },
+    { "type": "text", "id": "final_heading", "label": "Heading", "default": "Make Your Room Look Like A Golfer's Room" },
     { "type": "textarea", "id": "final_sub", "label": "Sub", "default": "Pick your 3. The cheapest is on us. Ships in 5 days for $7 flat." }
   ],
   "blocks": [

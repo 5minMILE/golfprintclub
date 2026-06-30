@@ -1,0 +1,116 @@
+<div class="lp-page-wrap">
+  <div class="lp-bundle-hero">
+    <div class="lp-bundle-hero__eyebrow">{{ section.settings.eyebrow }}</div>
+    <h1 class="lp-bundle-hero__h1">{{ section.settings.heading_line1 }}<br><span class="lp-bundle-hero__highlight">{{ section.settings.heading_line2 }}</span></h1>
+    <div class="lp-bundle-hero__sub">{{ section.settings.subheading }}</div>
+    <div class="lp-bundle-hero__rating">
+      <div class="lp-stars" style="font-size:15px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="lp-bundle-hero__rating-text">{{ section.settings.rating_text }}</div>
+    </div>
+    <a href="{{ section.settings.button_url }}" class="lp-btn-primary" style="margin-bottom:8px;">{{ section.settings.button_text }}</a>
+    <div class="lp-bundle-hero__fine">{{ section.settings.fine_print }}</div>
+  </div>
+</div>
+
+<style>
+  .lp-bundle-hero {
+    background: var(--lp-black);
+    padding: 20px 16px 24px;
+    color: #fff;
+    max-width: 390px;
+    margin: 0 auto;
+  }
+  .lp-bundle-hero__eyebrow {
+    font-family: var(--lp-font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lp-red);
+    margin-bottom: 6px;
+  }
+  .lp-bundle-hero__h1 {
+    font-family: var(--lp-font-head);
+    font-size: 36px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.0;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .lp-bundle-hero__highlight { color: var(--lp-blue); }
+  .lp-bundle-hero__sub {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .lp-bundle-hero__rating {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .lp-bundle-hero__rating-text { font-size: 12px; color: #aaa; }
+  .lp-bundle-hero__fine { text-align: center; font-size: 11px; color: #555; }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Limited Offer"
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading line 1",
+      "default": "3 Pairs."
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading line 2 (highlighted)",
+      "default": "$120."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Buy any 2 MD Golf Posters, get a 3rd completely free. Mix and match any design."
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.81 · 4,000+ golfers wearing Golf Print Club"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Claim My Bundle →"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Free shipping on orders over $125"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Hero"
+    }
+  ]
+}
+{% endschema %}

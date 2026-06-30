@@ -1,0 +1,327 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "order": [
+    "section_wf_coll_hero",
+    "section_wf_category_cards",
+    "section_wf_product_grid",
+    "section_wf_recently_viewed",
+    "section_ugc_grid",
+    "section_wf_reviews",
+    "section_trust_signals"
+  ],
+  "sections": {
+    "section_wf_coll_hero": {
+      "type": "section-wf-collection-hero",
+      "blocks": {
+        "pill_1": {
+          "type": "pill",
+          "settings": {
+            "label": "Golf Posters",
+            "link": "/collections/golf-half-tights"
+          }
+        },
+        "pill_2": {
+          "type": "pill",
+          "settings": {
+            "label": "Golf Posters",
+            "link": "/collections/golf-split-shorts"
+          }
+        },
+        "pill_3": {
+          "type": "pill",
+          "settings": {
+            "label": "Golf Posters",
+            "link": "/collections/golf posters"
+          }
+        },
+        "pill_4": {
+          "type": "pill",
+          "settings": {
+            "label": "Shirts",
+            "link": "/collections/golf-shirts"
+          }
+        }
+      },
+      "block_order": [
+        "pill_1",
+        "pill_2",
+        "pill_3",
+        "pill_4"
+      ],
+      "settings": {
+        "use_solid_bg": false,
+        "bg_color": "#111111",
+        "fallback_image": "{{ collection.image }}"
+      }
+    },
+    "section_wf_category_cards": {
+      "type": "section-wf-category-cards",
+      "blocks": {
+        "cat_1": {
+          "type": "category",
+          "settings": {
+            "collection": "golf-half-tights",
+            "image": "shopify://shop_images/hf_20260217_014415_5b1c0901-dc73-4c13-8e12-0317781a0e3f.png",
+            "label": "Golf Posters",
+            "link": ""
+          }
+        },
+        "cat_2": {
+          "type": "category",
+          "settings": {
+            "collection": "golf-split-shorts",
+            "image": "shopify://shop_images/hf_20260217_191715_d48793f4-6b56-4b77-8496-95695d5469a6.png",
+            "label": "Golf Posters",
+            "link": ""
+          }
+        },
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "collection": "golf posters",
+            "label": "Golf Posters",
+            "link": ""
+          }
+        },
+        "cat_4": {
+          "type": "category",
+          "settings": {
+            "collection": "golf-shirts",
+            "image": "shopify://shop_images/5_adc2ac9c-8afe-4edf-a4dd-2b89ba32625c.png",
+            "label": "Shirts",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "cat_1",
+        "cat_2",
+        "cat_3",
+        "cat_4"
+      ],
+      "settings": {
+        "heading": "Shop by Category",
+        "bg_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 10
+      }
+    },
+    "section_wf_product_grid": {
+      "type": "section-wf-product-grid",
+      "settings": {
+        "padding_top": 10,
+        "padding_bottom": 40
+      }
+    },
+    "section_wf_recently_viewed": {
+      "type": "section-wf-recent-products",
+      "settings": {
+        "heading": "Recently Viewed",
+        "limit": 6,
+        "minimum": 2,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "section_ugc_grid": {
+      "type": "section-ugc-grid",
+      "blocks": {
+        "image_1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/632585646_17859639432601348_3474770829607654148_n.jpg",
+            "link": "https://www.instagram.com/p/DUv9lFDidXc/?img_index=1"
+          }
+        },
+        "image_2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/524818814_18106362844535585_2447912840450345253_n.jpg",
+            "link": "https://www.instagram.com/p/DMqMK6Du33-/?img_index=1"
+          }
+        },
+        "image_3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/503735122_18511322599039015_3666960999311518927_n.jpg",
+            "link": ""
+          }
+        },
+        "image_4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/516930590_18410267086108023_3725682745817435305_n_1.jpg",
+            "link": "https://www.instagram.com/p/DL6Px5aNCXY/?img_index=1"
+          }
+        },
+        "image_5": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/504009426_18117847219463680_5514507617342105007_n.jpg",
+            "link": ""
+          }
+        },
+        "image_6": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/503966030_18282332050283941_7514746080078156195_n.jpg",
+            "link": ""
+          }
+        },
+        "image_7": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/fadskfajslk.png",
+            "link": "https://www.instagram.com/p/DHRjlk1OkT1/?img_index=9"
+          }
+        },
+        "image_8": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/637169320_18378784243092323_6236954335751447272_n.jpg",
+            "link": "https://www.instagram.com/p/DEvBEi_p3Ox/"
+          }
+        },
+        "image_9": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/464266574_1083295279899579_3316657288761329016_n.jpg",
+            "link": "https://www.instagram.com/p/DBcyLdINA27/?img_index=4"
+          }
+        },
+        "image_10": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/455361551_18458646640043865_8072700849282627754_n.jpg",
+            "link": ""
+          }
+        },
+        "image_11": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/449864297_1410827302952970_4707072703736157958_n.jpg",
+            "link": ""
+          }
+        },
+        "image_12": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/468622921_18047049329034700_6423825552992512565_n.jpg",
+            "link": ""
+          }
+        },
+        "image_13": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/448550419_1580862609150624_6834496539829711421_n_1.jpg",
+            "link": ""
+          }
+        },
+        "image_14": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/448436388_1129045088307566_4576531640461077986_n_1.jpg",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_1",
+        "image_2",
+        "image_3",
+        "image_4",
+        "image_5",
+        "image_6",
+        "image_7",
+        "image_8",
+        "image_9",
+        "image_10",
+        "image_11",
+        "image_12",
+        "image_13",
+        "image_14"
+      ],
+      "settings": {
+        "heading": "Real Golfers. Real Gear.",
+        "subtitle": "Tag @_golfprintclub to get featured",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "section_wf_reviews": {
+      "type": "section-wf-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "text": "These are hands down the best golf posters I've ever worn. No ride up, real compression, and the pocket actually holds my phone.",
+            "stars": 5,
+            "name": "Jake M."
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "text": "Finally a brand that actually makes gear for golfers, not Instagram. The compression is legit and they don't ride up during intervals.",
+            "stars": 5,
+            "name": "Sarah K."
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "text": "These are hands down the best golf posters I've ever worn. No ride up, real compression, and the pocket actually holds my phone.",
+            "stars": 5,
+            "name": "Verified Golfer"
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "text": "I switched from Nike and I'm never going back. Better compression, better pocket, half the price. What's not to love?",
+            "stars": 5,
+            "name": "Marcus T."
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4"
+      ],
+      "settings": {
+        "heading": "See What Others Are Saying",
+        "rating": "4.87",
+        "review_count": "115",
+        "cta_text": "See All Reviews",
+        "cta_link": "shopify://pages/reviews",
+        "padding_top": 0,
+        "padding_bottom": 20
+      }
+    },
+    "section_trust_signals": {
+      "type": "section-trust-signals",
+      "settings": {
+        "title_1": "Free Shipping",
+        "desc_1": "On US orders over $125",
+        "title_2": "Easy Returns",
+        "desc_2": "30-day hassle-free returns",
+        "title_3": "Secure Checkout",
+        "desc_3": "SSL encrypted payment",
+        "title_4": "Real Support",
+        "desc_4": "Actual humans. Not bots.",
+        "padding_top": 0,
+        "padding_bottom": 20
+      }
+    }
+  }
+}

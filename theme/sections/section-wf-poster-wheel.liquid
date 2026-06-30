@@ -1,0 +1,183 @@
+<!-- /sections/section-wf-poster-wheel.liquid -->
+<style>
+  .pw-{{ section.id }} {
+    padding: 60px 0;
+    background: #3D6E2E;
+    overflow: visible;
+    position: relative;
+  }
+  .pw-{{ section.id }} .pw-row {
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .pw-{{ section.id }} .pw-row:last-child {
+    margin-bottom: 0;
+  }
+  .pw-{{ section.id }} .pw-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    will-change: transform;
+  }
+  .pw-{{ section.id }} .pw-card {
+    flex: 0 0 auto;
+    width: 394px;
+    height: 544px;
+    background: #f0f0f0;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #E0E0E0;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+  .pw-{{ section.id }} .pw-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+    pointer-events: none;
+  }
+  .pw-{{ section.id }} .pw-card:hover img {
+    transform: scale(1.02);
+  }
+  @media (max-width: 749px) {
+    .pw-{{ section.id }} {
+      padding: 40px 0;
+    }
+    .pw-{{ section.id }} .pw-card {
+      width: 263px;
+      height: 363px;
+    }
+    .pw-{{ section.id }} .pw-track {
+      gap: 12px;
+    }
+    .pw-{{ section.id }} .pw-row {
+      margin-bottom: 12px;
+    }
+  }
+</style>
+
+<section class="pw-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="poster-wheel">
+  {%- assign col = section.settings.collection -%}
+  {%- if col != blank and col.products.size > 0 -%}
+    {%- for row_index in (1..2) -%}
+      {%- assign row_dir = -1 -%}
+      {%- if row_index == 2 -%}{%- assign row_dir = 1 -%}{%- endif -%}
+      {%- assign row_speed_mul = 1.0 -%}
+      {%- if row_index == 2 -%}{%- assign row_speed_mul = 0.85 -%}{%- endif -%}
+
+      <div class="pw-row" data-dir="{{ row_dir }}" data-speed-mul="{{ row_speed_mul }}">
+        <div class="pw-track">
+          {%- for cycle in (1..3) -%}
+            {%- for product in col.products -%}
+              <a href="{{ product.url }}" class="pw-card" aria-label="{{ product.title | escape }}">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy">
+                {%- endif -%}
+              </a>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  {%- endif -%}
+</section>
+
+<script>
+(function() {
+  var section = document.querySelector('.pw-{{ section.id }}');
+  if (!section) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var rows = section.querySelectorAll('.pw-row');
+  if (!rows.length) return;
+
+  var BASE_SPEED = 25 / 60;
+  var scrollBoost = 0;
+  var lastScrollY = window.scrollY;
+  var rowStates = [];
+
+  rows.forEach(function(row) {
+    var track = row.querySelector('.pw-track');
+    if (!track) return;
+    var dir = parseInt(row.getAttribute('data-dir'), 10) || -1;
+    var speedMul = parseFloat(row.getAttribute('data-speed-mul')) || 1.0;
+    var state = {
+      row: row,
+      track: track,
+      dir: dir,
+      speedMul: speedMul,
+      pos: 0,
+      trackWidth: 0,
+      paused: false
+    };
+    rowStates.push(state);
+    row.addEventListener('mouseenter', function() { state.paused = true; });
+    row.addEventListener('mouseleave', function() { state.paused = false; });
+  });
+
+  function measure() {
+    rowStates.forEach(function(state) {
+      state.trackWidth = state.track.scrollWidth / 3;
+      if (state.dir > 0 && state.pos === 0) {
+        state.pos = -state.trackWidth;
+      }
+    });
+  }
+
+  function tick() {
+    for (var i = 0; i < rowStates.length; i++) {
+      var s = rowStates[i];
+      if (s.paused || s.trackWidth === 0) continue;
+      var speed = (BASE_SPEED + scrollBoost) * s.speedMul;
+      s.pos += s.dir * speed;
+      if (s.dir < 0 && s.pos <= -s.trackWidth) s.pos += s.trackWidth;
+      else if (s.dir > 0 && s.pos >= 0) s.pos -= s.trackWidth;
+      s.track.style.transform = 'translate3d(' + s.pos.toFixed(2) + 'px, 0, 0)';
+    }
+    scrollBoost *= 0.94;
+    if (scrollBoost < 0.01) scrollBoost = 0;
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('scroll', function() {
+    var delta = Math.abs(window.scrollY - lastScrollY);
+    lastScrollY = window.scrollY;
+    scrollBoost = Math.min(scrollBoost + delta * 0.15, 8);
+  }, { passive: true });
+
+  function start() {
+    measure();
+    requestAnimationFrame(tick);
+  }
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start);
+
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(measure, 200);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Poster Wheel",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Source collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Poster Wheel",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

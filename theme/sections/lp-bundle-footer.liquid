@@ -1,0 +1,50 @@
+<div class="lp-page-wrap">
+  <div class="lp-bundle-footer">
+    <div class="lp-bundle-footer__logo">{{ section.settings.logo_text }}</div>
+    <div class="lp-bundle-footer__copy">{{ section.settings.copyright }}</div>
+  </div>
+</div>
+
+<style>
+  .lp-bundle-footer {
+    background: var(--lp-black);
+    padding: 16px;
+    text-align: center;
+    max-width: 390px;
+    margin: 0 auto;
+  }
+  .lp-bundle-footer__logo {
+    font-family: var(--lp-font-head);
+    font-size: 16px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .lp-bundle-footer__copy { font-size: 11px; color: #666; }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "Golf Print Club"
+    },
+    {
+      "type": "text",
+      "id": "copyright",
+      "label": "Copyright text",
+      "default": "© Golf Print Club 2026 · Privacy · Terms · Contact"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Footer"
+    }
+  ]
+}
+{% endschema %}

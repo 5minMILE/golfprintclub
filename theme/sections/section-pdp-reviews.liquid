@@ -1,0 +1,178 @@
+<div class="v1-reviews">
+  <h2 class="v1-sh">{{ section.settings.heading }}</h2>
+  <div class="v1-rv-summary">
+    <div class="v1-rv-left">
+      <div class="v1-rv-stars-big">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="v1-rv-score">{{ section.settings.score }}</div>
+    </div>
+    <div class="v1-rv-bars">
+      <div class="v1-rv-bar-row"><span class="v1-rv-bar-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><div class="v1-rv-bar-track"><div class="v1-rv-bar-fill" style="width:{{ section.settings.bar_5 }}%"></div></div><span class="v1-rv-bar-ct">{{ section.settings.count_5 }}</span></div>
+      <div class="v1-rv-bar-row"><span class="v1-rv-bar-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span><div class="v1-rv-bar-track"><div class="v1-rv-bar-fill" style="width:{{ section.settings.bar_4 }}%"></div></div><span class="v1-rv-bar-ct">{{ section.settings.count_4 }}</span></div>
+      <div class="v1-rv-bar-row"><span class="v1-rv-bar-stars">&#9733;&#9733;&#9733;&#9734;&#9734;</span><div class="v1-rv-bar-track"><div class="v1-rv-bar-fill" style="width:{{ section.settings.bar_3 }}%"></div></div><span class="v1-rv-bar-ct">{{ section.settings.count_3 }}</span></div>
+    </div>
+  </div>
+  <div class="v1-rv-list">
+    {% for block in section.blocks %}
+      {% if block.type == 'review' %}
+        <div class="v1-rv-card" {{ block.shopify_attributes }}>
+          <div class="v1-rv-head">
+            <div>
+              <div class="v1-rv-card-stars">{% for i in (1..5) %}{% if i <= block.settings.stars %}&#9733;{% else %}&#9734;{% endif %}{% endfor %}</div>
+              <div class="v1-rv-name">{{ block.settings.name }}</div>
+            </div>
+            <div class="v1-rv-date">{{ block.settings.date }}</div>
+          </div>
+          <div class="v1-rv-title">{{ block.settings.title }}</div>
+          <div class="v1-rv-body">&ldquo;{{ block.settings.body }}&rdquo;</div>
+          <div class="v1-rv-meta">{{ block.settings.meta }}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.v1-reviews{padding:10px 0;background:#fff;border-top:8px solid #F3F3F3}
+.v1-rv-summary{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:0 16px}
+.v1-rv-left{text-align:center;flex-shrink:0;min-width:60px}
+.v1-rv-stars-big{color:#3D6E2E;font-size:20px;letter-spacing:1px}
+.v1-rv-score{font-family:var(--FONT-STACK-HEADING);font-size:47px;font-weight:900;line-height:1.1}
+.v1-rv-bars{flex:1}
+.v1-rv-bar-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.v1-rv-bar-stars{color:#3D6E2E;font-size:7px;flex-shrink:0;width:35px}
+.v1-rv-bar-track{flex:1;height:6px;background:#eee;border-radius:3px;overflow:hidden}
+.v1-rv-bar-fill{height:100%;background:#3D6E2E;border-radius:3px}
+.v1-rv-bar-ct{font-size:8px;color:#888;width:14px;text-align:right}
+.v1-rv-list{display:flex;flex-direction:column;padding:0 16px}
+.v1-rv-card{padding:14px 0;border-top:1px solid #E4E4E4}
+.v1-rv-head{display:flex;justify-content:space-between;margin-bottom:4px}
+.v1-rv-card-stars{color:#3D6E2E;font-size:9px}
+.v1-rv-name{font-weight:700;font-size:10px}
+.v1-rv-date{font-size:8px;color:#888}
+.v1-rv-title{font-weight:700;font-size:11px;margin:2px 0}
+.v1-rv-body{font-size:10px;color:#555;line-height:1.5}
+.v1-rv-meta{margin-top:4px;font-size:8px;color:#3D6E2E}
+.v1-sh{font-family:var(--FONT-STACK-HEADING);font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:0.02em;margin:0 0 10px;color:#0A0A0A;padding:0 16px}
+</style>
+
+{% schema %}
+{
+  "name": "PDP Reviews",
+  "class": "section-pdp-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Golfers Say"
+    },
+    {
+      "type": "text",
+      "id": "score",
+      "label": "Score",
+      "default": "4.81"
+    },
+    {
+      "type": "range",
+      "id": "bar_5",
+      "label": "5-star bar %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 85
+    },
+    {
+      "type": "text",
+      "id": "count_5",
+      "label": "5-star count",
+      "default": "13"
+    },
+    {
+      "type": "range",
+      "id": "bar_4",
+      "label": "4-star bar %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "count_4",
+      "label": "4-star count",
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "bar_3",
+      "label": "3-star bar %",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "count_3",
+      "label": "3-star count",
+      "default": "0"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name",
+          "default": "Reviewer"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "01/01/2026"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title",
+          "default": "Great product!"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review body"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Meta (height, size, etc.)",
+          "default": "Height 5'10\" · Size M · ✓ Recommends"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP Reviews",
+      "blocks": [
+        { "type": "review", "settings": { "stars": 5, "name": "Logan R.", "date": "02/18/2026", "title": "Best golf posters!", "body": "I have had many different shorts from other brands but have never found any this good at this affordable of a price.", "meta": "Height 6'0\" · Size L · Runs small · ✓ Recommends" } },
+        { "type": "review", "settings": { "stars": 4, "name": "Matteo", "date": "03/03/2026", "title": "not too shabby", "body": "They fit nice and snug, just would say to have a tighter fit on the thigh.", "meta": "Height 5'9\" · Size S · Golf · ✓ Recommends" } },
+        { "type": "review", "settings": { "stars": 5, "name": "Sarah K.", "date": "01/25/2026", "title": "Perfect for track workouts", "body": "These stay put during sprints and the compression is actually supportive without being too tight. Best golf golf posters I own.", "meta": "Height 5'6\" · Size M · Track · ✓ Recommends" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

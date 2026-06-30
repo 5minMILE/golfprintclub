@@ -1,0 +1,265 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.landing-page",
+  "sections": {
+    "nav": {
+      "type": "lp-bundle-nav",
+      "settings": {
+        "logo_text": "Golf Print Club",
+        "badge_text": "🔒 Secure Checkout"
+      }
+    },
+    "hero": {
+      "type": "lp-bundle-hero",
+      "settings": {
+        "eyebrow": "Limited Offer",
+        "heading_line1": "3 Pairs.",
+        "heading_line2": "$120.",
+        "subheading": "Buy any 2 MD Golf Posters, get a 3rd completely free. Mix and match any design.",
+        "rating_text": "4.81 · 4,000+ golfers wearing Golf Print Club",
+        "button_text": "Claim My Bundle →",
+        "fine_print": "Free shipping on orders over $125"
+      }
+    },
+    "images": {
+      "type": "lp-bundle-images",
+      "blocks": {
+        "img1": {
+          "type": "grid_image",
+          "settings": {
+            "label": "Design 1"
+          }
+        },
+        "img2": {
+          "type": "grid_image",
+          "settings": {
+            "label": "Design 2"
+          }
+        },
+        "img3": {
+          "type": "grid_image",
+          "settings": {
+            "label": "Design 3"
+          }
+        },
+        "img4": {
+          "type": "grid_image",
+          "settings": {
+            "label": "Design 4"
+          }
+        }
+      },
+      "block_order": [
+        "img1",
+        "img2",
+        "img3",
+        "img4"
+      ],
+      "settings": {}
+    },
+    "value": {
+      "type": "lp-bundle-value",
+      "blocks": {
+        "v1": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🗓",
+            "title": "Train every day",
+            "description": "Rotate 3 pairs and never repeat before wash day. Serious golfers train 5–6 days a week."
+          }
+        },
+        "v2": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "💰",
+            "title": "$40 per pair",
+            "description": "vs. $90 at Nike, $120+ at Lululemon. Same race-day performance, less brand tax."
+          }
+        },
+        "v3": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "🎨",
+            "title": "Mix and match designs",
+            "description": "7 designs. Pick any 3. Camo, Statue of Liberty, Cotton Candy — stand out at the track."
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3"
+      ],
+      "settings": {
+        "heading": "Why buy 3?"
+      }
+    },
+    "configurator": {
+      "type": "lp-bundle-configurator",
+      "blocks": {
+        "pair1": {
+          "type": "pair",
+          "settings": {
+            "label": "Pair 1",
+            "price": "$60",
+            "is_free": false,
+            "sizes": "S, M, L",
+            "color_1": "#1a1a1a",
+            "color_2": "#2255bb",
+            "color_3": "#cc4499",
+            "color_4": "#333333",
+            "color_5": "#8B7355",
+            "color_6": "#4a7a4a",
+            "color_7": "#cc3300"
+          }
+        },
+        "pair2": {
+          "type": "pair",
+          "settings": {
+            "label": "Pair 2",
+            "price": "$60",
+            "is_free": false,
+            "sizes": "S, M, L",
+            "color_1": "#2255bb",
+            "color_2": "#1a1a1a",
+            "color_3": "#cc4499",
+            "color_4": "#333333",
+            "color_5": "#8B7355",
+            "color_6": "#4a7a4a",
+            "color_7": "#cc3300"
+          }
+        },
+        "pair3": {
+          "type": "pair",
+          "settings": {
+            "label": "Pair 3",
+            "is_free": true,
+            "sizes": "S, M, L",
+            "color_1": "#333333",
+            "color_2": "#1a1a1a",
+            "color_3": "#2255bb",
+            "color_4": "#cc4499",
+            "color_5": "#8B7355",
+            "color_6": "#4a7a4a",
+            "color_7": "#cc3300"
+          }
+        }
+      },
+      "block_order": [
+        "pair1",
+        "pair2",
+        "pair3"
+      ],
+      "settings": {
+        "heading": "Build Your Bundle",
+        "subheading": "Choose your 3 designs and size. Mix any way you want.",
+        "summary_line1_label": "Pair 1 + Pair 2",
+        "summary_line1_value": "$120",
+        "summary_line2_label": "Pair 3 (Free)",
+        "summary_line2_value": "-$60",
+        "total_price": "$120",
+        "savings_text": "You save $60 · Free shipping",
+        "button_text": "Add Bundle to Cart",
+        "fine_print": "Easy Exchanges · Secure Checkout · 4,000+ golfers"
+      }
+    },
+    "reviews": {
+      "type": "lp-bundle-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "title": "Best golf posters!",
+            "body": "\"Never found any this good at this affordable of a price.\"",
+            "meta": "Logan R. · 6'0\" · Size L · ✓ Verified"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "title": "Love these!",
+            "body": "\"Ordered 2 designs and both fit perfectly for track workouts.\"",
+            "meta": "Joan R. · ✓ Verified Purchase"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2"
+      ],
+      "settings": {
+        "heading": "Golfers love the bundle"
+      }
+    },
+    "comparison": {
+      "type": "lp-bundle-comparison",
+      "blocks": {
+        "c1": {
+          "type": "competitor",
+          "settings": {
+            "name": "Big Brands",
+            "price": "$270+ for 3",
+            "description": "$90/pair at Nike. You pay for the logo, not the performance.",
+            "bar_percent": 45,
+            "highlight": false,
+            "chips": "⚠ $90/pair|⚠ Safe designs"
+          }
+        },
+        "c2": {
+          "type": "competitor",
+          "settings": {
+            "name": "Golf Print Club B2G1",
+            "price": "$120 for 3",
+            "description": "Race-ready performance. $40/pair. Designs built for competitive golfers.",
+            "bar_percent": 90,
+            "highlight": true,
+            "chips": "✓ $40/pair|✓ Race-ready fit|✓ Unique designs"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2"
+      ],
+      "settings": {
+        "heading": "How the bundle stacks up"
+      }
+    },
+    "final_cta": {
+      "type": "lp-bundle-final-cta",
+      "settings": {
+        "primary_text": "Claim My Bundle — $120",
+        "secondary_text": "Buy 1 Pair Instead — $60",
+        "fine_print": "Free US shipping over $125 · Easy exchanges"
+      }
+    },
+    "footer": {
+      "type": "lp-bundle-footer",
+      "settings": {
+        "logo_text": "Golf Print Club",
+        "copyright": "© Golf Print Club 2026 · Privacy · Terms · Contact"
+      }
+    }
+  },
+  "order": [
+    "nav",
+    "hero",
+    "images",
+    "value",
+    "configurator",
+    "reviews",
+    "comparison",
+    "final_cta",
+    "footer"
+  ]
+}

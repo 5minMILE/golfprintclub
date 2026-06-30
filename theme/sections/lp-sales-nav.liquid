@@ -1,0 +1,67 @@
+{% render 'lp-base-styles' %}
+<div class="lp-page-wrap">
+  <div class="lp-sales-nav">
+    {% if section.settings.logo_image != blank %}
+      <img class="lp-sales-nav__logo-img" src="{{ section.settings.logo_image | image_url: width: 400 }}" alt="{{ section.settings.logo_text | default: shop.name }}" loading="eager">
+    {% else %}
+      <div class="lp-sales-nav__logo">{{ section.settings.logo_text }}</div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .lp-sales-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-bottom: 2px solid var(--lp-black);
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-sales-nav__logo {
+    font-family: var(--lp-font-head);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .lp-sales-nav__logo-img {
+    height: {{ section.settings.logo_height }}px;
+    width: auto;
+    display: block;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Sales — Nav",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_height",
+      "label": "Logo height (px)",
+      "min": 16,
+      "max": 60,
+      "step": 2,
+      "default": 30
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text (fallback)",
+      "default": "Golf Print Club"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Sales — Nav"
+    }
+  ]
+}
+{% endschema %}

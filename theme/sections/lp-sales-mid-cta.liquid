@@ -1,0 +1,49 @@
+<div class="lp-page-wrap">
+  <div class="lp-sales-mid-cta">
+    <a href="{{ section.settings.button_url }}" class="lp-btn-primary" style="margin-bottom:8px;">{{ section.settings.button_text }}</a>
+    <div class="lp-sales-mid-cta__sub">{{ section.settings.subtext }}</div>
+  </div>
+</div>
+
+<style>
+  .lp-sales-mid-cta {
+    padding: 20px 16px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-sales-mid-cta__sub {
+    text-align: center;
+    font-size: 11px;
+    color: var(--lp-mid);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Sales — Mid CTA",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add to Cart — Buy 2 Get 1 Free"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "$60 each · $40/each when you buy 2"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Sales — Mid CTA"
+    }
+  ]
+}
+{% endschema %}

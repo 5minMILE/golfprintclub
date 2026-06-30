@@ -1,0 +1,72 @@
+{%- comment -%}
+  SEO head additions:
+  - Noindex for filtered/sorted collection & search pages
+  - Pagination rel prev/next link tags in <head>
+{%- endcomment -%}
+
+{%- liquid
+  assign current_url = canonical_url | default: request.origin
+  assign has_filter_params = false
+
+  if current_url contains 'filter.' or current_url contains 'sort_by=' or current_url contains 'constraint='
+    assign has_filter_params = true
+  endif
+-%}
+
+{%- if has_filter_params -%}
+  <meta name="robots" content="noindex, follow">
+{%- endif -%}
+
+{%- comment -%} Pagination rel prev/next for paginated pages {%- endcomment -%}
+{%- if current_page and current_page > 1 -%}
+  {%- liquid
+    assign prev_page = current_page | minus: 1
+    assign base_url = canonical_url | split: '?' | first
+    if prev_page == 1
+      assign prev_url = base_url
+    else
+      assign prev_url = base_url | append: '?page=' | append: prev_page
+    endif
+  -%}
+  <link rel="prev" href="{{ prev_url }}">
+{%- endif -%}
+
+{%- comment -%} We can detect if there's likely a next page by checking the URL pattern {%- endcomment -%}
+{%- if current_url contains 'page=' -%}
+  {%- liquid
+    assign next_page = current_page | plus: 1
+    assign base_url = canonical_url | split: '?' | first
+    assign next_url = base_url | append: '?page=' | append: next_page
+  -%}
+  <link rel="next" href="{{ next_url }}">
+{%- endif -%}
+
+{%- comment -%}
+  Open Graph + Twitter Card meta. The theme ships a social-meta snippet but it was
+  never wired into the head, so link/social previews were missing a title, type,
+  description, and twitter card. og:image is already emitted by the theme, so it is
+  intentionally NOT repeated here (avoids duplicate og:image tags).
+{%- endcomment -%}
+{%- liquid
+  assign og_title = page_title | default: shop.name
+  assign og_url = canonical_url | default: request.origin
+  assign og_type = 'website'
+  if request.page_type == 'product'
+    assign og_type = 'product'
+  elsif request.page_type == 'article'
+    assign og_type = 'article'
+  endif
+  if template.name == 'index'
+    assign og_desc = 'Golf apparel and golf posters for competitors — golf posters, golf posters, golf posters, and premium golf wall art. Designed by golfers, priced for golfers.'
+  else
+    assign og_desc = page_description | default: shop.description | default: shop.name
+  endif
+-%}
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:title" content="{{ og_title | escape }}">
+<meta property="og:description" content="{{ og_desc | escape }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title | escape }}">
+<meta name="twitter:description" content="{{ og_desc | escape }}">

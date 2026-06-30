@@ -1,0 +1,91 @@
+<div class="lp-page-wrap">
+  <div class="lp-bundle-value">
+    <div class="lp-sec-head" style="text-align:center;margin-bottom:16px;">{{ section.settings.heading }}</div>
+    <div class="lp-bundle-value__cards">
+      {% for block in section.blocks %}
+        <div class="lp-bundle-value__card" {{ block.shopify_attributes }}>
+          <div class="lp-bundle-value__icon">{{ block.settings.icon }}</div>
+          <div>
+            <div class="lp-bundle-value__title">{{ block.settings.title }}</div>
+            <div class="lp-bundle-value__desc">{{ block.settings.description }}</div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .lp-bundle-value {
+    padding: 20px 16px;
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-bundle-value__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .lp-bundle-value__card {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px;
+    background: var(--lp-gray);
+    border-radius: 8px;
+  }
+  .lp-bundle-value__icon { font-size: 22px; flex-shrink: 0; }
+  .lp-bundle-value__title { font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+  .lp-bundle-value__desc { font-size: 12px; color: #555; line-height: 1.5; }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Value Props",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why buy 3?"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value_prop",
+      "name": "Value Prop",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🗓"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Train every day"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Rotate 3 pairs and never repeat before wash day. Serious golfers train 5–6 days a week."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Value Props",
+      "blocks": [
+        { "type": "value_prop", "settings": { "icon": "🗓", "title": "Train every day", "description": "Rotate 3 pairs and never repeat before wash day. Serious golfers train 5–6 days a week." } },
+        { "type": "value_prop", "settings": { "icon": "💰", "title": "$40 per pair", "description": "vs. $90 at Nike, $120+ at Lululemon. Same race-day performance, less brand tax." } },
+        { "type": "value_prop", "settings": { "icon": "🎨", "title": "Mix and match designs", "description": "7 designs. Pick any 3. Camo, Statue of Liberty, Cotton Candy — stand out at the track." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

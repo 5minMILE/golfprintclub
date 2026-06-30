@@ -1,0 +1,225 @@
+<!-- /sections/section-product-education.liquid -->
+{%- style -%}
+  #ProductEd--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  #ProductEd--{{ section.id }} {
+    padding-top: max(60px, var(--PT));
+    padding-bottom: max(60px, var(--PB));
+  }
+  #ProductEd--{{ section.id }} .product-ed__head {
+    max-width: 3000px;
+    margin: 0 50px 36px;
+    text-align: center;
+  }
+  #ProductEd--{{ section.id }} .product-ed__eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #3D6E2E;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  #ProductEd--{{ section.id }} .product-ed__heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 1000;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin: 0;
+  }
+  #ProductEd--{{ section.id }} .product-ed__inner {
+    max-width: 3000px;
+    margin: 0 50px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  #ProductEd--{{ section.id }} .product-ed__item-image {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: #F0F0F0;
+    overflow: hidden;
+  }
+  #ProductEd--{{ section.id }} .product-ed__item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #ProductEd--{{ section.id }} .product-ed__item-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 1000;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-top: 16px;
+  }
+  #ProductEd--{{ section.id }} .product-ed__item-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.55;
+    margin-top: 8px;
+    max-width: 42ch;
+  }
+  @media (max-width: 749px) {
+    #ProductEd--{{ section.id }} {
+      padding-top: max(40px, var(--PT));
+      padding-bottom: max(40px, var(--PB));
+    }
+    #ProductEd--{{ section.id }} .product-ed__head {
+      margin: 0 16px 24px;
+    }
+    #ProductEd--{{ section.id }} .product-ed__heading {
+      font-size: 22px;
+    }
+    #ProductEd--{{ section.id }} .product-ed__eyebrow {
+      font-size: 10px;
+    }
+    #ProductEd--{{ section.id }} .product-ed__inner {
+      margin: 0 16px;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    #ProductEd--{{ section.id }} .product-ed__item-image {
+      aspect-ratio: 4/5;
+    }
+    #ProductEd--{{ section.id }} .product-ed__item-title {
+      font-size: 16px;
+      margin-top: 12px;
+    }
+    #ProductEd--{{ section.id }} .product-ed__item-desc {
+      font-size: 12px;
+      margin-top: 6px;
+    }
+  }
+</style>
+
+<section id="ProductEd--{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="product-education">
+  <div class="product-ed__head">
+    <div class="product-ed__eyebrow">Engineered for real training</div>
+    <h2 class="product-ed__heading">{{ section.settings.heading | default: 'Built to disappear while you run' }}</h2>
+  </div>
+  <div class="product-ed__inner">
+    {%- for block in section.blocks -%}
+      <div class="product-ed__item" {{ block.shopify_attributes }}>
+        <div class="product-ed__item-image">
+          {%- if block.settings.image != blank -%}
+            {%- assign img = block.settings.image -%}
+            <img src="{{ img | image_url: width: 600 }}"
+              alt="{{ block.settings.title | escape }}"
+              width="{{ img.width }}"
+              height="{{ img.height }}"
+              loading="lazy">
+          {%- endif -%}
+        </div>
+        <div class="product-ed__item-title">{{ block.settings.title }}</div>
+        <div class="product-ed__item-desc">{{ block.settings.description }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Education",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built to disappear while you run"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Feature description text goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Education",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "No Ride Up",
+            "description": "Stays locked through 400m repeats, tempo runs, and everything between. No adjusting. Just golf."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "No Bounce Pocket",
+            "description": "Front waistband pocket holds your phone without movement. No arm band. No distraction."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Real Compression",
+            "description": "Actual muscle support - not fashion tights marketed as compression. You'll feel the difference."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

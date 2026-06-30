@@ -1,0 +1,57 @@
+{% render 'lp-base-styles' %}
+<div class="lp-page-wrap">
+  <div class="lp-bundle-nav">
+    <div class="lp-bundle-nav__logo">{{ section.settings.logo_text }}</div>
+    <div class="lp-bundle-nav__badge">{{ section.settings.badge_text }}</div>
+  </div>
+</div>
+
+<style>
+  .lp-bundle-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--lp-border);
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-bundle-nav__logo {
+    font-family: var(--lp-font-head);
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+  .lp-bundle-nav__badge {
+    font-size: 11px;
+    color: var(--lp-blue);
+    font-weight: 700;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Nav",
+  "settings": [
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "Golf Print Club"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text",
+      "default": "🔒 Secure Checkout"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Nav"
+    }
+  ]
+}
+{% endschema %}

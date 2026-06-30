@@ -1,0 +1,168 @@
+<div class="lp-page-wrap">
+  <div class="lp-bundle-compare">
+    <div class="lp-sec-head" style="margin-bottom:12px;">{{ section.settings.heading }}</div>
+
+    {% for block in section.blocks %}
+      <div class="lp-bundle-compare__card {% if block.settings.highlight %}lp-bundle-compare__card--highlight{% endif %}" {{ block.shopify_attributes }}>
+        <div class="lp-bundle-compare__header">
+          <div class="lp-bundle-compare__name {% if block.settings.highlight %}lp-bundle-compare__name--blue{% endif %}">{{ block.settings.name }}</div>
+          <div class="lp-bundle-compare__price {% if block.settings.highlight %}lp-bundle-compare__price--blue{% endif %}">{{ block.settings.price }}</div>
+        </div>
+        <div class="lp-bundle-compare__body">
+          <div class="lp-bundle-compare__desc">{{ block.settings.description }}</div>
+          <div class="lp-bundle-compare__bar">
+            <div class="lp-bundle-compare__track">
+              <div class="lp-bundle-compare__fill" style="width:{{ block.settings.bar_percent }}%;{% if block.settings.highlight %}background:var(--lp-blue);{% else %}background:#ccc;{% endif %}"></div>
+            </div>
+          </div>
+          <div class="lp-bundle-compare__chips">
+            {% assign chips = block.settings.chips | split: '|' %}
+            {% for chip in chips %}
+              {% assign trimmed = chip | strip %}
+              {% if trimmed != blank %}
+                <span class="lp-bundle-compare__chip {% if block.settings.highlight %}lp-bundle-compare__chip--good{% else %}lp-bundle-compare__chip--bad{% endif %}">{{ trimmed }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .lp-bundle-compare {
+    padding: 0 16px 20px;
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-bundle-compare__card {
+    border: 1px solid var(--lp-border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .lp-bundle-compare__card--highlight { border-color: var(--lp-blue); border-width: 2px; }
+  .lp-bundle-compare__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px 8px;
+  }
+  .lp-bundle-compare__name {
+    font-family: var(--lp-font-head);
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  .lp-bundle-compare__name--blue { color: var(--lp-blue); }
+  .lp-bundle-compare__price {
+    background: #f0f0f0;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .lp-bundle-compare__price--blue { background: rgba(0,123,255,0.08); color: var(--lp-blue); }
+  .lp-bundle-compare__body { padding: 0 14px 12px; }
+  .lp-bundle-compare__desc { font-size: 12px; color: #555; margin-bottom: 8px; line-height: 1.4; }
+  .lp-bundle-compare__track {
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 6px 0;
+  }
+  .lp-bundle-compare__fill { height: 100%; border-radius: 3px; }
+  .lp-bundle-compare__chips { margin-top: 6px; }
+  .lp-bundle-compare__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 12px;
+    margin: 3px 2px;
+  }
+  .lp-bundle-compare__chip--good {
+    border: 1px solid rgba(0,123,255,0.13);
+    color: var(--lp-blue);
+    background: rgba(0,123,255,0.03);
+  }
+  .lp-bundle-compare__chip--bad {
+    border: 1px solid rgba(255,0,0,0.13);
+    color: #cc0000;
+    background: rgba(255,0,0,0.03);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Comparison",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How the bundle stacks up"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "competitor",
+      "name": "Comparison Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Brand name",
+          "default": "Big Brands"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price label",
+          "default": "$270+ for 3"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "$90/pair at Nike. You pay for the logo, not the performance."
+        },
+        {
+          "type": "range",
+          "id": "bar_percent",
+          "label": "Progress bar %",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "default": 45
+        },
+        {
+          "type": "checkbox",
+          "id": "highlight",
+          "label": "Highlight (blue border)",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "chips",
+          "label": "Chip labels (pipe-separated)",
+          "default": "⚠ $90/pair|⚠ Safe designs"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Comparison",
+      "blocks": [
+        { "type": "competitor", "settings": { "name": "Big Brands", "price": "$270+ for 3", "description": "$90/pair at Nike. You pay for the logo, not the performance.", "bar_percent": 45, "highlight": false, "chips": "⚠ $90/pair|⚠ Safe designs" } },
+        { "type": "competitor", "settings": { "name": "Golf Print Club B2G1", "price": "$120 for 3", "description": "Race-ready performance. $40/pair. Designs built for competitive golfers.", "bar_percent": 90, "highlight": true, "chips": "✓ $40/pair|✓ Race-ready fit|✓ Unique designs" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

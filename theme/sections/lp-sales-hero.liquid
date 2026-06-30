@@ -1,0 +1,152 @@
+<div class="lp-page-wrap">
+  <div class="lp-sales-hero" {% if section.settings.image != blank %}style="background-image:url('{{ section.settings.image | image_url: width: 780 }}'); background-position: center {{ section.settings.image_position }}%;"{% endif %}>
+    <div class="lp-sales-hero__overlay"></div>
+    <div class="lp-sales-hero__content">
+      <div class="lp-sales-hero__eyebrow">{{ section.settings.eyebrow }}</div>
+      <h1 class="lp-sales-hero__h1">{{ section.settings.heading_start }} <em>{{ section.settings.heading_highlight }}</em></h1>
+      <div class="lp-sales-hero__sub">{{ section.settings.subheading }}</div>
+      <div class="lp-sales-hero__rating">
+        <div class="lp-stars" style="font-size:16px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="lp-sales-hero__rating-text">{{ section.settings.rating_text }}</div>
+      </div>
+      <a href="{{ section.settings.button_url }}" class="lp-btn-primary" style="margin-bottom:8px;">{{ section.settings.button_text }}</a>
+      <div class="lp-sales-hero__fine">{{ section.settings.fine_print }}</div>
+    </div>
+    <div class="lp-sales-hero__spacer"></div>
+  </div>
+</div>
+
+<style>
+  .lp-sales-hero {
+    position: relative;
+    margin: 0 auto;
+    background-color: var(--lp-black);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 50%;
+  }
+  .lp-sales-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0) 100%);
+    z-index: 1;
+  }
+  .lp-sales-hero__content {
+    position: relative;
+    z-index: 2;
+    padding: 20px 16px 24px;
+  }
+  .lp-sales-hero__spacer {
+    aspect-ratio: 1 / 1;
+    width: 100%;
+  }
+  .lp-sales-hero__eyebrow {
+    font-family: var(--lp-font-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lp-blue);
+    margin-bottom: 6px;
+  }
+  .lp-sales-hero__h1 {
+    font-family: var(--lp-font-head);
+    font-size: 38px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+  .lp-sales-hero__h1 em { color: var(--lp-blue); font-style: normal; }
+  .lp-sales-hero__sub {
+    font-size: 14px;
+    color: #ddd;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .lp-sales-hero__rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .lp-sales-hero__rating-text { font-size: 13px; color: #ddd; }
+  .lp-sales-hero__fine { text-align: center; font-size: 11px; color: #ccc; }
+</style>
+
+{% schema %}
+{
+  "name": "LP Sales — Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "range",
+      "id": "image_position",
+      "label": "Image focal point (vertical %)",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "MD Golf Posters · Buy 2 Get 1 Free"
+    },
+    {
+      "type": "text",
+      "id": "heading_start",
+      "label": "Heading (first part)",
+      "default": "Built for golfers who"
+    },
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading (highlighted)",
+      "default": "run hard."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Track sessions. Tempo runs. Race day. The half tight that doesn't ride up, bounce, or fall apart when pace goes up."
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.81 · 16 reviews · 4,000+ golfers"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Get My Pair — $40/each (B2G1)"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Free US shipping over $125"
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Sales — Hero"
+    }
+  ]
+}
+{% endschema %}

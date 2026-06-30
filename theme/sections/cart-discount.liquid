@@ -1,0 +1,42 @@
+{% schema %}
+{
+  "name": "Cart Discount Code",
+  "tag": "section",
+  "presets": [
+    {
+      "name": "Cart Discount Code"
+    }
+  ]
+}
+{% endschema %}
+
+<div>
+  <label for="discount_code" style="display: block; margin-bottom: 8px; font-size: 14px;">Discount code?</label>
+  <form id="discount-form" style="display: flex; gap: 12px; align-items: center;">
+    <input
+      type="text"
+      id="discount_code"
+      name="discount"
+      placeholder="Enter code"
+      required
+      style="display:block; width: 100%; padding: 10px; border: 1px solid #ccc;"
+    >
+    <button
+      type="submit"
+      style="padding: 12px 24px; background-color: black; color: white; font-weight: 700; font-size: 14px; border-radius: 9999px; border: none; cursor: pointer; font-family: inherit;"
+    >
+      APPLY
+    </button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('discount-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const code = document.getElementById('discount_code').value.trim();
+    if (!code) return;
+
+    const discountUrl = `/discount/${encodeURIComponent(code)}?redirect=/cart`;
+    window.location.href = discountUrl;
+  });
+</script>

@@ -1,0 +1,336 @@
+<!-- /sections/section-wf-faq.liquid -->
+<style>
+  .faq-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color | default: '#FBFBFB' }};
+  }
+  .faq-{{ section.id }} .faq-inner {
+    max-width: 3000px;
+    margin: 0 50px;
+    padding: 0;
+  }
+  @media (min-width: 3001px) {
+    .faq-{{ section.id }} .faq-inner {
+      margin: 0 auto;
+    }
+  }
+  .faq-{{ section.id }} .faq-head {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+  .faq-{{ section.id }} .faq-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: #3D6E2E;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    display: block;
+  }
+  .faq-{{ section.id }} .faq-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 1000;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    margin: 0 0 10px;
+  }
+  .faq-{{ section.id }} .faq-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    line-height: 1.5;
+    margin: 0 auto;
+    max-width: 640px;
+  }
+  /* Single column, full width. (display:block overrides the theme's global
+     .faq-list flex class, which was wrapping the items into two columns.) */
+  .faq-{{ section.id }} .faq-list {
+    display: block !important;
+    max-width: none;
+    width: 100%;
+    margin: 0;
+  }
+  .faq-{{ section.id }} .faq-item {
+    border-bottom: 1px solid #E0E0E0;
+    padding: 0;
+  }
+  .faq-{{ section.id }} .faq-item:first-of-type {
+    border-top: 1px solid #E0E0E0;
+  }
+  .faq-{{ section.id }} .faq-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 22px 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: #0A0A0A;
+    line-height: 1.35;
+    text-transform: none;
+    transition: color 0.15s ease;
+  }
+  .faq-{{ section.id }} .faq-item summary:hover,
+  .faq-{{ section.id }} .faq-item[open] summary {
+    color: #0A0A0A;
+  }
+  .faq-{{ section.id }} .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-{{ section.id }} .faq-item summary::marker {
+    display: none;
+  }
+  .faq-{{ section.id }} .faq-toggle {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    position: relative;
+    transition: transform 0.25s ease;
+  }
+  .faq-{{ section.id }} .faq-toggle::before,
+  .faq-{{ section.id }} .faq-toggle::after {
+    content: '';
+    position: absolute;
+    background: currentColor;
+    top: 50%;
+    left: 50%;
+    transition: transform 0.25s ease;
+  }
+  .faq-{{ section.id }} .faq-toggle::before {
+    width: 14px;
+    height: 2px;
+    transform: translate(-50%, -50%);
+  }
+  .faq-{{ section.id }} .faq-toggle::after {
+    width: 2px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+  }
+  .faq-{{ section.id }} .faq-item[open] .faq-toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+    opacity: 0;
+  }
+  .faq-{{ section.id }} .faq-answer {
+    padding: 0 4px 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+    line-height: 1.65;
+  }
+  .faq-{{ section.id }} .faq-answer p {
+    margin: 0 0 10px;
+  }
+  .faq-{{ section.id }} .faq-answer p:last-child {
+    margin-bottom: 0;
+  }
+  .faq-{{ section.id }} .faq-cta-row {
+    text-align: center;
+    margin-top: 36px;
+  }
+  .faq-{{ section.id }} .faq-cta {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #3D6E2E;
+    border: none;
+    padding: 14px 32px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .faq-{{ section.id }} .faq-cta:hover {
+    background: #0A0A0A;
+    color: #fff;
+  }
+  @media (max-width: 749px) {
+    .faq-{{ section.id }} {
+      padding: 32px 0;
+    }
+    .faq-{{ section.id }} .faq-inner {
+      margin: 0 18px;
+      padding: 0;
+    }
+    .faq-{{ section.id }} .faq-heading {
+      font-size: 22px;
+    }
+    .faq-{{ section.id }} .faq-item summary {
+      font-size: 14px;
+      padding: 18px 2px;
+      gap: 12px;
+    }
+    .faq-{{ section.id }} .faq-answer {
+      font-size: 13px;
+      padding: 0 2px 18px;
+    }
+  }
+</style>
+
+<section class="faq-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="faq">
+  <div class="faq-inner">
+    <div class="faq-head">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="faq-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="faq-heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="faq-sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="faq-list">
+        {%- for block in section.blocks -%}
+          <details class="faq-item" {{ block.shopify_attributes }}>
+            <summary>
+              <span>{{ block.settings.question }}</span>
+              <span class="faq-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-answer">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="faq-cta-row">
+        <a href="{{ section.settings.cta_link | default: '/pages/faq' }}" class="faq-cta">{{ section.settings.cta_text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{%- comment -%}
+  FAQPage JSON-LD — unlocks Google's FAQ accordion rich snippets in
+  search results. Each block becomes one Question/Answer pair.
+{%- endcomment -%}
+{%- if section.blocks.size > 0 -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {%- for block in section.blocks -%}
+        {
+          "@type": "Question",
+          "name": {{ block.settings.question | strip_html | json }},
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": {{ block.settings.answer | strip_html | json }}
+          }
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Got questions?"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Quick answers to the things golfers ask us most."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Browse the full FAQ"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#FBFBFB"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 60
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Question goes here?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Answer goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "category": "Text",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Do your golf posters actually compress?", "answer": "Yes. Our golf posters use 4-way stretch fabric with real graduated compression — not just tight fabric marketed as compression. You'll feel the support around mile 5 and beyond." } },
+        { "type": "faq", "settings": { "question": "How do they fit?", "answer": "Standard true-to-size. Most golfers wear the same size in Golf Print Club as in Nike or Tracksmith. Between sizes? Size up for a more relaxed fit; size down for race-day." } },
+        { "type": "faq", "settings": { "question": "What's your return policy?", "answer": "30-day no-questions-asked returns. If they ride up, the pocket bounces, or they just don't feel right, send them back and we'll make it right." } },
+        { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "U.S. orders ship within 1-2 business days and arrive in 3-5 business days. Free shipping on orders $125+." } },
+        { "type": "faq", "settings": { "question": "Do you make gear for women?", "answer": "Yes. Most of our golf posters, shirts, and golf posters come in both men's and women's cuts. Check each product page for size and fit options." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

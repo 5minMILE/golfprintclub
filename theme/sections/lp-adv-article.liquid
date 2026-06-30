@@ -1,0 +1,422 @@
+<div class="lp-page-wrap">
+  <!-- Article header -->
+  <div class="lp-adv-article__header">
+    <div class="lp-adv-article__tags">
+      {% if section.settings.tag_text != blank %}
+        <span class="lp-adv-tag--blue">{{ section.settings.tag_text }}</span>
+      {% endif %}
+      {% if section.settings.read_time != blank %}
+        <span class="lp-adv-tag--gray">{{ section.settings.read_time }}</span>
+      {% endif %}
+    </div>
+    <h1 class="lp-adv-article__title">{{ section.settings.title }}</h1>
+    <div class="lp-adv-article__byline">{{ section.settings.byline }}</div>
+    <div class="lp-adv-article__meta">
+      <div class="lp-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="lp-adv-article__meta-text">{{ section.settings.rating_text }}</div>
+    </div>
+  </div>
+
+  <!-- Article body (blocks) -->
+  <div class="lp-adv-article__body">
+    {% for block in section.blocks %}
+      {% case block.type %}
+
+        {% when 'paragraph' %}
+          <p class="lp-adv-p" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+
+        {% when 'heading' %}
+          <h2 class="lp-adv-h2" {{ block.shopify_attributes }}>{{ block.settings.text }}</h2>
+
+        {% when 'pull_quote' %}
+          <div class="lp-adv-pull-quote" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+
+        {% when 'image' %}
+          <div class="lp-img-block lp-adv-inline-img" style="height:{{ block.settings.height }}px;" {{ block.shopify_attributes }}>
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 780 }}" alt="{{ block.settings.image.alt | default: block.settings.label }}" loading="lazy">
+            {% endif %}
+            <span class="lp-img-label">{{ block.settings.label }}</span>
+          </div>
+
+        {% when 'feature_item' %}
+          <div class="lp-adv-feature-item" {{ block.shopify_attributes }}>
+            <div class="lp-adv-feature-num">{{ block.settings.number }}</div>
+            <div class="lp-adv-feature-text">{{ block.settings.text }}</div>
+          </div>
+
+        {% when 'inline_review' %}
+          <div class="lp-adv-inline-review" {{ block.shopify_attributes }}>
+            <div class="lp-stars" style="font-size:12px;margin-bottom:6px;">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="lp-adv-ir-text">{{ block.settings.text }}</div>
+            <div class="lp-adv-ir-author">{{ block.settings.author }}</div>
+          </div>
+
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .lp-adv-article__header {
+    padding: 18px 16px 0;
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-adv-article__tags {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .lp-adv-tag--blue {
+    background: var(--lp-blue);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: var(--lp-font-head);
+  }
+  .lp-adv-tag--gray {
+    background: #f5f5f5;
+    color: #666;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .lp-adv-article__title {
+    font-family: var(--lp-font-head);
+    font-size: 28px;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .lp-adv-article__byline {
+    font-size: 11px;
+    color: var(--lp-mid);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .lp-adv-article__meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--lp-border);
+  }
+  .lp-adv-article__meta-text { font-size: 12px; color: var(--lp-mid); }
+  .lp-adv-article__body {
+    padding: 14px 16px;
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-adv-p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #333;
+    margin-bottom: 14px;
+  }
+  .lp-adv-h2 {
+    font-family: var(--lp-font-head);
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin: 20px 0 10px;
+    line-height: 1.15;
+  }
+  .lp-adv-pull-quote {
+    border-left: 4px solid var(--lp-blue);
+    padding: 10px 14px;
+    margin: 16px 0;
+    background: #f0f6ff;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--lp-black);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .lp-adv-inline-img {
+    border-radius: 8px;
+    margin: 4px 0 14px;
+  }
+  .lp-adv-feature-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--lp-border);
+    align-items: flex-start;
+  }
+  .lp-adv-feature-item:last-of-type { border-bottom: none; }
+  .lp-adv-feature-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--lp-blue);
+    color: #fff;
+    font-family: var(--lp-font-head);
+    font-size: 14px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .lp-adv-feature-text { font-size: 13px; line-height: 1.5; color: #333; }
+  .lp-adv-inline-review {
+    background: var(--lp-gray);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 12px 0;
+  }
+  .lp-adv-ir-text {
+    font-size: 14px;
+    font-style: italic;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 6px;
+  }
+  .lp-adv-ir-author {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--lp-mid);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Adv — Article",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tag_text",
+      "label": "Category tag",
+      "default": "Gear"
+    },
+    {
+      "type": "text",
+      "id": "read_time",
+      "label": "Read time label",
+      "default": "5 min read"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Article title",
+      "default": "We stopped buying Nike tights. Here's why."
+    },
+    {
+      "type": "text",
+      "id": "byline",
+      "label": "Byline",
+      "default": "By Golf Print Club Team · March 2026"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.81 · 4,000+ golfers wearing Golf Print Club"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "paragraph",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Article paragraph text goes here.</p>"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Heading text",
+          "default": "Section Heading"
+        }
+      ]
+    },
+    {
+      "type": "pull_quote",
+      "name": "Pull Quote",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Quote text",
+          "default": "\"I couldn't justify $110 for shorts that ride up at mile 2. There had to be something built for how I actually train.\""
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Inline Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Placeholder label",
+          "default": "Comparison Photo"
+        },
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height (px)",
+          "min": 100,
+          "max": 400,
+          "step": 10,
+          "default": 180
+        }
+      ]
+    },
+    {
+      "type": "feature_item",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "1"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Feature text",
+          "default": "<p><strong>No ride-up.</strong> Full stride, every rep.</p>"
+        }
+      ]
+    },
+    {
+      "type": "inline_review",
+      "name": "Inline Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Review text",
+          "default": "\"I have had many different shorts from other brands but have never found any this good at this affordable of a price.\""
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "— Logan R., 6'0\" · Size L · Verified Purchase"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Adv — Article",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>If you've been golf competitively for more than a year, you've probably spent $70–$120 on a pair of tights from Nike, Lululemon, or 2XU. And if you're honest — they're fine. But fine isn't what you're training for.</p>"
+          }
+        },
+        {
+          "type": "pull_quote",
+          "settings": {
+            "text": "\"I couldn't justify $110 for shorts that ride up at mile 2. There had to be something built for how I actually train.\""
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "text": "The problem with big brand golf wall art"
+          }
+        },
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Big brands design for the broadest possible market. That means safe colorways, conservative fits, and price tags padded by licensing deals and retail overhead. Competitive golfers — the ones doing track workouts at 6am — aren't their priority.</p>"
+          }
+        },
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Golf Print Club started because of that exact frustration. A brand built specifically for the golfer who runs hard, trains often, and wants gear that can keep up.</p>"
+          }
+        },
+        {
+          "type": "image",
+          "settings": {
+            "label": "Comparison Photo",
+            "height": 180
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "text": "What actually matters in a half tight"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "number": "1",
+            "text": "<p><strong>No ride-up.</strong> Full stride, every rep. The MD Golf Posters stay locked at the thigh through tempo runs and track intervals.</p>"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "number": "2",
+            "text": "<p><strong>Real compression</strong> — not the kind that just feels tight. Ribbed stretch fabric that supports without restricting turnover.</p>"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "number": "3",
+            "text": "<p><strong>A pocket that actually works.</strong> Rear bounce-free pocket holds your phone through intervals. No bouncing, no adjusting.</p>"
+          }
+        },
+        {
+          "type": "feature_item",
+          "settings": {
+            "number": "4",
+            "text": "<p><strong>Designs you won't see everywhere.</strong> Camo, Statue of Liberty, Cotton Candy — gear that looks as competitive as your training.</p>"
+          }
+        },
+        {
+          "type": "inline_review",
+          "settings": {
+            "text": "\"I have had many different shorts from other brands but have never found any this good at this affordable of a price.\"",
+            "author": "— Logan R., 6'0\" · Size L · Verified Purchase"
+          }
+        },
+        {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>At $60 a pair — or $40 each with the buy 2 get 1 free deal — they're the most competitive-focused half tight on the market at a price that doesn't require a gear budget justification.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

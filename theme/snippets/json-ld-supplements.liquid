@@ -1,0 +1,239 @@
+{%- comment -%}
+  Supplementary JSON-LD for product pages.
+
+  Default Shopify product template (sections/product.liquid) already emits a full
+  Product schema (name, brand, offers, price, availability). For those pages this
+  snippet only ADDS the fields Shopify omits — shippingDetails + return policy —
+  merged into the existing Product entity via a shared @id.
+
+  Custom product templates (posters / print) do NOT render sections/product.liquid,
+  so they have NO base Product schema at all. For those we emit a COMPLETE Product
+  schema: name, image, brand, offers (price range + availability), shipping, returns,
+  and aggregateRating pulled from the real Judge.me badge metafield (so Google can
+  show review stars in organic results).
+{%- endcomment -%}
+
+{%- if template contains 'product' and product -%}
+  {%- assign canonical = shop.url | append: product.url -%}
+  {%- assign currency = cart.currency.iso_code | default: 'USD' -%}
+
+  {%- liquid
+    assign is_custom_template = false
+    if template.suffix contains 'poster' or template.suffix contains 'print' or template.suffix == 'graphic-tee-2'
+      assign is_custom_template = true
+    endif
+  -%}
+
+  {%- comment -%} Posters/print are made to order — no returns. Other products keep the 30-day policy. {%- endcomment -%}
+  {%- capture return_policy -%}
+    {%- if is_custom_template -%}
+      "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "US", "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted" }
+    {%- else -%}
+      "hasMerchantReturnPolicy": { "@type": "MerchantReturnPolicy", "applicableCountry": "US", "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow", "merchantReturnDays": 30, "returnMethod": "https://schema.org/ReturnByMail", "returnFees": "https://schema.org/FreeReturn" }
+    {%- endif -%}
+  {%- endcapture -%}
+
+  {%- capture shipping_and_returns -%}
+    "shippingDetails": [
+      {
+        "@type": "OfferShippingDetails",
+        "shippingRate": { "@type": "MonetaryAmount", "value": "6.00", "currency": {{ currency | json }} },
+        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "US" },
+        "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 2, "unitCode": "DAY" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 5, "maxValue": 6, "unitCode": "DAY" } }
+      },
+      {
+        "@type": "OfferShippingDetails",
+        "shippingRate": { "@type": "MonetaryAmount", "value": "0.00", "currency": {{ currency | json }} },
+        "shippingDestination": { "@type": "DefinedRegion", "addressCountry": "US" },
+        "eligibleTransactionVolume": { "@type": "PriceSpecification", "minValue": 125, "priceCurrency": {{ currency | json }} },
+        "deliveryTime": { "@type": "ShippingDeliveryTime", "handlingTime": { "@type": "QuantitativeValue", "minValue": 0, "maxValue": 2, "unitCode": "DAY" }, "transitTime": { "@type": "QuantitativeValue", "minValue": 5, "maxValue": 6, "unitCode": "DAY" } }
+      }
+    ],
+    {{ return_policy }}
+  {%- endcapture -%}
+
+  {%- if is_custom_template -%}
+    {%- liquid
+      assign avail = 'https://schema.org/OutOfStock'
+      if product.available
+        assign avail = 'https://schema.org/InStock'
+      endif
+      assign low_price = product.price_min | money_without_currency | replace: ',', '' | strip
+      assign high_price = product.price_max | money_without_currency | replace: ',', '' | strip
+      assign img_url = product.featured_image | image_url: width: 1200
+      unless img_url contains '://'
+        assign img_url = 'https:' | append: img_url
+      endunless
+
+      comment
+        AggregateRating intentionally disabled. The Judge.me badge metafield on this store
+        currently returns the same shop-wide count/rating for every product (verified
+        2026-06-20: all 21 posters report "60 reviews / 4.97"). Emitting that as
+        per-product data violates Google's structured-data policy and risks a manual
+        action. Re-enable ONLY after Judge.me is reconfigured to expose true per-product
+        reviewCount/ratingValue.
+      endcomment
+    -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": {{ canonical | json }},
+  "name": {{ product.title | json }},
+  "description": {{ product.description | strip_html | truncate: 300 | json }},
+  "image": {{ img_url | json }},
+  "sku": {{ product.selected_or_first_available_variant.sku | default: product.id | json }},
+  "brand": { "@type": "Brand", "name": {{ product.vendor | default: shop.name | json }} },
+  "offers": {
+    "@type": "AggregateOffer",
+    "url": {{ canonical | json }},
+    "priceCurrency": {{ currency | json }},
+    "lowPrice": {{ low_price | json }},
+    "highPrice": {{ high_price | json }},
+    "offerCount": {{ product.variants.size }},
+    "availability": {{ avail | json }},
+    {{ shipping_and_returns }}
+  }
+}
+</script>
+  {%- else -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": {{ canonical | json }},
+  "offers": {
+    "@type": "Offer",
+    "url": {{ canonical | json }},
+    "priceCurrency": {{ currency | json }},
+    {{ shipping_and_returns }}
+  }
+}
+</script>
+  {%- endif -%}
+
+  {%- comment -%}
+    BreadcrumbList for custom templates (posters/print/graphic-tee-2).
+    The standard template emits this via snippets/breadcrumbs.liquid, but custom
+    templates don't render product-title.liquid, so they get no breadcrumb schema.
+    Pick the canonical parent collection per template family.
+  {%- endcomment -%}
+  {%- if is_custom_template -%}
+    {%- liquid
+      assign parent_handle = 'golf-posters'
+      if template.suffix == 'graphic-tee-2'
+        assign parent_handle = 'graphic'
+      endif
+      assign parent_collection = collections[parent_handle]
+    -%}
+    {%- if parent_collection != empty and parent_collection.title != blank -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ parent_collection.title | json }}, "item": {{ shop.url | append: parent_collection.url | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ canonical | json }} }
+  ]
+}
+</script>
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- comment -%}
+  Collection page schema. The default theme emits no CollectionPage / ItemList /
+  BreadcrumbList for collections, so Google sees a plain HTML grid with no signal
+  about what category it is or which products it contains. Adding these unlocks
+  category-style rich results and helps internal link graph.
+
+  Emitted on the unfiltered, first page of any collection — filter pages get
+  noindex via seo-head.liquid so schema there is wasted.
+{%- endcomment -%}
+{%- if template contains 'collection' and collection and collection.handle != blank -%}
+  {%- liquid
+    assign coll_canonical = shop.url | append: collection.url
+    assign on_filter_or_sort = false
+    if canonical_url contains 'filter.' or canonical_url contains 'sort_by='
+      assign on_filter_or_sort = true
+    endif
+  -%}
+  {%- unless on_filter_or_sort -%}
+    {%- if current_page == blank or current_page == 1 -%}
+      {%- assign coll_desc = collection.description | strip_html | truncate: 300 -%}
+      {%- if coll_desc == blank -%}
+        {%- assign coll_desc = collection.title | append: ' from Golf Print Club. ' | append: collection.all_products_count | append: ' products available.' -%}
+      {%- endif -%}
+      {%- assign coll_image = collection.image | image_url: width: 1200 -%}
+      {%- if coll_image == blank and collection.products.first -%}
+        {%- assign coll_image = collection.products.first.featured_image | image_url: width: 1200 -%}
+      {%- endif -%}
+      {%- unless coll_image contains '://' -%}
+        {%- assign coll_image = 'https:' | append: coll_image -%}
+      {%- endunless -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": {{ coll_canonical | json }},
+  "url": {{ coll_canonical | json }},
+  "name": {{ collection.title | json }},
+  "description": {{ coll_desc | json }},
+  {%- if coll_image != blank and coll_image != 'https:' -%}
+  "image": {{ coll_image | json }},
+  {%- endif -%}
+  "isPartOf": { "@type": "WebSite", "url": {{ shop.url | json }}, "name": {{ shop.name | json }} },
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ collection.all_products_count }},
+    "itemListElement": [
+      {%- for p in collection.products limit: 50 -%}
+        {%- assign p_img = p.featured_image | image_url: width: 800 -%}
+        {%- unless p_img contains '://' -%}{%- assign p_img = 'https:' | append: p_img -%}{%- endunless -%}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.index }},
+          "url": {{ shop.url | append: p.url | json }},
+          "name": {{ p.title | json }}
+          {%- if p_img != blank and p_img != 'https:' -%}, "image": {{ p_img | json }}{%- endif -%}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ coll_canonical | json }} }
+  ]
+}
+</script>
+    {%- endif -%}
+  {%- endunless -%}
+{%- endif -%}
+
+{%- comment -%}
+  Article page BreadcrumbList. The Article entity itself is emitted by
+  sections/article.liquid (theme default, enhanced with dateModified + publisher
+  logo so Google's Article rich result requirements are satisfied). We only add
+  the BreadcrumbList here since the theme doesn't emit one for articles.
+{%- endcomment -%}
+{%- if template contains 'article' and article -%}
+  {%- assign article_canonical = shop.url | append: article.url -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": {{ shop.url | json }} },
+    { "@type": "ListItem", "position": 2, "name": {{ blog.title | default: 'Blog' | json }}, "item": {{ shop.url | append: blog.url | json }} },
+    { "@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ article_canonical | json }} }
+  ]
+}
+</script>
+{%- endif -%}

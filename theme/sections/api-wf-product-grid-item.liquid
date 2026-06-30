@@ -1,0 +1,226 @@
+{% comment %}
+  Renders a single product as a wireframe card via the section rendering API.
+  Used by section-wf-recent-products.liquid JS.
+{% endcomment %}
+
+<div data-api-content>
+  {%- if product.tags contains 'hide' -%}
+    {%- comment -%}Hidden product — render empty so JS skips it{%- endcomment -%}
+  {%- else -%}
+  {%- assign display_product = product -%}
+  {%- assign redirect_meta = product.metafields.custom.master_reference -%}
+  {%- if redirect_meta != blank -%}
+    {%- if redirect_meta.value and redirect_meta.value.handle -%}
+      {%- assign display_product = redirect_meta.value -%}
+    {%- else -%}
+      {%- assign redirect_value = redirect_meta.value | default: redirect_meta -%}
+      {%- assign redirect_parts = redirect_value | split: '/products/' -%}
+      {%- if redirect_parts.size > 1 -%}
+        {%- assign redirect_handle = redirect_parts[1] | split: '?' | first | split: '/' | first -%}
+        {%- if redirect_handle != blank and all_products[redirect_handle] -%}
+          {%- assign display_product = all_products[redirect_handle] -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- assign card_variant_color = product.options_by_name['Color'].values | first -%}
+  {%- assign card_variant_handle = card_variant_color | handleize -%}
+  {%- assign hover_image_url = '' -%}
+  {%- assign second_image_url = '' -%}
+  {%- assign match_1 = card_variant_handle | append: '-1' -%}
+  {%- assign match_2 = card_variant_handle | append: '-2' -%}
+  {%- for media in display_product.media -%}
+    {%- assign media_alt_handle = media.alt | handleize -%}
+    {%- if media_alt_handle == match_1 -%}
+      {%- assign hover_image_url = media | image_url: width: 600 -%}
+    {%- elsif media_alt_handle == match_2 -%}
+      {%- assign second_image_url = media | image_url: width: 600 -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  <div class="wf-card">
+    <a href="{{ product.url }}" class="wf-card__img"{% if hover_image_url != '' %} data-hover-src="{{ hover_image_url }}"{% endif %}{% if second_image_url != '' %} data-second-src="{{ second_image_url }}"{% endif %}>
+      {%- if product.featured_media -%}
+        {%- assign original_img_url = product.featured_media | image_url: width: 600 -%}
+        <img src="{{ original_img_url }}"
+          data-original-src="{{ original_img_url }}"
+          alt="{{ product.title | escape }}"
+          width="{{ product.featured_media.width }}"
+          height="{{ product.featured_media.height }}"
+          loading="lazy">
+      {%- endif -%}
+      {%- assign card_sold_out = false -%}
+      {%- assign card_backorder = false -%}
+      {%- if redirect_meta != blank -%}
+        {%- assign ref_value = redirect_meta.value | default: redirect_meta -%}
+        {%- assign variant_part = ref_value | split: 'variant=' -%}
+        {%- if variant_part.size > 1 -%}
+          {%- assign master_variant_id = variant_part[1] | split: '&' | first | plus: 0 -%}
+        {%- else -%}
+          {%- assign master_variant_id = 0 -%}
+        {%- endif -%}
+        {%- assign style_value = nil -%}
+        {%- if master_variant_id > 0 -%}
+          {%- for v in display_product.variants -%}
+            {%- if v.id == master_variant_id -%}
+              {%- assign style_value = v.option1 -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+        {%- if style_value -%}
+          {%- assign any_color_available = false -%}
+          {%- assign any_color_continue = false -%}
+          {%- for v in display_product.variants -%}
+            {%- if v.option1 == style_value -%}
+              {%- if v.available -%}
+                {%- assign any_color_available = true -%}
+              {%- endif -%}
+              {%- if v.inventory_policy == 'continue' -%}
+                {%- assign any_color_continue = true -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- unless any_color_available -%}
+            {%- if any_color_continue -%}
+              {%- assign card_backorder = true -%}
+            {%- else -%}
+              {%- assign card_sold_out = true -%}
+            {%- endif -%}
+          {%- endunless -%}
+        {%- else -%}
+          {%- unless display_product.available -%}
+            {%- assign card_sold_out = true -%}
+          {%- endunless -%}
+        {%- endif -%}
+      {%- else -%}
+        {%- unless product.available -%}
+          {%- assign any_continue = false -%}
+          {%- for v in product.variants -%}
+            {%- if v.inventory_policy == 'continue' -%}
+              {%- assign any_continue = true -%}
+              {%- break -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if any_continue -%}
+            {%- assign card_backorder = true -%}
+          {%- else -%}
+            {%- assign card_sold_out = true -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endif -%}
+      {%- if card_sold_out -%}
+        <span class="wf-card__badge wf-card__badge--soldout">Sold Out</span>
+      {%- elsif card_backorder -%}
+        <span class="wf-card__badge wf-card__badge--backorder">Backorder</span>
+      {%- elsif display_product.compare_at_price > display_product.price -%}
+        <span class="wf-card__badge wf-card__badge--sale">Sale</span>
+      {%- endif -%}
+    </a>
+
+    <div class="wf-card__info">
+      {%- assign color_option = display_product.options_by_name['Color'] -%}
+      {%- if color_option and color_option.values.size > 1 -%}
+        <div class="wf-card__swatches">
+          {%- for value in color_option.values limit: 6 -%}
+            {%- assign val_handle = value | handleize -%}
+            {%- assign val_down = value | downcase -%}
+            {%- assign swatch_bg = '#ddd' -%}
+            {%- assign swatch_is_file = false -%}
+            {%- if val_down == 'black' -%}
+              {%- assign swatch_bg = '#000000' -%}
+            {%- elsif val_down == 'white' -%}
+              {%- assign swatch_bg = '#ffffff' -%}
+            {%- elsif val_down == 'blank' -%}
+              {%- assign swatch_bg = 'blank.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'skull' -%}
+              {%- assign swatch_bg = 'skull.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'blue camo' -%}
+              {%- assign swatch_bg = 'blue.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'cotton candy' -%}
+              {%- assign swatch_bg = 'cool_jersey_1.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'sky' -%}
+              {%- assign swatch_bg = 'clouds_1.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'statue of liberty' -%}
+              {%- assign swatch_bg = 'statue.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'fire' -%}
+              {%- assign swatch_bg = 'red.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'ice' -%}
+              {%- assign swatch_bg = 'ice.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'usa' -%}
+              {%- assign swatch_bg = 'red_blue3.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'camo' -%}
+              {%- assign swatch_bg = 'camo1.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'storm' -%}
+              {%- assign swatch_bg = 'stormimage.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'yellow' -%}
+              {%- assign swatch_bg = 'yellow1234.png' -%}{%- assign swatch_is_file = true -%}
+            {%- elsif val_down == 'yellow jacket' -%}
+              {%- assign swatch_bg = 'yellow1234.png' -%}{%- assign swatch_is_file = true -%}
+            {%- endif -%}
+            {%- assign swatch_image_url = '' -%}
+            {%- for media in display_product.media -%}
+              {%- assign media_alt_handle = media.alt | handleize -%}
+              {%- assign match_string = val_handle | append: '-1' -%}
+              {%- if media_alt_handle == match_string -%}
+                {%- assign swatch_image_url = media | image_url: width: 600 -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if swatch_is_file -%}
+              <span class="wf-card__swatch" style="background: #ddd url('{{ swatch_bg | file_url }}') center/cover no-repeat;"{% if swatch_image_url != '' %} data-swatch-image="{{ swatch_image_url }}"{% endif %}></span>
+            {%- else -%}
+              <span class="wf-card__swatch" style="background: {{ swatch_bg }};"{% if swatch_image_url != '' %} data-swatch-image="{{ swatch_image_url }}"{% endif %}></span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <div class="wf-card__title"><a href="{{ product.url }}">{{ display_product.title }}</a></div>
+
+      {%- assign card_color_option = product.options_by_name['Color'] -%}
+      {%- if card_color_option and card_color_option.values.size > 0 -%}
+        {%- assign has_real_values = false -%}
+        {%- for value in card_color_option.values -%}
+          {%- assign trimmed = value | strip -%}
+          {%- assign trimmed_down = trimmed | downcase -%}
+          {%- if trimmed != '' and trimmed != 'Default Title' and trimmed != 'Default' and trimmed_down != 'nothing' -%}
+            {%- assign has_real_values = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if has_real_values -%}
+          <div class="wf-card__variants">
+            {%- for value in card_color_option.values -%}
+              {%- assign trimmed = value | strip -%}
+              {%- assign trimmed_down = trimmed | downcase -%}
+              {%- if trimmed != '' and trimmed != 'Default Title' and trimmed != 'Default' and trimmed_down != 'nothing' -%}
+                <span class="wf-card__variant-item">{{ value }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+
+      <div class="wf-card__price">
+        {%- if display_product.available -%}
+          {{ display_product.price | money }}
+          {%- if display_product.compare_at_price > display_product.price -%}
+            <span class="old-price">{{ display_product.compare_at_price | money }}</span>
+          {%- endif -%}
+        {%- else -%}
+          {{ display_product.price | money }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "WF Product Card API",
+  "settings": []
+}
+{% endschema %}

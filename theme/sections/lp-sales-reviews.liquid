@@ -1,0 +1,132 @@
+<div class="lp-page-wrap">
+  <div class="lp-section-gap"></div>
+  <div class="lp-sales-reviews__header">
+    <div class="lp-sec-head">{{ section.settings.heading }}</div>
+  </div>
+  {% for block in section.blocks %}
+    <div class="lp-sales-review-card" {{ block.shopify_attributes }}>
+      <div class="lp-sales-review-card__header">
+        <div>
+          <div class="lp-stars" style="font-size:12px;">{{ block.settings.stars }}</div>
+          <div class="lp-sales-review-card__reviewer">{{ block.settings.reviewer }}</div>
+        </div>
+        <div class="lp-sales-review-card__date">{{ block.settings.date }}</div>
+      </div>
+      <div class="lp-sales-review-card__title">{{ block.settings.title }}</div>
+      <div class="lp-sales-review-card__body">{{ block.settings.body }}</div>
+      <div class="lp-sales-review-card__meta">{{ block.settings.meta }}</div>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+  .lp-sales-reviews__header {
+    padding: 20px 16px 8px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-sales-review-card {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--lp-border);
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-sales-review-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+  }
+  .lp-sales-review-card__reviewer { font-weight: 600; font-size: 13px; }
+  .lp-sales-review-card__date { font-size: 11px; color: var(--lp-mid); }
+  .lp-sales-review-card__title { font-weight: 700; font-size: 13px; margin: 4px 0; }
+  .lp-sales-review-card__body { font-size: 12px; color: #555; line-height: 1.5; }
+  .lp-sales-review-card__meta { margin-top: 6px; font-size: 11px; color: var(--lp-blue); }
+</style>
+
+{% schema %}
+{
+  "name": "LP Sales — Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What golfers are saying"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "stars",
+          "label": "Stars (paste star chars)",
+          "default": "★★★★★"
+        },
+        {
+          "type": "text",
+          "id": "reviewer",
+          "label": "Reviewer name",
+          "default": "Logan R."
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "02/18/2026"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Review title",
+          "default": "Best golf posters!"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review body",
+          "default": "\"I have had many different shorts from other brands but have never found any this good at this affordable of a price.\""
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Meta info",
+          "default": "Height: 6'0\" · Size L · Runs small · ✓ Recommends"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Sales — Reviews",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "reviewer": "Logan R.",
+            "date": "02/18/2026",
+            "title": "Best golf posters!",
+            "body": "\"I have had many different shorts from other brands but have never found any this good at this affordable of a price.\"",
+            "meta": "Height: 6'0\" · Size L · Runs small · ✓ Recommends"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★☆",
+            "reviewer": "Matteo",
+            "date": "03/03/2026",
+            "title": "not too shabby",
+            "body": "\"They fit nice and snug, I only would say to have a tighter fit on the thigh...\"",
+            "meta": "Height: 5'9\" · Size S · Runs big · ✓ Recommends"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

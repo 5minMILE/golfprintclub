@@ -1,0 +1,41 @@
+<div class="lp-page-wrap">
+  <div class="lp-img-block" style="height:{{ section.settings.height }}px;">
+    {% if section.settings.image != blank %}
+      <img src="{{ section.settings.image | image_url: width: 780 }}" alt="{{ section.settings.image.alt | default: section.settings.label }}" loading="eager">
+    {% endif %}
+    <span class="lp-img-label">{{ section.settings.label }}</span>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "LP Adv — Hero Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Placeholder label",
+      "default": "Hero Action Photo"
+    },
+    {
+      "type": "range",
+      "id": "height",
+      "label": "Image height (px)",
+      "min": 150,
+      "max": 400,
+      "step": 10,
+      "default": 220
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Adv — Hero Image"
+    }
+  ]
+}
+{% endschema %}

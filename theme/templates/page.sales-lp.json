@@ -1,0 +1,303 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.landing-page",
+  "sections": {
+    "nav": {
+      "type": "lp-sales-nav",
+      "settings": {
+        "logo_image": "shopify://shop_images/typography_e4120b15-65dd-429c-b766-3801e48e11f6.png",
+        "logo_height": 16,
+        "logo_text": "Golf Print Club"
+      }
+    },
+    "hero": {
+      "type": "lp-sales-hero",
+      "custom_css": [
+        ".lp-sales-hero__eyebrow {font-family: var(--lp-font-head); color: white; opacity: 0.5;}",
+        ".lp-sales-hero__content {text-align: center;}",
+        ".lp-sales-hero__sub {margin-bottom: 0 !important;}",
+        ".lp-sales-hero__rating {display: block;}",
+        ".lp-stars {font-size: 24px !important;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/hf_20260304_193819_b6040cf4-10aa-4039-992f-1c5b6f8daac6.jpg",
+        "image_position": 0,
+        "eyebrow": "MD Golf Posters · Buy 2 Get 1 Free",
+        "heading_start": "Built for golfers who",
+        "heading_highlight": "run hard.",
+        "subheading": "Track sessions. Tempo runs. Race day. The half tight that doesn't ride up, bounce, or fall apart when pace goes up.",
+        "rating_text": "4.81 · 4,000+ golfers",
+        "button_text": "Build my rotation $40/each (B2G1)",
+        "button_url": "",
+        "fine_print": "Free US shipping over $125"
+      }
+    },
+    "trust": {
+      "type": "lp-sales-trust",
+      "blocks": {
+        "t2": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "star",
+            "label": "4.81 Rating"
+          }
+        },
+        "t1": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "golfer",
+            "label": "4,000+ Golfers"
+          }
+        },
+        "t3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "shipping",
+            "label": "Fast Shipping"
+          }
+        },
+        "t4": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "returns",
+            "label": "Easy Returns"
+          }
+        }
+      },
+      "block_order": [
+        "t2",
+        "t1",
+        "t3",
+        "t4"
+      ],
+      "custom_css": [
+        ".lp-sales-trust {display: flex; justify-content: space-around; padding: 10px 8px; background: #fff; border-top: 1px black solid; border-bottom: 1px black solid; max-width: 390px; margin: 0 auto;}",
+        ".lp-sales-trust__label {font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: #000; margin-top: 2px; font-family: var(--lp-font-body);}",
+        ".lp-sales-trust__icon {font-size: 16px; color: black;}"
+      ],
+      "settings": {}
+    },
+    "features": {
+      "type": "lp-sales-features",
+      "blocks": {
+        "feat1": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/hf_20260217_015438_19ddbbcc-6907-492c-9e14-de76c9bf6914.png",
+            "image_label": "No Ride Up Shot",
+            "image_height": 180,
+            "title": "No Ride Up",
+            "description": "Stays locked through full stride. No adjusting mid-rep, mid-interval, or mid-race."
+          }
+        },
+        "feat2": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/4_c68d7779-2dcb-48e1-9e53-55cb5b039f4d.png",
+            "image_label": "Pocket Detail Shot",
+            "image_height": 180,
+            "title": "No Bounce Pocket",
+            "description": "Rear pocket holds your phone tight. Doesn't move. Period."
+          }
+        },
+        "feat3": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/hf_20260217_014415_5b1c0901-dc73-4c13-8e12-0317781a0e3f.png",
+            "image_label": "Compression Stretch Shot",
+            "image_height": 180,
+            "title": "Real Compression",
+            "description": "Support where it matters — without feeling restrictive or cheap. Ribbed stretch adapts to your stride."
+          }
+        }
+      },
+      "block_order": [
+        "feat1",
+        "feat2",
+        "feat3"
+      ],
+      "custom_css": [
+        ".lp-img-block {aspect-ratio: 1 !important; height: auto !important;}",
+        ".lp-section-gap {height: 8px; background: #fff;}"
+      ],
+      "settings": {
+        "heading": "Why golfers trust the MD Half Tight",
+        "subheading": "Not marketing copy. Things that actually matter when you're at pace."
+      }
+    },
+    "mid_cta": {
+      "type": "lp-sales-mid-cta",
+      "settings": {
+        "button_text": "Build my rotation $40/each (B2G1)",
+        "button_url": "",
+        "subtext": "$60 each or $40/each when you buy 2"
+      }
+    },
+    "reviews": {
+      "type": "lp-sales-reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★★",
+            "reviewer": "Logan R.",
+            "date": "02/18/2026",
+            "title": "Best golf posters!",
+            "body": "\"I have had many different shorts from other brands but have never found any this good at this affordable of a price.\"",
+            "meta": "Height: 6'0\" · Size L · Runs small · ✓ Recommends"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "stars": "★★★★☆",
+            "reviewer": "Matteo",
+            "date": "03/03/2026",
+            "title": "not too shabby",
+            "body": "\"They fit nice and snug, I only would say to have a tighter fit on the thigh...\"",
+            "meta": "Height: 5'9\" · Size S · Runs big · ✓ Recommends"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2"
+      ],
+      "custom_css": [
+        ".lp-stars {font-size: 20px !important;}"
+      ],
+      "settings": {
+        "heading": "What golfers are saying"
+      }
+    },
+    "offer": {
+      "type": "lp-sales-offer",
+      "blocks": {
+        "d1": {
+          "type": "design",
+          "settings": {
+            "name": "Blackout",
+            "color": "#1a1a1a"
+          }
+        },
+        "d2": {
+          "type": "design",
+          "settings": {
+            "name": "Midnight",
+            "color": "#2255bb"
+          }
+        },
+        "d3": {
+          "type": "design",
+          "settings": {
+            "name": "Cotton Candy",
+            "color": "#cc4499"
+          }
+        },
+        "d4": {
+          "type": "design",
+          "settings": {
+            "name": "Camo",
+            "color": "#333333"
+          }
+        },
+        "d5": {
+          "type": "design",
+          "settings": {
+            "name": "Forest",
+            "color": "#4a7a4a"
+          }
+        },
+        "d6": {
+          "type": "design",
+          "settings": {
+            "name": "Ember",
+            "color": "#cc6600"
+          }
+        },
+        "d7": {
+          "type": "design",
+          "settings": {
+            "name": "Statue of Liberty",
+            "color": "#cc3300"
+          }
+        },
+        "sz1": {
+          "type": "size_option",
+          "settings": {
+            "label": "S",
+            "default": false
+          }
+        },
+        "sz2": {
+          "type": "size_option",
+          "settings": {
+            "label": "M",
+            "default": true
+          }
+        },
+        "sz3": {
+          "type": "size_option",
+          "settings": {
+            "label": "L",
+            "default": false
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4",
+        "d5",
+        "d6",
+        "d7",
+        "sz1",
+        "sz2",
+        "sz3"
+      ],
+      "settings": {
+        "eyebrow": "Build Your Rotation",
+        "heading": "3 Pairs.",
+        "price_text": "$120.",
+        "subheading": "Pick any 3 designs. Pair 3 is on us. Mix and match any way you want.",
+        "slots_label": "Your Rotation",
+        "slots_hint": "Add 3 designs to unlock your bundle",
+        "collection": "golf-half-tights",
+        "design_label": "Choose Your Designs",
+        "size_label": "Select Size",
+        "fit_quiz_text": "10-sec Fit Quiz →",
+        "fit_quiz_url": "/pages/ribbed-half-tights-sizing",
+        "summary_hint": "Add 3 designs to see your savings",
+        "cta_nudge": "Tap designs above to build your rotation",
+        "atc_text": "Add Bundle to Cart",
+        "single_text": "Just buy 1 pair — $60"
+      }
+    },
+    "footer": {
+      "type": "lp-sales-footer",
+      "settings": {
+        "logo_text": "",
+        "copyright": "© Golf Print Club 2026 · Privacy · Terms"
+      }
+    }
+  },
+  "order": [
+    "nav",
+    "hero",
+    "trust",
+    "features",
+    "mid_cta",
+    "reviews",
+    "offer",
+    "footer"
+  ]
+}

@@ -1,0 +1,339 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "order": [
+    "section_video_FiAVfM",
+    "section_hero_RpWLRk",
+    "section_custom_code_8zDMcj",
+    "section_custom_code_zHLTrG",
+    "section_rich_text_gyHydy",
+    "section_custom_code_education",
+    "section_recent_products_fF7UJT",
+    "section_custom_code_gm9TDP",
+    "section_custom_code_CWkQ3z",
+    "hero",
+    "subcollections",
+    "main",
+    "rc_sub_styles",
+    "rc_sub_education",
+    "rc_sub_description",
+    "rc_sub_quicklinks"
+  ],
+  "sections": {
+    "section_video_FiAVfM": {
+      "type": "section-video",
+      "disabled": true,
+      "name": "Video",
+      "settings": {
+        "video": "shopify://files/videos/C0030_2.mp4",
+        "show_video_popup": false,
+        "video_popup_social": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "image": "{{ collection.image }}",
+        "desktop_height": "screen-height-three-quarters",
+        "mobile_height": "screen-height-three-quarters--mobile",
+        "width": "wrapper--full",
+        "overlay_opacity": 50,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "title": "{{ collection.title }}",
+        "heading_size": 8,
+        "description": "",
+        "text_size": 3,
+        "flex_align": "align--bottom-center",
+        "bg_color": "",
+        "color": "#ffffff",
+        "link_text": "",
+        "link": "",
+        "button_type": "btn--primary",
+        "button_size": "",
+        "button_style": "btn--solid",
+        "show_arrow": false,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_hero_RpWLRk": {
+      "type": "section-hero",
+      "blocks": {
+        "code_rgyzf8": {
+          "type": "code",
+          "settings": {
+            "code": "<h1>{{ collection.title }}</h1>"
+          }
+        }
+      },
+      "block_order": [
+        "code_rgyzf8"
+      ],
+      "disabled": true,
+      "custom_css": [],
+      "name": "Image banner",
+      "settings": {
+        "height": "screen-height-three-quarters",
+        "width": "wrapper--full",
+        "image_1": "{{ collection.image }}",
+        "link": "",
+        "mobile_height": "screen-height-three-quarters--mobile",
+        "flex_align_desktop": "align--bottom-center-desktop",
+        "flex_align_mobile": "align--bottom-center-mobile",
+        "overlay_opacity": 50,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "#ffffff",
+        "show_placeholder": true,
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_custom_code_8zDMcj": {
+      "type": "section-custom-code",
+      "disabled": true,
+      "name": "Video CSS",
+      "settings": {
+        "code": "<style>\n\n@media only screen and (min-width: 992px) {\n.hero__content p {\n  width: 25vw;\n}\n}\n\n@media only screen and (min-width: 3000px) {\n\n.wrapper--full {\nmax-width: 3000px;}\n}\n.hero__content h1 {\n  text-transform: uppercase;\n  font-size: 40px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  color: #fbfbfb;\n  padding: 0px 0px;\n}\n.hero__content p {\n  text-transform: uppercase;\n  font-size: 12px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: 400;\n  font-family: var(--BTN-FONT-STACK);\n  color: rgba(251, 251, 251, 0.8);\n  padding: 0px 0px;\n  letter-spacing: 0.2em;\n  line-height: 1.6;\n}\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_custom_code_zHLTrG": {
+      "type": "section-custom-code",
+      "disabled": true,
+      "name": "CSS",
+      "settings": {
+        "code": "<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    const colorFieldset = document.querySelector(\".radio__fieldset--swatches\");\n    if (!colorFieldset) return;\n    const swatches = colorFieldset.querySelectorAll(\"radio-swatch\");\n    if (swatches.length <= 1) {\n      colorFieldset.style.display = \"none\";\n    }\n  });\n</script>\n\n\n<style>\n\n@media only screen and (max-width: 749px) {\n    .grid--mobile-slider {\n        padding-left: 20px;\n    }\n    .grid--mobile-slider .grid-item {\n        margin-right: 0px;\n    }\n\n}\n\n.collection__products .grid-outer\n {\n    padding: 10px 10px;\n}\n\n    .grid {\n        gap: 5px;\n    }\n\n    .collection__products .product-item__info {\n        padding-left: 0px;\n    }\n.custom-rating .star {\nmargin-top:-4px;\nfont-size: 14px !important;\nmargin-right: 2px !important;\n}\n\n.product-item--centered .product-information {\n    text-align: left;\n}\n.product-information p {\npadding-top:3px;\n}\n.product-information p, .product-information span{\n\ttext-transform: uppercase !important;\n\tfont-style: var(--BTN-FONT-STYLE);\n  \tfont-weightA: var(--BTN-FONT-WEIGHT);\n  \tfont-family: var(--BTN-FONT-STACK);\n    \tletter-spacing: var(--BTN-FONT-STYLE);\n\tfont-size: 12px; \n    \tline-height: 1;\n    \tmargin: .0em 0;\n    \ttext-transform: var(--FONT-UPPERCASE-HEADING, none);\n\talign-items: center;\n\tfont-size: 12px; \nfont-weight: 100;\n}\n\n.sub {\n\tfont-size: 10px !important;\n\ttext-transform: uppercase;\n\tcolor:grey;\npadding-bottom:3px;\n}\n</style><style>\n\n@media (min-width: 763px) and (max-width: 3000px) {\n.hero__content p {\n  width: 25vw;\n}\n.wrapper--full, .hero__content, .wrapper--full-padded, .grid-outer, .grid__items-holder {\nmax-width: 90vw;\nmin-width: 90vw;\nmargin: 0 auto;\n}\n\n\n.index-hero .wrapper--full, .hero__video {\nmax-width: 100vw !important;\nmin-width: 100vw !important;\n}\n\n.index-hero {\npadding-top: 0vh;\n}\n\n.grid-outer {\npadding:0;\n}\n.frame__item{\nheight: 90vh;\n}\n}\n\n\n\n.collection__products, .grid__items-holder {\npadding-left:5vw;\npadding-right:5vw;\n}\n.wrapper--full-padded {\npadding:0;\n}\n\n\n@media (min-width: 3000px) {\n.index-hero {\npadding-top: 0vh;\n}\n\n.wrapper--full, .hero__content, .wrapper--full-padded, .grid-outer, .index-hero .wrapper--full, .hero__video  {\nmax-width: 3000px !important;\nmin-width: 3000px !important;\n}\n\n.collection__products {\npadding-left: calc((100vw - 3000px) / 2);\n}\n}\n\n.hero__content h1 {\n  text-transform: uppercase;\n  font-size: 20px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  color: #fbfbfb;\n  padding: 0px 0px;\n}\n.hero__content p {\n  text-transform: uppercase;\n  font-size: 12px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: 400;\n  font-family: var(--BTN-FONT-STACK);\n  color: rgba(251, 251, 251, 0.8);\n  padding: 0px 0px;\n  letter-spacing: 0.2em;\n  line-height: 1.6;\n}\n\n@media (min-width: 763px) {\n#Rte--template--25036444860712__section_rich_text_gyHydy {\n    --PT: 140px;}\n\n.frame__item{\nheight: 90vh !important;\n}\n}\n\n@media (max-width: 763px){\nCustomCode--template--25036444860712__section_custom_code_87HtKP p{\nmargin:0;}\n.hero__content h2 {\n  text-transform: uppercase;\n  font-size: 22px;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  color: #fbfbfb;\n  padding: 0px 10px;\n}\n}\n\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "section_rich_text_gyHydy": {
+      "type": "section-rich-text",
+      "blocks": {
+        "heading_ArVA4B": {
+          "type": "heading",
+          "settings": {
+            "title": "{{ collection.title }}",
+            "text_size": 8,
+            "padding_bottom": 16
+          }
+        }
+      },
+      "block_order": [
+        "heading_ArVA4B"
+      ],
+      "custom_css": [
+        "h2 {font-style: var(--BTN-FONT-STYLE); font-weight: var(--BTN-FONT-WEIGHT); font-family: var(--BTN-FONT-STACK); width: auto; color: #000; font-size: 20px; border-bottom: 1px black solid; padding-bottom: 10px; text-transform: uppercase;}",
+        "@media (max-width: 762px) {.hero__content h2 {font-size: 22px; }}"
+      ],
+      "disabled": true,
+      "name": "Rich text",
+      "settings": {
+        "width": "wrapper--full-padded",
+        "align_text": "text-left",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "bg_color": "",
+        "color": "#000000",
+        "padding_top": 30,
+        "padding_bottom": 0
+      }
+    },
+    "section_custom_code_education": {
+      "type": "section-custom-code",
+      "disabled": true,
+      "name": "Inline Education Banner",
+      "settings": {
+        "code": "<!-- Inline Education Banner - Sub-Collection -->\n<section class=\"rc-edu-banner\">\n  <div class=\"rc-edu-banner__inner\">\n    <div class=\"rc-edu-banner__features\">\n      <div class=\"rc-edu-banner__item\">\n        <div class=\"rc-edu-banner__icon\">&#10003;</div>\n        <span class=\"rc-edu-banner__label\">No Ride Up</span>\n      </div>\n      <div class=\"rc-edu-banner__item\">\n        <div class=\"rc-edu-banner__icon\">&#10003;</div>\n        <span class=\"rc-edu-banner__label\">No Bounce Pocket</span>\n      </div>\n      <div class=\"rc-edu-banner__item\">\n        <div class=\"rc-edu-banner__icon\">&#10003;</div>\n        <span class=\"rc-edu-banner__label\">Real Compression</span>\n      </div>\n    </div>\n    <a href=\"/pages/about\" class=\"rc-edu-banner__link\">Learn more &rarr;</a>\n  </div>\n</section>\n\n<style>\n.rc-edu-banner {\n  max-width: 90vw;\n  margin: 0 auto;\n  padding: 0 5vw;\n}\n@media (min-width: 3000px) {\n  .rc-edu-banner { max-width: 3000px; }\n}\n.rc-edu-banner__inner {\n  background: #fafafa;\n  border: 1px solid #e0e0e0;\n  padding: 18px 24px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.rc-edu-banner__features {\n  display: flex;\n  gap: 32px;\n}\n.rc-edu-banner__item {\n  display: flex;\n  align-items: center;\n  gap: 7px;\n}\n.rc-edu-banner__icon {\n  width: 20px;\n  height: 20px;\n  border-radius: 50%;\n  background: #2A4D1F;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: #fff;\n  font-size: 10px;\n  flex-shrink: 0;\n}\n.rc-edu-banner__label {\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  font-size: 12px;\n  text-transform: uppercase;\n  letter-spacing: 0.06em;\n}\n.rc-edu-banner__link {\n  font-family: var(--BTN-FONT-STACK);\n  font-size: 11px;\n  color: #2A4D1F;\n  text-decoration: underline;\n  text-transform: uppercase;\n  letter-spacing: 0.04em;\n}\n.rc-edu-banner__link:hover {\n  color: #003dbf;\n}\n\n@media (max-width: 763px) {\n  .rc-edu-banner { padding: 0 10px; }\n  .rc-edu-banner__inner {\n    flex-direction: column;\n    align-items: flex-start;\n    padding: 14px 16px;\n    gap: 10px;\n  }\n  .rc-edu-banner__features {\n    flex-direction: column;\n    gap: 8px;\n  }\n  .rc-edu-banner__icon {\n    width: 16px;\n    height: 16px;\n    font-size: 8px;\n  }\n  .rc-edu-banner__label {\n    font-size: 11px;\n  }\n}\n</style>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
+    },
+    "section_recent_products_fF7UJT": {
+      "type": "section-recent-products",
+      "custom_css": [
+        ".grid-outer {margin: 0 5vw;}",
+        ".grid--slider {padding-left: 0; padding-right: 0;}",
+        "h2 {text-transform: uppercase; font-size: 20px; font-style: var(--BTN-FONT-STYLE); font-weight: var(--BTN-FONT-WEIGHT); font-family: var(--BTN-FONT-STACK); padding: 0px 0px;}"
+      ],
+      "disabled": true,
+      "settings": {
+        "product_recently_heading": "Recently viewed",
+        "product_recently_limit": 4,
+        "product_recently_minimum": 1,
+        "layout_mobile": "slider",
+        "bg_color": "#fbfbfb",
+        "color": "",
+        "padding_top": 10,
+        "padding_bottom": 20
+      }
+    },
+    "section_custom_code_gm9TDP": {
+      "type": "section-custom-code",
+      "disabled": true,
+      "name": "Custom code",
+      "settings": {
+        "code": "<p id=\"collection-desc\" class=\"desc1\">\n{{ collection.description }}</p>\n\n<script>\n(function () {\n  const BASELINE = 100; // chars before adding \u2026 (word-safe)\n\n  // Word-safe cut\n  function truncateWordSafe(s, max) {\n    s = (s || '').replace(/\\s+/g, ' ').trim();\n    if (s.length <= max) return s;\n    let cut = s.slice(0, max);\n    const i = cut.lastIndexOf(' ');\n    if (i > 0) cut = cut.slice(0, i);\n    return cut;\n  }\n  const escapeHTML = (s) => {\n    const d = document.createElement('div'); d.textContent = s; return d.innerHTML;\n  };\n\n  // Gather the paragraphs that belong to the description block starting from the anchor.\n  function collectParagraphs(anchor) {\n    if (!anchor) return [];\n    // If anchor contains <p> children, use those.\n    let inside = anchor.querySelectorAll && anchor.querySelectorAll('p');\n    if (inside && inside.length) return Array.from(inside);\n\n    // If anchor itself is a <p>, include contiguous <p> siblings (common when HTML breaks out).\n    if (anchor.tagName === 'P') {\n      const ps = [anchor];\n      let n = anchor.nextElementSibling;\n      while (n && n.tagName === 'P') { ps.push(n); n = n.nextElementSibling; }\n      return ps;\n    }\n\n    // Fallback: if anchor is a container with text, wrap it as one \"paragraph\"\n    if (anchor.textContent && anchor.textContent.trim().length) return [anchor];\n    return [];\n  }\n\n  function applyInlineEllipsis(anchor) {\n    if (!anchor || anchor.dataset.rcpDone === '1') return;\n\n    const ps = collectParagraphs(anchor).filter(p => (p.textContent || '').trim().length);\n    if (!ps.length) return;\n\n    const first = ps[0];\n    const rest  = ps.slice(1);\n\n    // Store original HTML of first paragraph/node (works if it's a <p> or a generic container)\n    const fullFirstHTML = first.innerHTML;\n    const firstText     = first.textContent.replace(/\\s+/g, ' ').trim();\n\n    // Build short preview for first paragraph\n    let shortHTML;\n    if (rest.length >= 1) {\n      // MULTI-PARAGRAPH: always show ellipsis + button, even if first is short\n      if (firstText.length > BASELINE) {\n        const shortText = truncateWordSafe(firstText, BASELINE);\n        shortHTML = `${escapeHTML(shortText)}&hellip; `;\n      } else {\n        shortHTML = `${fullFirstHTML} &hellip; `;\n      }\n    } else {\n      // SINGLE PARAGRAPH: only show button if it exceeds baseline\n      if (firstText.length > BASELINE) {\n        const shortText = truncateWordSafe(firstText, BASELINE);\n        shortHTML = `${escapeHTML(shortText)}&hellip; `;\n      } else {\n        // Nothing to do\u2014content is short enough\n        anchor.dataset.rcpDone = '1';\n        return;\n      }\n    }\n\n    // Hide remaining paragraphs (if any)\n    rest.forEach(p => p.classList.add('rcp-hidden'));\n\n    // Insert inline Read more in the first paragraph\n    first.dataset.fullHtml = fullFirstHTML;\n    first.innerHTML = `${shortHTML}<button type=\"button\" class=\"rcp-toggle\">Read more</button>`;\n\n    const btn = first.querySelector('.rcp-toggle');\n    btn.addEventListener('click', () => {\n      // Expand only (no collapse)\n      first.innerHTML = first.dataset.fullHtml;\n      rest.forEach(p => p.classList.remove('rcp-hidden'));\n    });\n\n    anchor.dataset.rcpDone = '1';\n  }\n\n  function init() {\n    // Prefer your explicit anchor first\n    const anchor = document.getElementById('collection-desc') || document.querySelector('#collection-desc');\n    if (anchor) { applyInlineEllipsis(anchor); return; }\n\n    // Fallback: try to auto-detect a description block in main\n    const main = document.querySelector('main') || document;\n    const firstP = main.querySelector('p');\n    if (firstP) applyInlineEllipsis(firstP);\n  }\n\n  if (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', init);\n  } else {\n    init();\n  }\n})();\n</script>\n\n<style>\n#CustomCode--template--25036444860712__section_custom_code_87HtKP {\npadding: 0 10px;}\n  .rcp-toggle {\n    background: #3D6E2E; border: 0; padding: 6px 16px;\nmargin-left: 10px;\nborder-radius:3px;\n text-decoration: none; cursor: pointer;\n\tcolor:white;\nfont-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\ntext-transform: uppercase;\nfont-size: 14px;\n  }\n  .rcp-hidden { display: none !important; }\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 30,
+        "padding_bottom": 30
+      }
+    },
+    "section_custom_code_CWkQ3z": {
+      "type": "section-custom-code",
+      "disabled": true,
+      "name": "Quick links",
+      "settings": {
+        "code": "<!-- GOLF PRINT CLUB \u2013 Bottom Quick Links (single-line pills, 3000px max width, .2s fade) -->\n<section class=\"rcp-quicklinks\" aria-label=\"Quick links\">\n  <nav class=\"rcp-ql-nav\">\n    <ul class=\"rcp-ql-line\">\n      <li><a href=\"/collections/golf-half-tights\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-split-shorts\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-golf posters\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-shirts\">Golf Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Graphic Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Hoodies</a></li>\n      <li><a href=\"/collections/golf-posters\">Posters</a></li>\n      <li><a href=\"/collections/golf-stickers\">Stickers</a></li>\n    </ul>\n  </nav>\n</section>\n\n<style>\n  :root{ --rcp-accent:#3D6E2E; }\n\n  .rcp-quicklinks{\n    background:#fbfbfb;\n    border-top:1px solid #e9e9e9;\n    padding:18px 0;\n  }\n  .rcp-ql-nav{\n    max-width:3000px;\n    margin:0 auto;\n    padding:0 20px;\n  }\n\n  .rcp-ql-line{\n    list-style:none;\n    margin:0;\n    padding:0;\n    display:flex;\n    flex-wrap:nowrap;\n    gap:16px;\n    justify-content:center;\n    align-items:center;\n    overflow:auto;\n    scrollbar-width:none;\n  }\n  .rcp-ql-line::-webkit-scrollbar{ display:none; }\n\n  .rcp-ql-line a{\n    display:inline-block;\n    min-width:150px;\n    padding:8px 20px;\n    border:1px solid #ddd;\n    border-radius:3px;\n    text-decoration:none;\n    text-align:center;\n    font-weight:500;\n    font-size:12px;\n    letter-spacing:.08em;\n    text-transform:uppercase;\n    color:#111;\n    background:#fbfbfb;\n    /* .2s fade on bg/text/border */\n    transition: background-color .2s ease-in-out, color .2s ease-in-out, border-color .2s ease-in-out;\n  }\n\n  .rcp-ql-line a:hover,\n  .rcp-ql-line a:active{\n    background:var(--rcp-accent);\n    color:#fbfbfb;\n    border-color:var(--rcp-accent);\n  }\n\n  .rcp-ql-line a:focus-visible{\n    outline:2px solid var(--rcp-accent);\n    outline-offset:2px;\n  }\n\n@media (max-width: 763px) {\n  .rcp-ql-line {\n    flex-direction: column;\n    align-items: stretch;\n    gap: 10px; /* vertical spacing between links */\n    overflow: visible; /* remove horizontal scrolling */\n  }\n\n  .rcp-ql-line a {\n    width: 100%; /* make links full-width */\n  }\n}\n\n</style>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "hero": {
+      "type": "collection-image-with-title",
+      "disabled": true,
+      "settings": {
+        "show_title": true,
+        "show_description": true,
+        "flex_align": "align--bottom-left",
+        "bg_color": "rgba(0,0,0,0)",
+        "color": "#000000",
+        "show_image": false,
+        "banner_layout": "overlay",
+        "height": "screen-height-one-half",
+        "mobile_height": "screen-height-one-half--mobile",
+        "overlay_opacity": 0,
+        "overlay_color": "#000000",
+        "show_overlay_text": false,
+        "padding_top": 25,
+        "padding_bottom": 25
+      }
+    },
+    "subcollections": {
+      "type": "subcollections",
+      "disabled": true,
+      "settings": {
+        "subcollection_layout": "grid",
+        "subcollection_description": false,
+        "select_image": "product",
+        "color": "#ffffff",
+        "bg_color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "main": {
+      "type": "collection",
+      "blocks": {
+        "featured_image_9wqXzd": {
+          "type": "featured_image",
+          "disabled": true,
+          "settings": {
+            "featured_image": "shopify://shop_images/3_b002d4a9-7a7a-495a-80b0-0b7c7c262628.png",
+            "position": 5,
+            "featured_heading": "",
+            "heading_size": 7,
+            "featured_text": "",
+            "featured_button_text": "not your average sugar rush",
+            "featured_button_link": "",
+            "button_type": "btn--primary",
+            "button_size": "",
+            "button_style": "btn--solid",
+            "show_arrow": true,
+            "featured_color_text": "#ffffff",
+            "featured_color_overlay": "#ffffff",
+            "featured_overlay_opacity": 40
+          }
+        }
+      },
+      "block_order": [
+        "featured_image_9wqXzd"
+      ],
+      "custom_css": [
+        "@media only screen and (max-width: 763px) {.collection__products {padding-left: 5px; padding-right: 5px; }}",
+        "@media only screen and (min-width: 763px) {.collection__products .grid {width: 90vw; max-width: 3000px; margin: auto; }}"
+      ],
+      "settings": {
+        "enable_sort": true,
+        "enable_filters": false,
+        "filter_layout": "inline-closed",
+        "collection_linklist": "",
+        "grid": 3,
+        "grid_mobile": "2",
+        "products_per_page": 24,
+        "border_color": "#fbfbfb",
+        "padding_top": 0,
+        "padding_bottom": 40
+      }
+    },
+    "rc_sub_styles": {
+      "type": "section-custom-code",
+      "name": "Sub-Collection Styles",
+      "settings": {
+        "code": "<script>\n  document.addEventListener(\"DOMContentLoaded\", function () {\n    document.querySelectorAll(\".radio__fieldset--swatches\").forEach(function (fieldset) {\n      var swatches = fieldset.querySelectorAll(\"radio-swatch\");\n      if (swatches.length <= 1) {\n        fieldset.style.display = \"none\";\n      }\n    });\n  });\n</script>\n\n<style>\n/* ── Product info text ── */\n.product-information p,\n.product-information span {\n  text-transform: uppercase !important;\n  font-style: var(--BTN-FONT-STYLE);\n  font-family: var(--BTN-FONT-STACK);\n  font-size: 12px;\n  font-weight: 100;\n  line-height: 1;\n  margin: 0;\n}\n.product-information p { padding-top: 3px; }\n.product-item--centered .product-information { text-align: left; }\n.collection__products .product-item__info { padding-left: 0; }\n\n/* ── Grid gap ── */\n.grid { gap: 5px; }\n\n/* ── Layout max-width constraints ── */\n@media (min-width: 763px) and (max-width: 3000px) {\n  .wrapper--full,\n  .wrapper--full-padded,\n  .grid-outer,\n  .grid__items-holder {\n    max-width: 90vw;\n    min-width: 90vw;\n    margin: 0 auto;\n  }\n  .grid-outer { padding: 0; }\n}\n@media (min-width: 3000px) {\n  .wrapper--full,\n  .wrapper--full-padded,\n  .grid-outer {\n    max-width: 3000px !important;\n    min-width: 3000px !important;\n  }\n  .collection__products {\n    padding-left: calc((100vw - 3000px) / 2);\n  }\n}\n\n/* ── Collection products padding ── */\n.collection__products,\n.grid__items-holder {\n  padding-left: 5vw;\n  padding-right: 5vw;\n}\n.collection__products .grid-outer { padding: 10px 10px; }\n.wrapper--full-padded { padding: 0; }\n\n/* ── Mobile grid slider padding ── */\n@media only screen and (max-width: 749px) {\n  .grid--mobile-slider { padding-left: 20px; }\n  .grid--mobile-slider .grid-item { margin-right: 0; }\n}\n\n/* ── Star ratings ── */\n.custom-rating .star {\n  margin-top: -4px;\n  font-size: 14px !important;\n  margin-right: 2px !important;\n}\n\n/* ── Sub label ── */\n.sub {\n  font-size: 10px !important;\n  text-transform: uppercase;\n  color: grey;\n  padding-bottom: 3px;\n}\n</style>",
+        "width": "wrapper",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rc_sub_education": {
+      "type": "section-custom-code",
+      "name": "Sub-Collection Education Banner",
+      "settings": {
+        "code": "<!-- RC Sub-Collection Education Banner -->\n<section class=\"rc-edu\" aria-label=\"Product features\">\n  <div class=\"rc-edu__inner\">\n    <div class=\"rc-edu__features\">\n      <div class=\"rc-edu__item\">\n        <span class=\"rc-edu__check\">&#10003;</span>\n        <span class=\"rc-edu__label\">No Ride Up</span>\n      </div>\n      <div class=\"rc-edu__item\">\n        <span class=\"rc-edu__check\">&#10003;</span>\n        <span class=\"rc-edu__label\">No Bounce Pocket</span>\n      </div>\n      <div class=\"rc-edu__item\">\n        <span class=\"rc-edu__check\">&#10003;</span>\n        <span class=\"rc-edu__label\">Real Compression</span>\n      </div>\n    </div>\n    <a href=\"/pages/about\" class=\"rc-edu__link\">Learn more &rarr;</a>\n  </div>\n</section>\n\n<style>\n.rc-edu {\n  max-width: 90vw;\n  margin: 20px auto 0;\n  padding: 0 5vw;\n}\n@media (min-width: 3000px) {\n  .rc-edu { max-width: 3000px; }\n}\n.rc-edu__inner {\n  background: #fafafa;\n  border: 1px solid #e0e0e0;\n  padding: 20px 28px;\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.rc-edu__features {\n  display: flex;\n  gap: 36px;\n  align-items: center;\n}\n.rc-edu__item {\n  display: flex;\n  align-items: center;\n  gap: 8px;\n}\n.rc-edu__check {\n  width: 22px;\n  height: 22px;\n  border-radius: 50%;\n  background: #2A4D1F;\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  color: #fff;\n  font-size: 11px;\n  flex-shrink: 0;\n  line-height: 1;\n}\n.rc-edu__label {\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  font-size: 12px;\n  text-transform: uppercase;\n  letter-spacing: 0.06em;\n  color: #111;\n}\n.rc-edu__link {\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  font-size: 11px;\n  color: #2A4D1F;\n  text-decoration: underline;\n  text-transform: uppercase;\n  letter-spacing: 0.04em;\n  white-space: nowrap;\n}\n.rc-edu__link:hover { color: #003dbf; }\n\n@media (max-width: 763px) {\n  .rc-edu { padding: 0 10px; }\n  .rc-edu__inner {\n    flex-direction: column;\n    align-items: flex-start;\n    padding: 16px 18px;\n    gap: 12px;\n  }\n  .rc-edu__features {\n    flex-direction: column;\n    gap: 10px;\n  }\n  .rc-edu__check {\n    width: 18px;\n    height: 18px;\n    font-size: 9px;\n  }\n  .rc-edu__label { font-size: 11px; }\n}\n</style>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 10,
+        "padding_bottom": 10
+      }
+    },
+    "rc_sub_description": {
+      "type": "section-custom-code",
+      "name": "Sub-Collection Description",
+      "settings": {
+        "code": "<div class=\"rc-desc\" id=\"rc-collection-desc\">\n  <p id=\"rc-desc-text\">{{ collection.description }}</p>\n</div>\n\n<script>\n(function () {\n  var LIMIT = 100;\n\n  function truncWord(s, max) {\n    s = (s || '').replace(/\\s+/g, ' ').trim();\n    if (s.length <= max) return s;\n    var cut = s.slice(0, max);\n    var i = cut.lastIndexOf(' ');\n    if (i > 0) cut = cut.slice(0, i);\n    return cut;\n  }\n\n  function esc(s) {\n    var d = document.createElement('div');\n    d.textContent = s;\n    return d.innerHTML;\n  }\n\n  function init() {\n    var el = document.getElementById('rc-desc-text');\n    if (!el) return;\n    var full = el.innerHTML;\n    var text = el.textContent.replace(/\\s+/g, ' ').trim();\n    if (text.length <= LIMIT) return;\n\n    var short = esc(truncWord(text, LIMIT));\n    el.dataset.fullHtml = full;\n    el.innerHTML = short + '&hellip; <button type=\"button\" class=\"rcp-toggle\">Read more</button>';\n\n    el.querySelector('.rcp-toggle').addEventListener('click', function () {\n      el.innerHTML = el.dataset.fullHtml;\n    });\n  }\n\n  if (document.readyState === 'loading') {\n    document.addEventListener('DOMContentLoaded', init);\n  } else {\n    init();\n  }\n})();\n</script>\n\n<style>\n.rc-desc {\n  max-width: 90vw;\n  margin: 0 auto;\n  padding: 20px 5vw 10px;\n}\n@media (min-width: 3000px) {\n  .rc-desc { max-width: 3000px; }\n}\n.rc-desc p {\n  font-style: var(--BTN-FONT-STYLE);\n  font-family: var(--BTN-FONT-STACK);\n  font-size: 13px;\n  font-weight: 100;\n  line-height: 1.6;\n  text-transform: uppercase;\n  letter-spacing: 0.04em;\n  color: #333;\n}\n.rcp-toggle {\n  background: #2A4D1F;\n  border: 0;\n  padding: 6px 16px;\n  margin-left: 10px;\n  border-radius: 3px;\n  text-decoration: none;\n  cursor: pointer;\n  color: #fff;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: var(--BTN-FONT-WEIGHT);\n  font-family: var(--BTN-FONT-STACK);\n  text-transform: uppercase;\n  font-size: 12px;\n}\n.rcp-toggle:hover { background: #003dbf; }\n.rcp-hidden { display: none !important; }\n\n@media (max-width: 763px) {\n  .rc-desc { padding: 16px 10px 8px; }\n}\n</style>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rc_sub_quicklinks": {
+      "type": "section-custom-code",
+      "name": "Sub-Collection Quick Links",
+      "settings": {
+        "code": "<!-- RC Sub-Collection Quick Links -->\n<section class=\"rc-ql\" aria-label=\"Quick links\">\n  <nav class=\"rc-ql__nav\">\n    <ul class=\"rc-ql__list\">\n      <li><a href=\"/collections/golf-half-tights\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-split-shorts\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-golf posters\">Golf Posters</a></li>\n      <li><a href=\"/collections/golf-shirts\">Golf Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Graphic Shirts</a></li>\n      <li><a href=\"/collections/lifestyle-clothing\">Hoodies</a></li>\n      <li><a href=\"/collections/golf-posters\">Posters</a></li>\n      <li><a href=\"/collections/golf-stickers\">Stickers</a></li>\n    </ul>\n  </nav>\n</section>\n\n<style>\n.rc-ql {\n  background: #fbfbfb;\n  border-top: 1px solid #e9e9e9;\n  padding: 20px 0;\n}\n.rc-ql__nav {\n  max-width: 3000px;\n  margin: 0 auto;\n  padding: 0 5vw;\n}\n.rc-ql__list {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n  display: flex;\n  flex-wrap: nowrap;\n  gap: 14px;\n  justify-content: center;\n  align-items: center;\n  overflow: auto;\n  scrollbar-width: none;\n}\n.rc-ql__list::-webkit-scrollbar { display: none; }\n.rc-ql__list a {\n  display: inline-block;\n  min-width: 140px;\n  padding: 9px 22px;\n  border: 1px solid #ddd;\n  border-radius: 3px;\n  text-decoration: none;\n  text-align: center;\n  font-style: var(--BTN-FONT-STYLE);\n  font-weight: 500;\n  font-family: var(--BTN-FONT-STACK);\n  font-size: 12px;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: #111;\n  background: #fbfbfb;\n  transition: background-color .2s ease-in-out, color .2s ease-in-out, border-color .2s ease-in-out;\n  white-space: nowrap;\n}\n.rc-ql__list a:hover,\n.rc-ql__list a:active {\n  background: #2A4D1F;\n  color: #fbfbfb;\n  border-color: #2A4D1F;\n}\n.rc-ql__list a:focus-visible {\n  outline: 2px solid #2A4D1F;\n  outline-offset: 2px;\n}\n\n@media (max-width: 763px) {\n  .rc-ql__nav { padding: 0 10px; }\n  .rc-ql__list {\n    flex-direction: column;\n    align-items: stretch;\n    gap: 10px;\n    overflow: visible;\n  }\n  .rc-ql__list a {\n    width: 100%;\n    min-width: 0;\n  }\n}\n</style>",
+        "width": "wrapper--full-padded",
+        "bg_color": "",
+        "color": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    }
+  }
+}

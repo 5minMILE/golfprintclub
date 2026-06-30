@@ -1,0 +1,596 @@
+{%- comment -%}
+  RC Filters Sidebar (All dropdowns + Sort at top + only Sort open on load + sticky desktop)
+
+  Replace the entire contents of:
+  snippets/collection-filters-sidebar.liquid
+
+  Uses:
+  - Native Shopify collection.filters for: availability, product_type, option size/color, price_range
+  - Tag filters for: Features, Fit, Collection, Discount (Sale)
+
+  TAGS TO ADD ON PRODUCTS (examples):
+  feature:back-pocket
+  feature:inner-pocket
+  feature:liner
+
+  fit:compression
+  fit:split-shorts
+
+  collection:fire-ice
+  collection:2-wrlds
+  collection:storm
+
+  sale:discounted
+{%- endcomment -%}
+
+{%- liquid
+  assign active_count = 0
+  for f in collection.filters
+    assign active_count = active_count | plus: f.active_values.size
+  endfor
+  if current_tags != blank
+    assign active_count = active_count | plus: current_tags.size
+  endif
+
+  comment
+    Tag groups (Label|tag) — edit these to match your real tags
+  endcomment
+  capture TAG_FEATURES
+    echo "Back pocket|feature:back-pocket\n"
+    echo "Inner pocket|feature:inner-pocket\n"
+    echo "Liner|feature:liner\n"
+  endcapture
+
+  capture TAG_FIT
+    echo "Compression|fit:compression\n"
+    echo "Split shorts|fit:split-shorts\n"
+  endcapture
+
+  capture TAG_COLLECTION
+    echo "Fire & Ice|collection:fire-ice\n"
+    echo "2 WRLDS|collection:2-wrlds\n"
+    echo "Storm|collection:storm\n"
+  endcapture
+
+  capture TAG_SALE
+    echo "Discounted|sale:discounted\n"
+  endcapture
+
+  comment
+    Find native filters we care about.
+  endcomment
+  assign f_avail = nil
+  assign f_type  = nil
+  assign f_size  = nil
+  assign f_color = nil
+  assign f_price = nil
+
+  for f in collection.filters
+    assign pn = f.param_name | downcase
+    assign lb = f.label | downcase
+
+    if f.type == 'price_range'
+      assign f_price = f
+    endif
+
+    if pn contains 'filter.v.availability' or lb contains 'availability' or lb contains 'in stock'
+      assign f_avail = f
+    endif
+
+    if pn contains 'filter.p.product_type' or lb == 'product type'
+      assign f_type = f
+    endif
+
+    if pn contains 'filter.v.option.size' or lb == 'size'
+      assign f_size = f
+    endif
+
+    if pn contains 'filter.v.option.color' or lb == 'color'
+      assign f_color = f
+    endif
+  endfor
+
+  assign current_sort = collection.sort_by | default: collection.default_sort_by
+-%}
+
+<style>
+  /* ===== RC Filter UI ===== */
+  #Collection--{{ section.id }} .rcf-wrap{ width:100%; color:#111; }
+  #Collection--{{ section.id }} .rcf-header{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,.08);
+    position: sticky; top: 0; z-index: 5;
+  }
+  #Collection--{{ section.id }} .rcf-title{
+    font-family: var(--BTN-FONT-STACK) !important;
+    font-weight: 900; letter-spacing:.02em; text-transform:uppercase; font-size:18px;
+    display:flex; align-items:center; gap:10px; white-space:nowrap;
+  }
+  #Collection--{{ section.id }} .rcf-badge{
+    font-weight: 900; font-size:12px; padding:4px 8px; border-radius:999px;
+    background: rgba(0,0,0,.06);
+  }
+  #Collection--{{ section.id }} .rcf-clear{
+    font-family: var(--BTN-FONT-STACK) !important; font-weight: 800; opacity:.8; text-decoration: underline; color:inherit;
+    white-space:nowrap; font-size: 12px;   text-underline-offset: 6px; text-transform:uppercase;
+  }
+  #Collection--{{ section.id }} .rcf-clear:hover{ opacity:1; }
+
+  #Collection--{{ section.id }} details.rcf-item:last-child{ border-bottom: 1px solid rgba(0,0,0,.08); }
+
+  #Collection--{{ section.id }} .rcf-sum{
+    list-style:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding: 14px 10px;
+  }
+  #Collection--{{ section.id }} .rcf-sum::-webkit-details-marker{ display:none; }
+
+  #Collection--{{ section.id }} .rcf-label{
+    font-family: var(--BTN-FONT-STACK) !important; font-weight: 800; letter-spacing:.02em; text-transform:uppercase; font-size:13px;
+  }
+  #Collection--{{ section.id }} .rcf-plus{ width:18px; height:18px; position:relative; opacity:.8; flex:0 0 auto; }
+  #Collection--{{ section.id }} .rcf-plus:before,
+  #Collection--{{ section.id }} .rcf-plus:after{
+    content:""; position:absolute; left:50%; top:50%;
+    width:10px; height:2px; background:currentColor;
+    transform: translate(-50%,-50%);
+  }
+  #Collection--{{ section.id }} .rcf-plus:after{ transform: translate(-50%,-50%) rotate(90deg); }
+  #Collection--{{ section.id }} details[open] .rcf-plus:after{ opacity:0; }
+
+  #Collection--{{ section.id }} .rcf-panel{ padding: 0 10px 14px; }
+
+  #Collection--{{ section.id }} .rcf-list{ display:flex; flex-direction:column; gap:5px; margin-top: 0px; }
+
+  #Collection--{{ section.id }} label.rcf-opt{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    cursor:pointer; font-size:14px; user-select:none;
+  }
+  #Collection--{{ section.id }} label.rcf-opt input{ width:18px; height:18px; accent-color:#111; }
+  #Collection--{{ section.id }} .rcf-count{ opacity:.8; font-weight:800; font-family: var(--BTN-FONT-STACK) !important; font-size:12px;}
+
+  /* Tag links styled like checkbox rows */
+  #Collection--{{ section.id }} a.rcf-link{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    text-decoration:none; color:inherit;
+    font-size:14px;
+    padding: 2px 0;
+  }
+  #Collection--{{ section.id }} .rcf-pill{
+    width:18px; height:18px; border-radius:4px;
+    border:1px solid rgba(0,0,0,.25);
+    display:inline-flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+    margin-right: 10px;
+  }
+  #Collection--{{ section.id }} .rcf-pill.is-on{ background:#111; border-color:#111; color:#fff; }
+  #Collection--{{ section.id }} .rcf-pill svg{ width:14px; height:14px; display:block; }
+
+  /* Color swatch */
+  #Collection--{{ section.id }} .rcf-swatch{
+    width:18px; height:18px; border-radius:6px;
+    border:1px solid rgba(0,0,0,.15);
+    overflow:hidden; flex:0 0 auto;
+    margin-right: 10px;
+  }
+  #Collection--{{ section.id }} .rcf-swatch > span,
+  #Collection--{{ section.id }} .rcf-swatch img{ width:100%; height:100%; display:block; object-fit:cover; }
+
+  /* Price inputs */
+  #Collection--{{ section.id }} .rcf-price{
+    display:grid; grid-template-columns: 1fr 1fr;
+    gap:10px;
+    margin-top: 10px;
+  }
+  #Collection--{{ section.id }} .rcf-price input[type="number"]{
+    width:100%; height:42px; border-radius:12px;
+    border:1px solid rgba(0,0,0,.12);
+    padding:0 12px;
+  }
+  #Collection--{{ section.id }} .rcf-apply{
+    margin-top: 12px;
+    width:100%; height:44px; border-radius:999px;
+    border:1px solid rgba(0,0,0,.12);
+    background:#f2f2f2;
+    font-weight: 900; letter-spacing:.02em;
+    cursor:pointer;
+  }
+
+  /* ===== Sticky left sidebar on desktop ===== */
+  @media (min-width: 990px){
+    #Collection--{{ section.id }} .rcf-wrap{
+      position: sticky;
+      top: 16px;
+      align-self: flex-start;
+      max-height: calc(100vh - 32px);
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+</style>
+
+<div class="rcf-wrap" id="RCF_META--{{ section.id }}">
+  <collection-filters-form>
+    <form data-collection-filters-form class="collection__filters" id="CollectionFiltersForm--{{ section.id }}">
+
+      <!-- Header -->
+      <div class="rcf-header">
+        <div class="rcf-title">
+          Filter &amp; Sort
+          {%- if active_count > 0 -%}
+            <span class="rcf-badge">{{ active_count }}</span>
+          {%- endif -%}
+        </div>
+        <a class="rcf-clear" href="{{ collection.url }}">Clear all</a>
+      </div>
+
+      <!-- ===== Sort by (dropdown) ===== -->
+      <details class="rcf-item" data-rcf-sort>
+        <summary class="rcf-sum">
+          <div class="rcf-label">Sort by</div>
+          <span class="rcf-plus" aria-hidden="true"></span>
+        </summary>
+        <div class="rcf-panel">
+          <div class="rcf-list">
+            <label class="rcf-opt" style="justify-content:flex-start; gap:10px;">
+              <input type="radio" name="sort_by" value="price-ascending" {% if current_sort == 'price-ascending' %}checked{% endif %}>
+              <span>Price: Low to High</span>
+            </label>
+
+            <label class="rcf-opt" style="justify-content:flex-start; gap:10px;">
+              <input type="radio" name="sort_by" value="price-descending" {% if current_sort == 'price-descending' %}checked{% endif %}>
+              <span>Price: High to Low</span>
+            </label>
+
+            <label class="rcf-opt" style="justify-content:flex-start; gap:10px;">
+              <input type="radio" name="sort_by" value="best-selling" {% if current_sort == 'best-selling' %}checked{% endif %}>
+              <span>Relevancy</span>
+            </label>
+
+            <label class="rcf-opt" style="justify-content:flex-start; gap:10px;">
+              <input type="radio" name="sort_by" value="created-descending" {% if current_sort == 'created-descending' %}checked{% endif %}>
+              <span>Newest</span>
+            </label>
+          </div>
+        </div>
+      </details>
+
+      <!-- ===== In stock (native) ===== -->
+      {%- if f_avail != nil and f_avail.values.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">In stock</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for v in f_avail.values -%}
+                <label class="rcf-opt">
+                  <span style="display:flex;align-items:center;gap:10px;">
+                    <input
+                      type="checkbox"
+                      name="{{ v.param_name }}"
+                      value="{{ v.value }}"
+                      {% if v.active %}checked{% endif %}
+                      {% if v.count == 0 and v.active == false %}disabled{% endif %}>
+                    <span>{{ v.label }}</span>
+                  </span>
+                  <span class="rcf-count">{{ v.count }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Product type (native) ===== -->
+      {%- if f_type != nil and f_type.values.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Product type</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for v in f_type.values -%}
+                <label class="rcf-opt">
+                  <span style="display:flex;align-items:center;gap:10px;">
+                    <input
+                      type="checkbox"
+                      name="{{ v.param_name }}"
+                      value="{{ v.value }}"
+                      {% if v.active %}checked{% endif %}
+                      {% if v.count == 0 and v.active == false %}disabled{% endif %}>
+                    <span>{{ v.label }}</span>
+                  </span>
+                  <span class="rcf-count">{{ v.count }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Size (native option) ===== -->
+      {%- if f_size != nil and f_size.values.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Size</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for v in f_size.values -%}
+                <label class="rcf-opt">
+                  <span style="display:flex;align-items:center;gap:10px;">
+                    <input
+                      type="checkbox"
+                      name="{{ v.param_name }}"
+                      value="{{ v.value }}"
+                      {% if v.active %}checked{% endif %}
+                      {% if v.count == 0 and v.active == false %}disabled{% endif %}>
+                    <span>{{ v.label }}</span>
+                  </span>
+                  <span class="rcf-count">{{ v.count }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Features (tags) ===== -->
+      {%- assign feature_lines = TAG_FEATURES | strip | split: "\n" -%}
+      {%- if feature_lines.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Features</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for line in feature_lines -%}
+                {%- assign p = line | split: "|" -%}
+                {%- assign label = p[0] | strip -%}
+                {%- assign tag = p[1] | strip -%}
+                {%- assign handle = tag | handleize -%}
+                {%- assign is_on = false -%}
+                {%- if current_tags contains handle -%}{%- assign is_on = true -%}{%- endif -%}
+
+                {%- if is_on -%}
+                  {%- assign href = collection.url | link_to_remove_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- else -%}
+                  {%- assign href = collection.url | link_to_add_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- endif -%}
+
+                <a class="rcf-link" href="{{ href }}">
+                  <span style="display:flex;align-items:center;">
+                    <span class="rcf-pill {% if is_on %}is-on{% endif %}" aria-hidden="true">
+                      {% if is_on %}
+                        <svg viewBox="0 0 20 20" fill="none"><path d="M16 6L8.5 13.5L4 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% endif %}
+                    </span>
+                    <span>{{ label }}</span>
+                  </span>
+                </a>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Fit (tags) ===== -->
+      {%- assign fit_lines = TAG_FIT | strip | split: "\n" -%}
+      {%- if fit_lines.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Fit</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for line in fit_lines -%}
+                {%- assign p = line | split: "|" -%}
+                {%- assign label = p[0] | strip -%}
+                {%- assign tag = p[1] | strip -%}
+                {%- assign handle = tag | handleize -%}
+                {%- assign is_on = false -%}
+                {%- if current_tags contains handle -%}{%- assign is_on = true -%}{%- endif -%}
+
+                {%- if is_on -%}
+                  {%- assign href = collection.url | link_to_remove_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- else -%}
+                  {%- assign href = collection.url | link_to_add_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- endif -%}
+
+                <a class="rcf-link" href="{{ href }}">
+                  <span style="display:flex;align-items:center;">
+                    <span class="rcf-pill {% if is_on %}is-on{% endif %}" aria-hidden="true">
+                      {% if is_on %}
+                        <svg viewBox="0 0 20 20" fill="none"><path d="M16 6L8.5 13.5L4 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% endif %}
+                    </span>
+                    <span>{{ label }}</span>
+                  </span>
+                </a>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Collection (tags) ===== -->
+      {%- assign coll_lines = TAG_COLLECTION | strip | split: "\n" -%}
+      {%- if coll_lines.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Collection</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for line in coll_lines -%}
+                {%- assign p = line | split: "|" -%}
+                {%- assign label = p[0] | strip -%}
+                {%- assign tag = p[1] | strip -%}
+                {%- assign handle = tag | handleize -%}
+                {%- assign is_on = false -%}
+                {%- if current_tags contains handle -%}{%- assign is_on = true -%}{%- endif -%}
+
+                {%- if is_on -%}
+                  {%- assign href = collection.url | link_to_remove_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- else -%}
+                  {%- assign href = collection.url | link_to_add_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- endif -%}
+
+                <a class="rcf-link" href="{{ href }}">
+                  <span style="display:flex;align-items:center;">
+                    <span class="rcf-pill {% if is_on %}is-on{% endif %}" aria-hidden="true">
+                      {% if is_on %}
+                        <svg viewBox="0 0 20 20" fill="none"><path d="M16 6L8.5 13.5L4 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% endif %}
+                    </span>
+                    <span>{{ label }}</span>
+                  </span>
+                </a>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Color (native option) ===== -->
+      {%- if f_color != nil and f_color.values.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Color</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for v in f_color.values -%}
+                <label class="rcf-opt" style="justify-content:flex-start;">
+                  <span style="display:flex;align-items:center; width:100%;">
+                    <input
+                      type="checkbox"
+                      name="{{ v.param_name }}"
+                      value="{{ v.value }}"
+                      {% if v.active %}checked{% endif %}
+                      {% if v.count == 0 and v.active == false %}disabled{% endif %}>
+
+                    <span class="rcf-swatch" aria-hidden="true">
+                      {%- if v.swatch and v.swatch.image -%}
+                        <img src="{{ v.swatch.image | image_url: width: 50 }}" alt="">
+                      {%- elsif v.swatch and v.swatch.color -%}
+                        <span style="background:{{ v.swatch.color }};"></span>
+                      {%- else -%}
+                        <span style="background:#eee;"></span>
+                      {%- endif -%}
+                    </span>
+
+                    <span style="display:flex;align-items:center;justify-content:space-between;width:100%;">
+                      <span>{{ v.label }}</span>
+                      <span class="rcf-count">{{ v.count }}</span>
+                    </span>
+                  </span>
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Discount (Sale tags) ===== -->
+      {%- assign sale_lines = TAG_SALE | strip | split: "\n" -%}
+      {%- if sale_lines.size > 0 -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Discount</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-list">
+              {%- for line in sale_lines -%}
+                {%- assign p = line | split: "|" -%}
+                {%- assign label = p[0] | strip -%}
+                {%- assign tag = p[1] | strip -%}
+                {%- assign handle = tag | handleize -%}
+                {%- assign is_on = false -%}
+                {%- if current_tags contains handle -%}{%- assign is_on = true -%}{%- endif -%}
+
+                {%- if is_on -%}
+                  {%- assign href = collection.url | link_to_remove_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- else -%}
+                  {%- assign href = collection.url | link_to_add_tag: tag | split: 'href="' | last | split: '"' | first -%}
+                {%- endif -%}
+
+                <a class="rcf-link" href="{{ href }}">
+                  <span style="display:flex;align-items:center;">
+                    <span class="rcf-pill {% if is_on %}is-on{% endif %}" aria-hidden="true">
+                      {% if is_on %}
+                        <svg viewBox="0 0 20 20" fill="none"><path d="M16 6L8.5 13.5L4 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      {% endif %}
+                    </span>
+                    <span>{{ label }}</span>
+                  </span>
+                </a>
+              {%- endfor -%}
+            </div>
+          </div>
+        </details>
+      {%- endif -%}
+
+      <!-- ===== Price (native price_range) ===== -->
+      {%- if f_price != nil -%}
+        <details class="rcf-item">
+          <summary class="rcf-sum">
+            <div class="rcf-label">Price</div>
+            <span class="rcf-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="rcf-panel">
+            <div class="rcf-price">
+              <input
+                name="{{ f_price.min_value.param_name }}"
+                type="number"
+                inputmode="numeric"
+                placeholder="Min"
+                value="{{ f_price.min_value.value | default: '' }}">
+              <input
+                name="{{ f_price.max_value.param_name }}"
+                type="number"
+                inputmode="numeric"
+                placeholder="Max"
+                value="{{ f_price.max_value.value | default: '' }}">
+            </div>
+            <button class="rcf-apply" type="submit">Apply</button>
+          </div>
+        </details>
+      {%- endif -%}
+
+    </form>
+  </collection-filters-form>
+</div>
+
+<script>
+(() => {
+  const form = document.getElementById('CollectionFiltersForm--{{ section.id }}');
+  if (!form) return;
+
+  // Auto-submit when native filters change (checkbox/radio)
+  const submitSoon = () => form.dispatchEvent(new Event('submit', { bubbles:true, cancelable:true }));
+  form.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach((el) => {
+    el.addEventListener('change', submitSoon);
+  });
+
+  // ONLY "Sort by" open on load, everything else closed
+  const root = document.getElementById('RCF_META--{{ section.id }}');
+  if (!root) return;
+
+  const allDetails = Array.from(root.querySelectorAll('details.rcf-item'));
+  const sortDetails = root.querySelector('details[data-rcf-sort]') || allDetails[0];
+
+  allDetails.forEach(d => d.removeAttribute('open'));
+  if (sortDetails) sortDetails.setAttribute('open','');
+})();
+</script>

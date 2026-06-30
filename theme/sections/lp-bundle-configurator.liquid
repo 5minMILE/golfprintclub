@@ -1,0 +1,324 @@
+<div class="lp-page-wrap">
+  <div class="lp-section-gap"></div>
+  <div class="lp-bundle-config">
+    <div class="lp-sec-head" style="margin-bottom:4px;">{{ section.settings.heading }}</div>
+    <div class="lp-bundle-config__sub">{{ section.settings.subheading }}</div>
+
+    {% for block in section.blocks %}
+      {% if block.type == 'pair' %}
+        {% unless forloop.first %}<div class="lp-bundle-config__divider"></div>{% endunless %}
+        <div class="lp-bundle-config__pair" {{ block.shopify_attributes }}>
+          <div class="lp-bundle-config__pair-header">
+            <span>{{ block.settings.label }}</span>
+            {% if block.settings.is_free %}
+              <span class="lp-bundle-config__free-badge">FREE</span>
+            {% else %}
+              <span class="lp-bundle-config__pair-price">{{ block.settings.price }}</span>
+            {% endif %}
+          </div>
+          <div class="lp-design-scroll" style="margin-bottom:8px;">
+            {% for i in (1..7) %}
+              {% assign img_key = 'swatch_' | append: i %}
+              {% assign color_key = 'color_' | append: i %}
+              {% assign swatch_img = block.settings[img_key] %}
+              {% assign swatch_color = block.settings[color_key] %}
+              {% if swatch_color != blank %}
+                <div class="lp-design-thumb {% if forloop.first %}active{% endif %}" style="background-color:{{ swatch_color }};{% if swatch_img != blank %}background-image:url({{ swatch_img | image_url: width: 120 }});{% endif %}"></div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="lp-size-grid">
+            {% assign sizes = block.settings.sizes | split: ',' %}
+            {% for size in sizes %}
+              <div class="lp-size-btn" style="font-size:12px;">{{ size | strip }}</div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <!-- Order summary -->
+    <div class="lp-bundle-config__summary">
+      <div class="lp-bundle-config__summary-row">
+        <span style="color:#aaa;">{{ section.settings.summary_line1_label }}</span>
+        <span>{{ section.settings.summary_line1_value }}</span>
+      </div>
+      <div class="lp-bundle-config__summary-row">
+        <span style="color:#aaa;">{{ section.settings.summary_line2_label }}</span>
+        <span style="color:var(--lp-red);">{{ section.settings.summary_line2_value }}</span>
+      </div>
+      <div class="lp-bundle-config__summary-total">
+        <span>Total</span>
+        <span style="color:var(--lp-blue);">{{ section.settings.total_price }}</span>
+      </div>
+      <div class="lp-bundle-config__summary-savings">{{ section.settings.savings_text }}</div>
+    </div>
+
+    <a href="{{ section.settings.button_url }}" class="lp-btn-primary" style="margin-bottom:10px;">{{ section.settings.button_text }}</a>
+    <div class="lp-bundle-config__fine">{{ section.settings.fine_print }}</div>
+  </div>
+</div>
+
+<style>
+  .lp-bundle-config {
+    padding: 20px 16px;
+    max-width: 390px;
+    margin: 0 auto;
+    background: var(--lp-white);
+  }
+  .lp-bundle-config__sub {
+    font-size: 13px;
+    color: var(--lp-mid);
+    margin-bottom: 16px;
+  }
+  .lp-bundle-config__pair { margin-bottom: 14px; }
+  .lp-bundle-config__pair-header {
+    font-family: var(--lp-font-head);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lp-bundle-config__pair-price { color: var(--lp-blue); }
+  .lp-bundle-config__free-badge {
+    background: var(--lp-red);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .lp-bundle-config__divider {
+    height: 1px;
+    background: var(--lp-border);
+    margin-bottom: 14px;
+  }
+  .lp-bundle-config__summary {
+    background: var(--lp-black);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 14px;
+    color: #fff;
+  }
+  .lp-bundle-config__summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 5px 0;
+    border-bottom: 1px solid #333;
+  }
+  .lp-bundle-config__summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--lp-font-head);
+    font-size: 20px;
+    font-weight: 900;
+    padding: 8px 0 0;
+  }
+  .lp-bundle-config__summary-savings {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+  }
+  .lp-bundle-config__fine {
+    text-align: center;
+    font-size: 11px;
+    color: var(--lp-mid);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "LP Bundle — Configurator",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build Your Bundle"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Choose your 3 designs and size. Mix any way you want."
+    },
+    {
+      "type": "text",
+      "id": "summary_line1_label",
+      "label": "Summary line 1 label",
+      "default": "Pair 1 + Pair 2"
+    },
+    {
+      "type": "text",
+      "id": "summary_line1_value",
+      "label": "Summary line 1 value",
+      "default": "$120"
+    },
+    {
+      "type": "text",
+      "id": "summary_line2_label",
+      "label": "Summary line 2 label",
+      "default": "Pair 3 (Free)"
+    },
+    {
+      "type": "text",
+      "id": "summary_line2_value",
+      "label": "Summary line 2 value",
+      "default": "-$60"
+    },
+    {
+      "type": "text",
+      "id": "total_price",
+      "label": "Total price",
+      "default": "$120"
+    },
+    {
+      "type": "text",
+      "id": "savings_text",
+      "label": "Savings text",
+      "default": "You save $60 · Free shipping"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add Bundle to Cart"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Easy Exchanges · Secure Checkout · 4,000+ golfers"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pair",
+      "name": "Pair Selector",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Pair label",
+          "default": "Pair 1"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price",
+          "default": "$60"
+        },
+        {
+          "type": "checkbox",
+          "id": "is_free",
+          "label": "Show as FREE",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "sizes",
+          "label": "Sizes (comma-separated)",
+          "default": "S, M, L"
+        },
+        {
+          "type": "color",
+          "id": "color_1",
+          "label": "Swatch 1 color",
+          "default": "#1a1a1a"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_1",
+          "label": "Swatch 1 image (optional)"
+        },
+        {
+          "type": "color",
+          "id": "color_2",
+          "label": "Swatch 2 color",
+          "default": "#2255bb"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_2",
+          "label": "Swatch 2 image (optional)"
+        },
+        {
+          "type": "color",
+          "id": "color_3",
+          "label": "Swatch 3 color",
+          "default": "#cc4499"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_3",
+          "label": "Swatch 3 image (optional)"
+        },
+        {
+          "type": "color",
+          "id": "color_4",
+          "label": "Swatch 4 color",
+          "default": "#333333"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_4",
+          "label": "Swatch 4 image (optional)"
+        },
+        {
+          "type": "color",
+          "id": "color_5",
+          "label": "Swatch 5 color",
+          "default": "#8B7355"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_5",
+          "label": "Swatch 5 image (optional)"
+        },
+        {
+          "type": "color",
+          "id": "color_6",
+          "label": "Swatch 6 color",
+          "default": "#4a7a4a"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_6",
+          "label": "Swatch 6 image (optional)"
+        },
+        {
+          "type": "color",
+          "id": "color_7",
+          "label": "Swatch 7 color",
+          "default": "#cc3300"
+        },
+        {
+          "type": "image_picker",
+          "id": "swatch_7",
+          "label": "Swatch 7 image (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "LP Bundle — Configurator",
+      "blocks": [
+        { "type": "pair", "settings": { "label": "Pair 1", "price": "$60" } },
+        { "type": "pair", "settings": { "label": "Pair 2", "price": "$60" } },
+        { "type": "pair", "settings": { "label": "Pair 3", "is_free": true } }
+      ]
+    }
+  ]
+}
+{% endschema %}

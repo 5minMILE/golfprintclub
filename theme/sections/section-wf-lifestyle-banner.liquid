@@ -1,0 +1,168 @@
+<!-- /sections/section-wf-lifestyle-banner.liquid -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  #WfBanner--{{ section.id }} {
+    position: relative;
+    height: 50vh;
+    background: #111;
+    overflow: hidden;
+    margin: 0 50px;
+    max-width: 3000px;
+  }
+  #WfBanner--{{ section.id }} img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #WfBanner--{{ section.id }}::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    z-index: 1;
+    pointer-events: none;
+  }
+  #WfBanner--{{ section.id }} .wf-banner__overlay {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    z-index: 2;
+  }
+  #WfBanner--{{ section.id }} .wf-banner__promo {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 7px;
+    font-weight: 600;
+    color: #999;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  #WfBanner--{{ section.id }} .wf-banner__heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 40px;
+    font-weight: 1000;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin: 0;
+  }
+  #WfBanner--{{ section.id }} .wf-banner__btn {
+    display: inline-block;
+    margin-top: 10px;
+    background: #2A4D1F;
+    color: #fff;
+    padding: 8px 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 1000;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+  @media (max-width: 749px) {
+    #WfBanner--{{ section.id }} {
+      height: 40vh;
+      margin: 0 16px;
+    }
+    #WfBanner--{{ section.id }} .wf-banner__overlay {
+      bottom: 16px;
+      left: 14px;
+    }
+    #WfBanner--{{ section.id }} .wf-banner__heading {
+      font-size: 20px;
+    }
+    #WfBanner--{{ section.id }} .wf-banner__btn {
+      margin-top: 6px;
+      padding: 7px 16px;
+      font-size: 8px;
+      letter-spacing: 0.1em;
+    }
+  }
+  @media (min-width: 750px) {
+    #WfBanner--{{ section.id }} {
+      height: 90vh;
+    }
+    #WfBanner--{{ section.id }} .wf-banner__promo {
+      font-size: 14px;
+      color: #fff;
+    }
+    #WfBanner--{{ section.id }} .wf-banner__btn {
+      background: #3D6E2E;
+      padding: 12px 28px;
+      font-size: 20px;
+      font-weight: 800;
+    }
+  }
+</style>
+
+<section id="WfBanner--{{ section.id }}">
+  {%- if section.settings.image != blank -%}
+    {%- assign img = section.settings.image -%}
+    <img src="{{ img | image_url: width: 1800 }}"
+      alt="{{ section.settings.heading | escape }}"
+      width="{{ img.width }}"
+      height="{{ img.height }}"
+      loading="lazy">
+  {%- endif -%}
+  <div class="wf-banner__overlay">
+    {%- if section.settings.promo_text != blank -%}
+      <div class="wf-banner__promo">{{ section.settings.promo_text }}</div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="wf-banner__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.button_text != blank -%}
+      <a href="{{ section.settings.button_link }}" class="wf-banner__btn">{{ section.settings.button_text }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "WF Lifestyle Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Banner image"
+    },
+    {
+      "type": "text",
+      "id": "promo_text",
+      "label": "Promo text",
+      "default": "Buy 2 Shorts, Get 1 Free"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Build Your Rotation"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Shorts"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "WF Lifestyle Banner",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}

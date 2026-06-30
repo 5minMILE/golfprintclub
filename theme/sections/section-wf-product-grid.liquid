@@ -1,0 +1,698 @@
+<!-- /sections/section-wf-product-grid.liquid -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+{%- style -%}
+  #WfProdGrid--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<style>
+  #WfProdGrid--{{ section.id }} {
+    padding-top: var(--PT);
+    padding-bottom: var(--PB);
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__inner {
+    max-width: 3000px;
+    margin: 0 50px;
+  }
+  /* Toolbar */
+  #WfProdGrid--{{ section.id }} .wf-pg__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E0E0E0;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__count {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #999;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__toggles {
+    display: flex;
+    gap: 6px;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__toggle {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__toggle.is-active {
+    border-color: #000;
+    background: #000;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__toggle.is-active svg {
+    stroke: #fff;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__toggle svg {
+    width: 14px;
+    height: 14px;
+    stroke: #666;
+    fill: none;
+    stroke-width: 2;
+  }
+  /* Grid */
+  #WfProdGrid--{{ section.id }} .wf-pg__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__grid.cols-1 {
+    grid-template-columns: 1fr;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__grid .wf-card.is-hidden {
+    display: none !important;
+  }
+  @media (min-width: 750px) {
+    #WfProdGrid--{{ section.id }} .wf-pg__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    #WfProdGrid--{{ section.id }} .wf-pg__grid.cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    #WfProdGrid--{{ section.id }} .wf-pg__grid.cols-1 {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+    }
+  }
+  @media (max-width: 749px) {
+    #WfProdGrid--{{ section.id }} .wf-pg__inner {
+      margin: 0 16px;
+    }
+    /* Hide desktop-only toggle */
+    #WfProdGrid--{{ section.id }} .wf-pg__toggle--desktop {
+      display: none;
+    }
+  }
+  @media (min-width: 750px) {
+    #WfProdGrid--{{ section.id }} .wf-pg__toggles {
+      display: none;
+    }
+  }
+  /* Product card — exact match of wf-collection-tabs */
+  #WfProdGrid--{{ section.id }} .wf-card {
+    border: 1px solid #E0E0E0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__info {
+    padding: 8px 10px 10px;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__img {
+    display: block;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: #F0F0F0;
+    overflow: hidden;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__badge {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 7px;
+    padding: 2px 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    z-index: 1;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__badge--soldout {
+    background: #2A4D1F;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card:has(.wf-card__badge--soldout) .wf-card__img img {
+    opacity: 0.8;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__badge--sale {
+    background: #000;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__badge--backorder {
+    background: #FF8800;
+  }
+  @media (min-width: 750px) {
+    #WfProdGrid--{{ section.id }} .wf-card__badge {
+      font-size: 10px;
+      font-weight: 700;
+    }
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__swatches {
+    display: flex;
+    gap: 6px;
+    margin-top: 4px;
+    align-items: center;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__swatch {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__swatch:hover,
+  #WfProdGrid--{{ section.id }} .wf-card__swatch.is-active {
+    transform: scale(1.2);
+    border-color: #333;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 1000;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 4px;
+    line-height: 1.2;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__variants {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: #888;
+    margin-top: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__variant-item {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__price {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 1000;
+    margin-top: 3px;
+  }
+  #WfProdGrid--{{ section.id }} .wf-card__price .old-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-left: 4px;
+    font-weight: 400;
+    font-size: 9px;
+  }
+  /* Load More */
+  #WfProdGrid--{{ section.id }} .wf-pg__load-more {
+    display: block;
+    width: 100%;
+    padding: 14px 0;
+    margin-top: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #3D6E2E;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__load-more:hover {
+    background: #0069d9;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__load-more {
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__load-more::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(100,180,255,0.5) 0%, rgba(0,123,255,0.15) 30%, transparent 55%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__load-more:hover {
+    background: #0080ff;
+    box-shadow: 0 0 12px rgba(0,123,255,0.5);
+    transform: translateY(-1px);
+  }
+  #WfProdGrid--{{ section.id }} .wf-pg__load-more:hover::before {
+    opacity: 1;
+  }
+</style>
+
+<section id="WfProdGrid--{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="wf-product-grid">
+  <div class="wf-pg__inner">
+    <div class="wf-pg__toolbar">
+      {%- assign visible_product_count = 0 -%}
+      {%- for p in collection.products -%}
+        {%- unless p.tags contains 'hide' -%}
+          {%- assign visible_product_count = visible_product_count | plus: 1 -%}
+        {%- endunless -%}
+      {%- endfor -%}
+      <span class="wf-pg__count">{{ visible_product_count }} Products</span>
+      <div class="wf-pg__toggles">
+        {%- comment -%}Desktop toggles: 4-col (default), 2-col, 1-col{%- endcomment -%}
+        <button class="wf-pg__toggle wf-pg__toggle--desktop is-active" data-cols-desktop="4" aria-label="4 columns">
+          <svg viewBox="0 0 16 16"><rect x="1" y="1" width="2.5" height="6"/><rect x="5.17" y="1" width="2.5" height="6"/><rect x="9.33" y="1" width="2.5" height="6"/><rect x="13.5" y="1" width="2.5" height="6"/><rect x="1" y="9" width="2.5" height="6"/><rect x="5.17" y="9" width="2.5" height="6"/><rect x="9.33" y="9" width="2.5" height="6"/><rect x="13.5" y="9" width="2.5" height="6"/></svg>
+        </button>
+        <button class="wf-pg__toggle wf-pg__toggle--desktop" data-cols-desktop="2" aria-label="2 columns">
+          <svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>
+        </button>
+        <button class="wf-pg__toggle wf-pg__toggle--desktop" data-cols-desktop="1" aria-label="1 column">
+          <svg viewBox="0 0 16 16"><rect x="3" y="1" width="10" height="6"/><rect x="3" y="9" width="10" height="6"/></svg>
+        </button>
+        {%- comment -%}Mobile toggles: 2-col (default), 1-col{%- endcomment -%}
+        <button class="wf-pg__toggle wf-pg__toggle--mobile is-active" data-cols-mobile="2" aria-label="2 columns">
+          <svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6"/><rect x="9" y="1" width="6" height="6"/><rect x="1" y="9" width="6" height="6"/><rect x="9" y="9" width="6" height="6"/></svg>
+        </button>
+        <button class="wf-pg__toggle wf-pg__toggle--mobile" data-cols-mobile="1" aria-label="1 column">
+          <svg viewBox="0 0 16 16"><rect x="3" y="1" width="10" height="6"/><rect x="3" y="9" width="10" height="6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="wf-pg__grid" data-load-limit="16">
+      {%- assign render_limit = 48 -%}
+      {%- assign visible_count = 0 -%}
+      {%- for product in collection.products limit: render_limit -%}
+        {%- unless product.tags contains 'hide' -%}
+          {%- comment -%}Resolve redirect metafield to get master product data{%- endcomment -%}
+          {%- assign display_product = product -%}
+          {%- assign redirect_meta = product.metafields.custom.master_reference -%}
+          {%- if redirect_meta != blank -%}
+            {%- if redirect_meta.value and redirect_meta.value.handle -%}
+              {%- assign display_product = redirect_meta.value -%}
+            {%- else -%}
+              {%- assign redirect_value = redirect_meta.value | default: redirect_meta -%}
+              {%- assign redirect_parts = redirect_value | split: '/products/' -%}
+              {%- if redirect_parts.size > 1 -%}
+                {%- assign redirect_handle = redirect_parts[1] | split: '?' | first | split: '/' | first -%}
+                {%- if redirect_handle != blank and all_products[redirect_handle] -%}
+                  {%- assign display_product = all_products[redirect_handle] -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+          {%- endif -%}
+
+          {%- comment -%}Find hover image (-1) and second image (-2) from redirect product{%- endcomment -%}
+          {%- assign card_variant_color = product.options_by_name['Color'].values | first -%}
+          {%- assign card_variant_handle = card_variant_color | handleize -%}
+          {%- assign hover_image_url = '' -%}
+          {%- assign second_image_url = '' -%}
+          {%- assign match_1 = card_variant_handle | append: '-1' -%}
+          {%- assign match_2 = card_variant_handle | append: '-2' -%}
+          {%- for media in display_product.media -%}
+            {%- assign media_alt_handle = media.alt | handleize -%}
+            {%- if media_alt_handle == match_1 -%}
+              {%- assign hover_image_url = media | image_url: width: 600 -%}
+            {%- elsif media_alt_handle == match_2 -%}
+              {%- assign second_image_url = media | image_url: width: 600 -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- assign visible_count = visible_count | plus: 1 -%}
+          <div class="wf-card{% if visible_count > 16 %} is-hidden{% endif %}" data-card-index="{{ visible_count }}">
+            <a href="{{ product.url }}" class="wf-card__img"{% if hover_image_url != '' %} data-hover-src="{{ hover_image_url }}"{% endif %}{% if second_image_url != '' %} data-second-src="{{ second_image_url }}"{% endif %}>
+              {%- if product.featured_media -%}
+                {%- assign original_img_url = product.featured_media | image_url: width: 600 -%}
+                <img src="{{ original_img_url }}"
+                  data-original-src="{{ original_img_url }}"
+                  alt="{{ product.title | escape }}"
+                  width="{{ product.featured_media.width }}"
+                  height="{{ product.featured_media.height }}"
+                  loading="lazy">
+              {%- endif -%}
+              {%- comment -%}
+                Badge: sold out / backorder / sale
+                For redirect products, parse the variant ID from master_reference,
+                find the color, then check only that color's variants on the master.
+              {%- endcomment -%}
+              {%- assign card_sold_out = false -%}
+              {%- assign card_backorder = false -%}
+              {%- if redirect_meta != blank -%}
+                {%- assign ref_value = redirect_meta.value | default: redirect_meta -%}
+                {%- assign variant_part = ref_value | split: 'variant=' -%}
+                {%- if variant_part.size > 1 -%}
+                  {%- assign master_variant_id = variant_part[1] | split: '&' | first | plus: 0 -%}
+                {%- else -%}
+                  {%- assign master_variant_id = 0 -%}
+                {%- endif -%}
+                {%- assign style_value = nil -%}
+                {%- if master_variant_id > 0 -%}
+                  {%- for v in display_product.variants -%}
+                    {%- if v.id == master_variant_id -%}
+                      {%- assign style_value = v.option1 -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endif -%}
+                {%- if style_value -%}
+                  {%- assign any_color_available = false -%}
+                  {%- assign any_color_continue = false -%}
+                  {%- for v in display_product.variants -%}
+                    {%- if v.option1 == style_value -%}
+                      {%- if v.available -%}
+                        {%- assign any_color_available = true -%}
+                      {%- endif -%}
+                      {%- if v.inventory_policy == 'continue' -%}
+                        {%- assign any_color_continue = true -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- unless any_color_available -%}
+                    {%- if any_color_continue -%}
+                      {%- assign card_backorder = true -%}
+                    {%- else -%}
+                      {%- assign card_sold_out = true -%}
+                    {%- endif -%}
+                  {%- endunless -%}
+                {%- else -%}
+                  {%- unless display_product.available -%}
+                    {%- assign card_sold_out = true -%}
+                  {%- endunless -%}
+                {%- endif -%}
+              {%- else -%}
+                {%- unless product.available -%}
+                  {%- assign any_continue = false -%}
+                  {%- for v in product.variants -%}
+                    {%- if v.inventory_policy == 'continue' -%}
+                      {%- assign any_continue = true -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  {%- if any_continue -%}
+                    {%- assign card_backorder = true -%}
+                  {%- else -%}
+                    {%- assign card_sold_out = true -%}
+                  {%- endif -%}
+                {%- endunless -%}
+              {%- endif -%}
+              {%- if card_sold_out -%}
+                <span class="wf-card__badge wf-card__badge--soldout">Sold Out</span>
+              {%- elsif card_backorder -%}
+                <span class="wf-card__badge wf-card__badge--backorder">Backorder</span>
+              {%- elsif display_product.compare_at_price > display_product.price -%}
+                <span class="wf-card__badge wf-card__badge--sale">Sale</span>
+              {%- endif -%}
+            </a>
+
+            <div class="wf-card__info">
+            {%- assign color_option = display_product.options_by_name['Color'] -%}
+            {%- if color_option and color_option.values.size > 1 -%}
+              <div class="wf-card__swatches">
+                {%- for value in color_option.values limit: 6 -%}
+                  {%- assign val_handle = value | handleize -%}
+                  {%- assign val_down = value | downcase -%}
+
+                  {%- comment -%}Map color names to hex codes or Shopify file URLs{%- endcomment -%}
+                  {%- assign swatch_bg = '#ddd' -%}
+                  {%- assign swatch_is_file = false -%}
+                  {%- if val_down == 'black' -%}
+                    {%- assign swatch_bg = '#000000' -%}
+                  {%- elsif val_down == 'white' -%}
+                    {%- assign swatch_bg = '#ffffff' -%}
+                  {%- elsif val_down == 'blank' -%}
+                    {%- assign swatch_bg = 'blank.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'skull' -%}
+                    {%- assign swatch_bg = 'skull.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'blue camo' -%}
+                    {%- assign swatch_bg = 'blue.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'cotton candy' -%}
+                    {%- assign swatch_bg = 'cool_jersey_1.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'sky' -%}
+                    {%- assign swatch_bg = 'clouds_1.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'statue of liberty' -%}
+                    {%- assign swatch_bg = 'statue.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'fire' -%}
+                    {%- assign swatch_bg = 'red.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'ice' -%}
+                    {%- assign swatch_bg = 'ice.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'usa' -%}
+                    {%- assign swatch_bg = 'red_blue3.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'camo' -%}
+                    {%- assign swatch_bg = 'camo1.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'storm' -%}
+                    {%- assign swatch_bg = 'stormimage.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'yellow' -%}
+                    {%- assign swatch_bg = 'yellow1234.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- elsif val_down == 'yellow jacket' -%}
+                    {%- assign swatch_bg = 'yellow1234.png' -%}{%- assign swatch_is_file = true -%}
+                  {%- endif -%}
+
+                  {%- comment -%}Find the -1 image for this color variant{%- endcomment -%}
+                  {%- assign swatch_image_url = '' -%}
+                  {%- for media in display_product.media -%}
+                    {%- assign media_alt_handle = media.alt | handleize -%}
+                    {%- assign match_string = val_handle | append: '-1' -%}
+                    {%- if media_alt_handle == match_string -%}
+                      {%- assign swatch_image_url = media | image_url: width: 600 -%}
+                      {%- break -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+
+                  {%- if swatch_is_file -%}
+                    <span class="wf-card__swatch" style="background: #ddd url('{{ swatch_bg | file_url }}') center/cover no-repeat;"{% if swatch_image_url != '' %} data-swatch-image="{{ swatch_image_url }}"{% endif %}></span>
+                  {%- else -%}
+                    <span class="wf-card__swatch" style="background: {{ swatch_bg }};"{% if swatch_image_url != '' %} data-swatch-image="{{ swatch_image_url }}"{% endif %}></span>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            <div class="wf-card__title"><a href="{{ product.url }}">{{ display_product.title }}</a></div>
+
+            {%- assign card_color_option = product.options_by_name['Color'] -%}
+            {%- if card_color_option and card_color_option.values.size > 0 -%}
+              {%- assign has_real_values = false -%}
+              {%- for value in card_color_option.values -%}
+                {%- assign trimmed = value | strip -%}
+                {%- assign trimmed_down = trimmed | downcase -%}
+                {%- if trimmed != '' and trimmed != 'Default Title' and trimmed != 'Default' and trimmed_down != 'nothing' -%}
+                  {%- assign has_real_values = true -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if has_real_values -%}
+                <div class="wf-card__variants">
+                  {%- for value in card_color_option.values -%}
+                    {%- assign trimmed = value | strip -%}
+                    {%- assign trimmed_down = trimmed | downcase -%}
+                    {%- if trimmed != '' and trimmed != 'Default Title' and trimmed != 'Default' and trimmed_down != 'nothing' -%}
+                      <span class="wf-card__variant-item">{{ value }}</span>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+
+            <div class="wf-card__price">
+              {%- if display_product.available -%}
+                {{ display_product.price | money }}
+                {%- if display_product.compare_at_price > display_product.price -%}
+                  <span class="old-price">{{ display_product.compare_at_price | money }}</span>
+                {%- endif -%}
+              {%- else -%}
+                {{ display_product.price | money }}
+              {%- endif -%}
+            </div>
+            </div>
+          </div>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if visible_count > 16 -%}
+      <button class="wf-pg__load-more" data-total="{{ visible_count }}">Load More</button>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    var section = document.getElementById('WfProdGrid--{{ section.id }}');
+    if (!section) return;
+
+    var grid = section.querySelector('.wf-pg__grid');
+    var loadMoreBtn = section.querySelector('.wf-pg__load-more');
+    var loadLimit = 16;
+
+    /* Reactive glow gradient — track mouse position on Load More */
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('mousemove', function(e) {
+        var rect = loadMoreBtn.getBoundingClientRect();
+        var x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+        var y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+        loadMoreBtn.style.setProperty('--mouse-x', x + '%');
+        loadMoreBtn.style.setProperty('--mouse-y', y + '%');
+      });
+    }
+    var currentLimit = loadLimit;
+    var total = parseInt((loadMoreBtn && loadMoreBtn.getAttribute('data-total')) || '0');
+
+    /* Load More */
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', function() {
+        currentLimit += loadLimit;
+        var cards = grid.querySelectorAll('.wf-card[data-card-index]');
+        cards.forEach(function(card) {
+          var idx = parseInt(card.getAttribute('data-card-index'));
+          if (idx <= currentLimit) {
+            card.classList.remove('is-hidden');
+          }
+        });
+        if (currentLimit >= total) {
+          loadMoreBtn.style.display = 'none';
+        }
+      });
+    }
+
+    /* Grid toggle — Desktop */
+    var desktopToggles = section.querySelectorAll('.wf-pg__toggle--desktop');
+    desktopToggles.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        desktopToggles.forEach(function(b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var cols = btn.getAttribute('data-cols-desktop');
+        grid.classList.remove('cols-1', 'cols-2');
+        if (cols === '2') grid.classList.add('cols-2');
+        else if (cols === '1') grid.classList.add('cols-1');
+      });
+    });
+
+    /* Grid toggle — Mobile */
+    var mobileToggles = section.querySelectorAll('.wf-pg__toggle--mobile');
+    mobileToggles.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        mobileToggles.forEach(function(b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var cols = btn.getAttribute('data-cols-mobile');
+        grid.classList.remove('cols-1');
+        if (cols === '1') grid.classList.add('cols-1');
+      });
+    });
+
+    /* Preload hover and swatch images */
+    var swatches = section.querySelectorAll('.wf-card__swatch[data-swatch-image]');
+    swatches.forEach(function(swatch) {
+      var preload = new Image();
+      preload.src = swatch.getAttribute('data-swatch-image');
+    });
+
+    var cardImgs = section.querySelectorAll('.wf-card__img');
+    cardImgs.forEach(function(cardImg) {
+      var hoverSrc = cardImg.getAttribute('data-hover-src');
+      var secondSrc = cardImg.getAttribute('data-second-src');
+      if (hoverSrc) { var p1 = new Image(); p1.src = hoverSrc; }
+      if (secondSrc) { var p2 = new Image(); p2.src = secondSrc; }
+    });
+
+    /* Hover on product image: left half = -1, right half = -2 (desktop only) */
+    var isTouchDevice = window.matchMedia('(max-width: 749px)').matches;
+    if (!isTouchDevice) {
+      cardImgs.forEach(function(cardImg) {
+        var img = cardImg.querySelector('img');
+        if (!img) return;
+        var hoverSrc = cardImg.getAttribute('data-hover-src');
+        var secondSrc = cardImg.getAttribute('data-second-src');
+        if (!hoverSrc) return;
+
+        cardImg.addEventListener('mouseenter', function() {
+          img.src = hoverSrc;
+        });
+
+        if (secondSrc) {
+          cardImg.addEventListener('mousemove', function(e) {
+            var rect = cardImg.getBoundingClientRect();
+            var x = e.clientX - rect.left;
+            if (x > rect.width / 2) {
+              img.src = secondSrc;
+            } else {
+              img.src = hoverSrc;
+            }
+          });
+        }
+
+        cardImg.addEventListener('mouseleave', function() {
+          var original = img.getAttribute('data-original-src');
+          if (original) img.src = original;
+        });
+      });
+
+      /* Color swatch hover → swap product image (desktop only) */
+      swatches.forEach(function(swatch) {
+        var card = swatch.closest('.wf-card');
+        if (!card) return;
+        var img = card.querySelector('.wf-card__img img');
+        if (!img) return;
+
+        swatch.addEventListener('mouseenter', function() {
+          img.src = this.getAttribute('data-swatch-image');
+          card.querySelectorAll('.wf-card__swatch').forEach(function(s) { s.classList.remove('is-active'); });
+          this.classList.add('is-active');
+        });
+
+        swatch.addEventListener('mouseleave', function() {
+          var original = img.getAttribute('data-original-src');
+          if (original) img.src = original;
+          this.classList.remove('is-active');
+        });
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "WF Product Grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "WF Product Grid",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

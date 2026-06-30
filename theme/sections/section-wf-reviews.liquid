@@ -1,0 +1,637 @@
+<!-- /sections/section-wf-reviews.liquid -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+{%- style -%}
+  #WfReviews--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+  }
+{%- endstyle -%}
+
+<style>
+  #WfReviews--{{ section.id }} {
+    padding-top: var(--PT);
+    padding-bottom: var(--PB);
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__inner {
+    max-width: 3000px;
+    margin: 0 50px;
+    text-align: center;
+  }
+  @media (min-width: 3001px) {
+    #WfReviews--{{ section.id }} .wf-reviews__inner {
+      margin: 0 auto;
+    }
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 1000;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin: 0;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__mobile-br {
+    display: none;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__stars {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #3D6E2E;
+    margin-top: 5px;
+  }
+
+  /* === 4x2 grid === */
+  #WfReviews--{{ section.id }} .wf-reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+  #WfReviews--{{ section.id }} .wf-review {
+    position: relative;
+    padding: 36px 32px;
+    min-height: 380px;
+    border: 1px solid #E0E0E0;
+    border-radius: 6px;
+    background: #fff;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    display: none;
+    flex-direction: column;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #WfReviews--{{ section.id }} .wf-review.is-visible {
+    display: flex;
+  }
+  #WfReviews--{{ section.id }} .wf-review:hover {
+    border-color: #3D6E2E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  }
+  #WfReviews--{{ section.id }} .wf-review__text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    line-height: 1.5;
+    margin: 0 0 18px;
+    flex: 1;
+  }
+  #WfReviews--{{ section.id }} .wf-review__rating {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3D6E2E;
+    margin-top: auto;
+  }
+  #WfReviews--{{ section.id }} .wf-review__name {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 1000;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  #WfReviews--{{ section.id }} .wf-review__photo {
+    position: absolute;
+    bottom: 28px;
+    right: 28px;
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #E0E0E0;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.12);
+    background: #f5f5f5;
+  }
+  #WfReviews--{{ section.id }} .wf-review__date {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: #9a9a9a;
+    margin-top: 4px;
+  }
+
+  /* === Pagination === */
+  #WfReviews--{{ section.id }} .wf-reviews__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__pagination.is-hidden {
+    display: none;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1px solid #E0E0E0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    transition: background 0.15s, border-color 0.15s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__arrow:hover {
+    background: #3D6E2E;
+    border-color: #3D6E2E;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__arrow:hover svg {
+    stroke: #fff;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__arrow:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: #fff;
+    border-color: #E0E0E0;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__arrow:disabled svg {
+    stroke: #333;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__arrow svg {
+    width: 14px;
+    height: 14px;
+    stroke: #333;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.15s;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__indicator {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #666;
+    letter-spacing: 0.06em;
+    min-width: 48px;
+    text-align: center;
+  }
+
+  #WfReviews--{{ section.id }} .wf-reviews__cta {
+    display: inline-block;
+    margin-top: 24px;
+    border: 1px solid #000;
+    padding: 16px 80px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 1000;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000;
+    background: none;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  #WfReviews--{{ section.id }} .wf-reviews__cta:hover {
+    background: #000;
+    color: #fff;
+  }
+
+  @media (max-width: 1100px) {
+    #WfReviews--{{ section.id }} .wf-reviews__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 860px) {
+    #WfReviews--{{ section.id }} .wf-reviews__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 749px) {
+    #WfReviews--{{ section.id }} .wf-reviews__inner {
+      margin: 0 16px;
+    }
+    #WfReviews--{{ section.id }} .wf-reviews__heading {
+      font-size: 20px;
+    }
+    #WfReviews--{{ section.id }} .wf-reviews__mobile-br {
+      display: inline;
+    }
+    #WfReviews--{{ section.id }} .wf-reviews__stars {
+      font-size: 17px;
+      margin-top: 3px;
+    }
+    #WfReviews--{{ section.id }} .wf-reviews__grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    #WfReviews--{{ section.id }} .wf-review {
+      padding: 22px;
+      min-height: auto;
+    }
+    #WfReviews--{{ section.id }} .wf-review__photo {
+      width: 50px;
+      height: 50px;
+      bottom: 18px;
+      right: 18px;
+    }
+    #WfReviews--{{ section.id }} .wf-reviews__cta {
+      padding: 14px 0;
+      font-size: 13px;
+      width: 100%;
+      text-align: center;
+    }
+    #WfReviews--{{ section.id }} .wf-reviews__pagination {
+      margin-top: 20px;
+      gap: 12px;
+    }
+    #WfReviews--{{ section.id }} .wf-reviews__arrow {
+      width: 40px;
+      height: 40px;
+    }
+  }
+</style>
+
+<section id="WfReviews--{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="wf-reviews"
+  data-min-rating="{{ section.settings.min_rating | default: 4 }}"
+  data-max-reviews="{{ section.settings.max_reviews | default: 16 }}">
+  <div class="wf-reviews__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="wf-reviews__heading">{{ section.settings.heading | replace: ' Are', ' <br class="wf-reviews__mobile-br">Are' }}</h2>
+    {%- endif -%}
+    {%- liquid
+      assign jm_rating = shop.metafields.judgeme.all_reviews_rating | default: section.settings.rating
+      assign jm_count = shop.metafields.judgeme.all_reviews_count | default: section.settings.review_count
+      assign jm_reviews = shop.metafields.judgeme.reviews_grid.value.all_reviews.reviews
+      assign jm_min = section.settings.min_rating | default: 4
+      assign jm_max = section.settings.max_reviews | default: 16
+    -%}
+    <div class="wf-reviews__stars">&#9733;&#9733;&#9733;&#9733;&#9733; {{ jm_rating }} ({{ jm_count }})</div>
+
+    {%- comment -%}
+      Live review data straight from the Judge.me shop metafield (most-recent 25,
+      refreshed automatically by Judge.me as new reviews arrive). The JS below
+      filters out blank / product-name-only bodies and renders the cards, so new
+      reviews flow onto the homepage on their own — no scraping, no cron.
+    {%- endcomment -%}
+    {%- if jm_reviews and jm_reviews != blank -%}
+      <script type="application/json" data-jm-reviews="{{ section.id }}">[
+        {%- for r in jm_reviews -%}
+          {"n":{{ r.reviewer_name | default: 'Verified Golfer' | json }},"r":{{ r.rating | default: 5 | json }},"b":{{ r.body | strip | json }},"d":{{ r.created_at | json }},"img":{%- if r.pictures_urls and r.pictures_urls.size > 0 -%}{{ r.pictures_urls.first.small | default: r.pictures_urls.first.original | json }}{%- else -%}null{%- endif -%},"pt":{{ r.product_title | default: '' | json }}}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]</script>
+    {%- endif -%}
+
+    <div class="wf-reviews__grid" data-wf-reviews-grid="{{ section.id }}">
+      {%- assign rendered = 0 -%}
+      {%- if jm_reviews and jm_reviews != blank -%}
+        {%- for r in jm_reviews -%}
+          {%- assign b = r.body | strip -%}
+          {%- assign blen = b | size -%}
+          {%- assign rt = r.rating | times: 1 -%}
+          {%- if blen >= 15 and rt >= jm_min and b != r.product_title and rendered < jm_max -%}
+            <div class="wf-review" data-wf-review-index="{{ rendered }}">
+              <div class="wf-review__text">{{ b | escape }}</div>
+              <div class="wf-review__rating">{%- for i in (1..5) -%}{%- if i <= rt -%}&#9733;{%- else -%}&#9734;{%- endif -%}{%- endfor -%}</div>
+              <div class="wf-review__name">{{ r.reviewer_name | default: 'Verified Golfer' }}</div>
+              {%- if r.created_at -%}<div class="wf-review__date">{{ r.created_at | date: '%b %-d, %Y' }}</div>{%- endif -%}
+              {%- if r.pictures_urls and r.pictures_urls.size > 0 -%}<img class="wf-review__photo" src="{{ r.pictures_urls.first.small | default: r.pictures_urls.first.original }}" alt="Customer review photo" width="64" height="64">{%- endif -%}
+            </div>
+            {%- assign rendered = rendered | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- comment -%} Fallback: if the metafield is unavailable, render the manual blocks {%- endcomment -%}
+      {%- if rendered == 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="wf-review" data-wf-review-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+            <div class="wf-review__text">{{ block.settings.text }}</div>
+            <div class="wf-review__rating">{%- for i in (1..5) -%}{%- if i <= block.settings.stars -%}&#9733;{%- else -%}&#9734;{%- endif -%}{%- endfor -%}</div>
+            <div class="wf-review__name">{{ block.settings.name }}</div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+    <div class="wf-reviews__pagination is-hidden" data-wf-reviews-pagination="{{ section.id }}">
+      <button class="wf-reviews__arrow" data-wf-reviews-prev="{{ section.id }}" aria-label="Previous page">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="wf-reviews__indicator" data-wf-reviews-indicator="{{ section.id }}">1 / 1</span>
+      <button class="wf-reviews__arrow" data-wf-reviews-next="{{ section.id }}" aria-label="Next page">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+{%- comment -%}
+  AggregateRating + Review schema for rich star snippets in Google search.
+  Attached to a Brand entity (Golf Print Club). Pulls rating + count from
+  section settings; review items pulled from blocks (capped at 10 so the
+  payload stays reasonable).
+{%- endcomment -%}
+{%- comment -%}
+  JSON-LD block intentionally disabled. Previously emitted Brand + Review schema, but
+  Google's Review-snippet rich result does not support the "Brand" host type
+  (verified 2026-06-20 via Rich Results Test: 9 invalid items detected on a
+  collection page). Reviews still render visually; the right home for an aggregate
+  rating is the canonical Organization schema in snippets/social-meta.liquid,
+  attached to the homepage entity. Re-enable here only if rewritten against a
+  Google-supported host type AND scoped to pages where it doesn't duplicate.
+{%- endcomment -%}
+
+<script>
+  (function() {
+    /* Build review cards from the live Judge.me metafield JSON.
+       Filters out blank bodies and product-name-only entries (a body with no
+       lowercase-initial word is almost always just a product/variant name like
+       "MD Cotton Candy Golf Posters"), dedupes, sorts newest-first, and caps the
+       count. Returns true when it rendered cards, false to keep the server-side
+       fallback already in the grid. */
+    function buildFromJudgeme(grid, sectionEl) {
+      var tag = document.querySelector('script[data-jm-reviews="' + grid.getAttribute('data-wf-reviews-grid') + '"]');
+      if (!tag) return false;
+      var data;
+      try { data = JSON.parse(tag.textContent); } catch (e) { return false; }
+      if (!Array.isArray(data) || !data.length) return false;
+
+      var minRating = parseInt(sectionEl && sectionEl.getAttribute('data-min-rating'), 10);
+      if (isNaN(minRating)) minRating = 4;
+      var maxReviews = parseInt(sectionEl && sectionEl.getAttribute('data-max-reviews'), 10);
+      if (isNaN(maxReviews)) maxReviews = 16;
+
+      var seen = {};
+      var clean = data.filter(function (r) {
+        var b = (r.b || '').trim();
+        if (b.length < 12) return false;                 /* empty / too short */
+        if (!/(?:^|\s)[a-z]/.test(b)) return false;       /* no lowercase-initial word => product name */
+        if ((r.r || 0) < minRating) return false;         /* rating floor (homepage default 4) */
+        var key = (r.n || '') + '|' + b.slice(0, 40).toLowerCase();
+        if (seen[key]) return false;
+        seen[key] = 1;
+        return true;
+      });
+      clean.sort(function (a, b) { return new Date(b.d || 0) - new Date(a.d || 0); });
+      clean = clean.slice(0, maxReviews);
+      if (!clean.length) return false;
+
+      function stars(n) { var s = ''; for (var i = 1; i <= 5; i++) { s += (i <= n) ? '★' : '☆'; } return s; }
+      function esc(t) { var d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+      function fmtDate(d) { if (!d) return ''; var dt = new Date(d); if (isNaN(dt.getTime())) return ''; return dt.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }); }
+
+      grid.innerHTML = clean.map(function (r, i) {
+        var dt = fmtDate(r.d);
+        var photo = (r.img && /^https?:\/\//.test(r.img)) ? '<img class="wf-review__photo" src="' + esc(r.img) + '" alt="Customer review photo" width="64" height="64">' : '';
+        return '<div class="wf-review" data-wf-review-index="' + i + '">'
+          + '<div class="wf-review__text">' + esc((r.b || '').trim()) + '</div>'
+          + '<div class="wf-review__rating">' + stars(r.r) + '</div>'
+          + '<div class="wf-review__name">' + esc(r.n || 'Verified Golfer') + '</div>'
+          + (dt ? '<div class="wf-review__date">' + dt + '</div>' : '')
+          + photo
+          + '</div>';
+      }).join('');
+      return true;
+    }
+
+    function init() {
+      var id = '{{ section.id }}';
+      var sectionEl = document.getElementById('WfReviews--' + id);
+      var grid = document.querySelector('[data-wf-reviews-grid="' + id + '"]');
+      var prevBtn = document.querySelector('[data-wf-reviews-prev="' + id + '"]');
+      var nextBtn = document.querySelector('[data-wf-reviews-next="' + id + '"]');
+      var pagination = document.querySelector('[data-wf-reviews-pagination="' + id + '"]');
+      var indicator = document.querySelector('[data-wf-reviews-indicator="' + id + '"]');
+      if (!grid || !prevBtn || !nextBtn || !pagination || !indicator) return;
+
+      buildFromJudgeme(grid, sectionEl);
+
+      var allReviews = Array.prototype.slice.call(grid.querySelectorAll('.wf-review'));
+      var total = allReviews.length;
+      if (total < 1) return;
+
+      var currentPage = 0;
+
+      function getPageSize() {
+        var w = window.innerWidth;
+        if (w <= 749) return 3;           /* mobile: 1 col, 3 reviews per page */
+        if (w <= 860) return 4;           /* small tablet: 2 cols x 2 rows */
+        if (w <= 1100) return 6;          /* tablet: 3 cols x 2 rows */
+        return 8;                         /* desktop: 4 cols x 2 rows */
+      }
+
+      function render() {
+        var pageSize = getPageSize();
+        var totalPages = Math.ceil(total / pageSize);
+        if (currentPage >= totalPages) currentPage = totalPages - 1;
+        if (currentPage < 0) currentPage = 0;
+
+        allReviews.forEach(function(el, i) {
+          var pageIndex = Math.floor(i / pageSize);
+          if (pageIndex === currentPage) {
+            el.classList.add('is-visible');
+          } else {
+            el.classList.remove('is-visible');
+          }
+        });
+
+        if (totalPages <= 1) {
+          pagination.classList.add('is-hidden');
+        } else {
+          pagination.classList.remove('is-hidden');
+          indicator.textContent = (currentPage + 1) + ' / ' + totalPages;
+          prevBtn.disabled = (currentPage === 0);
+          nextBtn.disabled = (currentPage === totalPages - 1);
+        }
+      }
+
+      prevBtn.addEventListener('click', function() {
+        if (currentPage > 0) {
+          currentPage--;
+          render();
+          /* Smooth scroll the grid into view so user sees the new page */
+          grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
+      nextBtn.addEventListener('click', function() {
+        var pageSize = getPageSize();
+        var totalPages = Math.ceil(total / pageSize);
+        if (currentPage < totalPages - 1) {
+          currentPage++;
+          render();
+          grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
+      /* Re-render on resize since page size depends on viewport */
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(render, 150);
+      });
+
+      render();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "WF Reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "See What Others Are Saying"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Average rating",
+      "default": "4.87"
+    },
+    {
+      "type": "text",
+      "id": "review_count",
+      "label": "Review count",
+      "default": "115"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Button text",
+      "default": "See All Reviews"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Auto-pulled reviews (Judge.me)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reviews are pulled live from Judge.me and refresh on their own as new ones come in. The fields below tune what shows on the homepage; the manual blocks are only used as a fallback if Judge.me is unavailable."
+    },
+    {
+      "type": "range",
+      "id": "min_rating",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "label": "Minimum star rating to show",
+      "info": "Set to 4 to show only 4–5★ on the homepage; set to 1 to show every rating.",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "max_reviews",
+      "min": 8,
+      "max": 48,
+      "step": 8,
+      "label": "Max reviews to show",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 20
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "default": "These are hands down the best golf posters I've ever worn. No ride up, real compression, and the pocket actually holds my phone."
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Reviewer name",
+          "default": "Verified Golfer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [
+    {
+      "name": "WF Reviews",
+      "category": "Text",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "text": "These are hands down the best golf posters I've ever worn. No ride up, real compression, and the pocket actually holds my phone.",
+            "stars": 5,
+            "name": "Jake M."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "Finally a brand that actually makes gear for golfers, not Instagram. The compression is legit and they don't ride up during intervals.",
+            "stars": 5,
+            "name": "Sarah K."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "text": "I switched from Nike and I'm never going back. Better compression, better pocket, half the price. What's not to love?",
+            "stars": 5,
+            "name": "Marcus T."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

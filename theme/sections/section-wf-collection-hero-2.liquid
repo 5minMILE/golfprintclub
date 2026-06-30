@@ -1,0 +1,329 @@
+<!-- /sections/section-wf-collection-hero-2.liquid -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+  #WfCollHero2--{{ section.id }} {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    overflow: hidden;
+    background: {{ section.settings.bg_color | default: '#111' }};
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.05) 100%);
+    z-index: 1;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+    padding: 0 20px 40px;
+    max-width: 800px;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+    margin: 0 0 10px;
+    line-height: 1.1;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__desc-wrap {
+    margin: 0 0 16px;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__desc.is-expanded {
+    display: block;
+    -webkit-line-clamp: unset;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__read-more {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 6px;
+    transition: color 0.2s;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__read-more:hover {
+    color: #fff;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumb {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    padding: 3px 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumb:hover {
+    color: #fff;
+    border-color: #fff;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumb--current {
+    color: rgba(255,255,255,0.9);
+    border-color: rgba(255,255,255,0.4);
+    cursor: default;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumb--current:hover {
+    color: rgba(255,255,255,0.9);
+    border-color: rgba(255,255,255,0.4);
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumb-sep {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    color: rgba(255,255,255,0.4);
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__pills {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__pill {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  #WfCollHero2--{{ section.id }} .wf-coll-hero__pill:hover {
+    color: #3D6E2E;
+    border-color: #3D6E2E;
+  }
+  /* Solid background mode — dark text */
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__bg,
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__overlay {
+    display: none;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__title {
+    color: #000;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__desc {
+    color: #555;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__read-more {
+    color: #999;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__read-more:hover {
+    color: #000;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__breadcrumb {
+    color: #999;
+    border-color: #ccc;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__breadcrumb:hover {
+    color: #000;
+    border-color: #000;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__breadcrumb--current {
+    color: #333;
+    border-color: #aaa;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__breadcrumb--current:hover {
+    color: #333;
+    border-color: #aaa;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__breadcrumb-sep {
+    color: #bbb;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__pill {
+    color: #666;
+    border-color: #ccc;
+  }
+  #WfCollHero2--{{ section.id }}.wf-coll-hero--solid .wf-coll-hero__pill:hover {
+    color: #000;
+    border-color: #000;
+  }
+  @media (max-width: 749px) {
+    #WfCollHero2--{{ section.id }} {
+      min-height: 0;
+      padding-top: 40px;
+    }
+    #WfCollHero2--{{ section.id }} .wf-coll-hero__content {
+      padding: 0 20px 30px;
+    }
+  }
+  @media (min-width: 750px) {
+    #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumb {
+      font-size: 10px;
+    }
+    #WfCollHero2--{{ section.id }} .wf-coll-hero__breadcrumb-sep {
+      font-size: 10px;
+    }
+    #WfCollHero2--{{ section.id }} .wf-coll-hero__title {
+      font-size: 56px;
+    }
+    #WfCollHero2--{{ section.id }} .wf-coll-hero__desc {
+      font-size: 14px;
+    }
+    #WfCollHero2--{{ section.id }} .wf-coll-hero__pill {
+      font-size: 10px;
+    }
+    #WfCollHero2--{{ section.id }} .wf-coll-hero__content {
+      padding: 0 50px 50px;
+    }
+  }
+</style>
+
+<section id="WfCollHero2--{{ section.id }}"{% if section.settings.use_solid_bg %} class="wf-coll-hero--solid"{% endif %}>
+  <div class="wf-coll-hero__bg">
+    {%- if collection.image -%}
+      <img src="{{ collection.image | image_url: width: 1920 }}"
+        alt="{{ collection.title | escape }}"
+        width="{{ collection.image.width }}"
+        height="{{ collection.image.height }}"
+        loading="eager">
+    {%- elsif section.settings.fallback_image != blank -%}
+      <img src="{{ section.settings.fallback_image | image_url: width: 1920 }}"
+        alt="{{ collection.title | escape }}"
+        loading="eager">
+    {%- endif -%}
+  </div>
+  <div class="wf-coll-hero__overlay"></div>
+  <div class="wf-coll-hero__content">
+    <div class="wf-coll-hero__breadcrumbs">
+      <a href="/" class="wf-coll-hero__breadcrumb">Home</a>
+      <span class="wf-coll-hero__breadcrumb-sep">&rsaquo;</span>
+      <span class="wf-coll-hero__breadcrumb wf-coll-hero__breadcrumb--current">{{ collection.title }}</span>
+    </div>
+    <h1 class="wf-coll-hero__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="wf-coll-hero__desc-wrap">
+        <p class="wf-coll-hero__desc" data-wf-desc>{{ collection.description | strip_html }}</p>
+        <button class="wf-coll-hero__read-more" data-wf-read-more style="display:none">Read More +</button>
+      </div>
+    {%- endif -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="wf-coll-hero__pills">
+        {%- for block in section.blocks -%}
+          <a href="{{ block.settings.link }}" class="wf-coll-hero__pill" {{ block.shopify_attributes }}>{{ block.settings.label }}</a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<script>
+  (function() {
+    var section = document.getElementById('WfCollHero2--{{ section.id }}');
+    if (!section) return;
+    var desc = section.querySelector('[data-wf-desc]');
+    var btn = section.querySelector('[data-wf-read-more]');
+    if (!desc || !btn) return;
+    /* Show button only if text is actually clamped */
+    if (desc.scrollHeight > desc.clientHeight + 1) {
+      btn.style.display = '';
+    }
+    btn.addEventListener('click', function() {
+      var expanded = desc.classList.toggle('is-expanded');
+      btn.textContent = expanded ? 'Read Less \u2212' : 'Read More +';
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "WF Collection Hero 2",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_solid_bg",
+      "label": "Use solid background",
+      "info": "Hides the image and overlay, uses background color instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#111111"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback image",
+      "info": "Used if collection has no image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "pill",
+      "name": "Category Pill",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Category"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "WF Collection Hero 2",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

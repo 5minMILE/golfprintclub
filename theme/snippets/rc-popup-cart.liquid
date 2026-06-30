@@ -1,0 +1,1968 @@
+<style>
+/* ========== CART POPUP ========== */
+
+:root{
+    --rc-maxw: 560px;
+    --rc-radius: 22px;
+    --rc-border: rgba(0,0,0,.10);
+    --rc-text: #111;
+    --rc-blue: #0b63ff;
+    --rc-red: #e11d48;
+    --rc-bg: #fbfbfb;
+
+    /* DESKTOP DRAWER WIDTH */
+    --rc-desktopw: 20vw;
+    --rc-desktop-minw: 100px;
+  }
+
+  /* =========================
+     POPUP ROOT (START HIDDEN)
+     ========================= */
+  #rcCartDevRoot{
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    background: rgba(0,0,0,.55);
+
+    /* start hidden */
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity .18s ease;
+  }
+  #rcCartDevRoot.isOpen{
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #rcCartDevSheetWrap{
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  #rcCartDevSheet{
+    width: 100%;
+    max-width: var(--rc-maxw);
+    height: min(86vh, 760px);
+    background: #fff;
+    border-top-left-radius: var(--rc-radius);
+    border-top-right-radius: var(--rc-radius);
+    box-shadow: 0 -20px 60px rgba(0,0,0,.28);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: var(--rc-text);
+    font-family: var(--BTN-FONT-STACK, system-ui, -apple-system, Segoe UI, Roboto, Arial);
+    position: relative;
+  }
+
+  .rc-handle{
+    height: 18px;
+    display:flex;align-items:center;justify-content:center;
+    background: var(--rc-bg);
+  }
+  .rc-handle:before{
+    content:"";
+    width:44px;height:5px;border-radius:999px;
+    background: rgba(0,0,0,.18);
+  }
+
+  .rc-ucfont{
+    text-transform: uppercase !important;
+    font-style: var(--BTN-FONT-STYLE);
+    font-weight: var(--BTN-FONT-WEIGHT);
+    font-family: var(--BTN-FONT-STACK);
+    letter-spacing: var(--BTN-FONT-LETTER-SPACING, .08em);
+  }
+
+  .rc-header{
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--rc-border);
+    display:flex;align-items:center;justify-content:center;
+    position: relative;
+    background: var(--rc-bg);
+  }
+  .rc-title{ font-size: 14px; font-weight: 900; }
+
+  .rc-trackBtn{
+    position:absolute;
+    right:12px;
+    top:10px;
+    width:40px;height:40px;
+    border: 0 !important;
+    outline: none !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0;
+    cursor: pointer;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .rc-trackBtn svg{
+    width: 22px;height: 22px;
+    stroke: rgba(0,0,0,.75);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .rc-ship{
+    padding: 12px 16px 14px;
+    background: var(--rc-bg);
+  }
+  .rc-shipText{
+    font-size: 12px;
+    text-align:center;
+    text-transform: uppercase !important;
+    font-style: var(--BTN-FONT-STYLE);
+    font-weight: var(--BTN-FONT-WEIGHT);
+    font-family: var(--BTN-FONT-STACK);
+  }
+  .rc-shipBar{
+    height: 8px;
+    background: rgba(0,0,0,.12);
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 10px;
+    width:80vw;
+  }
+  .rc-shipBarFill{
+    height: 100%;
+    width: 0%;
+    background: var(--rc-blue);
+    border-radius: 999px;
+    transition: width .25s ease;
+  }
+
+  .rc-body{
+    flex: 1;
+    overflow:auto;
+    padding: 0 16px 130px;
+    -webkit-overflow-scrolling: touch;
+    background: var(--rc-bg);
+  }
+
+  .rc-item{
+    display:grid;
+    grid-template-columns: 100px 1fr;
+    gap:12px;
+    padding: 8px 0;
+  }
+  .rc-thumb{
+    width:100px;
+    height:100px;
+    border-radius:10px;
+    overflow:hidden;
+    background:rgba(0,0,0,.04);
+    align-self:start;
+  }
+  .rc-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+
+  .rc-meta{min-width:0;display:flex;flex-direction:column;gap:0;margin:auto;}
+  .rc-topline{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .rc-name{
+    font-size:16px;
+    font-weight:1000;
+    line-height:1.05;
+    min-width:0;
+    flex: 1;
+    max-width:50vw;
+  }
+
+  .rc-variant{
+    font-size:13px;
+    color: rgba(0,0,0,.55);
+    line-height: 1.1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    font-weight: 500;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+
+  .rc-row2{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+
+  .rc-priceWrap{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    flex-wrap:wrap;
+    min-width: 110px;
+  }
+
+  .rc-priceNew{
+    font-size:16px;
+    font-weight:1000;
+    color:#111;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+  .rc-priceNew.isDeal{ color: var(--rc-red); }
+
+  .rc-priceOld{
+    font-size:14px;
+    font-weight:800;
+    color: rgba(0,0,0,.45);
+    text-decoration: line-through;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+
+  .rc-freeTag{
+    font-size:12px;
+    font-weight:1000;
+    color: var(--rc-red);
+  }
+
+  .rc-qtyWrap{display:flex;align-items:center;gap:8px;}
+  .rc-qtyLabel{ font-size:12px;color: rgba(0,0,0,.60);font-weight: 900; }
+  .rc-qtySelect{
+    height:24px;width:72px;border-radius:10px;
+    border: 1px solid var(--rc-border);
+    background:#fff;padding: 0 10px;font-size:12px;font-weight:600;color:#111;outline:none;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;margin:0;
+  }
+
+  .rc-trashBtn{
+    width:25px;height:25px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;flex: 0 0 auto;border: none !important;outline: none !important;box-shadow: none !important;
+    background: transparent !important;padding: 0;-webkit-tap-highlight-color: transparent;
+  }
+  .rc-trashBtn svg{
+    width:20px;height:20px;fill:none;stroke: rgba(0,0,0,.70);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  }
+  .rc-trashBtn:hover{ background: rgba(0,0,0,.04); }
+  .rc-trashBtn:active{ background: rgba(0,0,0,.07); transform: translateY(1px); }
+
+  .rc-footer{
+    position:absolute;left:0;right:0;bottom:0;
+    background:#fff;border-top: 1px solid var(--rc-border);
+    padding: 12px 16px 14px;
+  }
+  .rc-subrow{display:flex;align-items:center;justify-content:space-between;margin-bottom: 10px;}
+  .rc-subrow span{font-size:12px;font-weight:1000;color: rgba(0,0,0,.60);}
+  .rc-subrow strong{
+    font-size:16px;font-weight:1000;color:#111;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+
+  /* PROMO DROPDOWN */
+  .rc-discount{
+    margin: 10px 0 12px;
+    border: 1px solid var(--rc-border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+  }
+  .rc-discountHead{
+    width: 100%;
+    height: 46px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 0 14px;
+    background: #fff;
+    cursor:pointer;
+    border: 0;
+    outline: none;
+  }
+  .rc-discountHead span{
+    font-size: 12px;
+    font-weight: 1000;
+    color: rgba(0,0,0,.70);
+  }
+  .rc-chevron{
+    width: 18px;height: 18px;
+    stroke: rgba(0,0,0,.55);
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform .18s ease;
+  }
+  .rc-discount.isOpen .rc-chevron{ transform: rotate(180deg); }
+
+  .rc-discountBody{
+    display:none;
+    padding: 12px 14px 14px;
+    border-top: 1px solid var(--rc-border);
+    background: #fff;
+  }
+  .rc-discount.isOpen .rc-discountBody{ display:block; }
+
+  .rc-discountInput{
+    width:100%;
+    height:44px;
+    border-radius: 12px;
+    border: 1px solid var(--rc-border);
+    background: #fff;
+    padding: 0 12px;
+    outline: none;
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-family: var(--BTN-FONT-STACK, system-ui, -apple-system, Segoe UI, Roboto, Arial);
+    margin-bottom: 10px;
+  }
+  .rc-discountApply{
+    width:100%;
+    height:48px;
+    border-radius: 12px;
+    border: 0;
+    background: var(--rc-blue);
+    color:#fff;
+    cursor:pointer;
+    font-size: 14px;
+    font-weight: 1000;
+  }
+  .rc-discountApply:disabled{ opacity:.6; cursor:not-allowed; }
+  .rc-discountHint{
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgba(0,0,0,.55);
+    text-align:center;
+  }
+
+  .rc-checkout{
+    width:100%;
+    height:56px;
+    border-radius:14px;
+    background: var(--rc-blue);
+    color:#fff;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+    font-weight:1000;
+  }
+
+  .rc-small{ font-size:12px;color: rgba(0,0,0,.55);margin-top: 10px;text-align:center; }
+  .rc-empty{padding:26px 0;text-align:center;color: rgba(0,0,0,.60);font-size:14px;}
+  .rc-loading{opacity:.65; pointer-events:none;}
+
+  @supports(padding: max(0px)) {
+    .rc-footer{ padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+  }
+
+  /* UPSELLS */
+  .rc-upsellWrap{
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rc-border);
+  }
+  .rc-upsellTitle{
+    font-size: 12px;
+    font-weight: 1000;
+    color: rgba(0,0,0,.70);
+    margin-bottom: 10px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+  }
+  .rc-upsellHint{
+    font-size: 11px;
+    color: rgba(0,0,0,.45);
+    font-weight: 900;
+  }
+  .rc-upsellRow{
+    display:flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 2px 2px 10px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .rc-upsellRow::-webkit-scrollbar{ height: 6px; }
+  .rc-upsellRow::-webkit-scrollbar-thumb{ background: rgba(0,0,0,.12); border-radius: 999px; }
+  .rc-upsellCard{
+    flex: 0 0 auto;
+    width: 210px;
+    background: #fff;
+    border: 1px solid var(--rc-border);
+    border-radius: 14px;
+    padding: 10px;
+    display:flex;
+    flex-direction:column;
+    gap: 10px;
+    scroll-snap-align: start;
+  }
+  .rc-upsellImg{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(0,0,0,.04);
+  }
+  .rc-upsellImg img{ width:100%; height:100%; object-fit: cover; display:block; }
+  .rc-upsellMeta{ min-width:0; display:flex; flex-direction:column; gap: 4px; }
+  .rc-upsellName{
+    font-size: 13px;
+    font-weight: 1000;
+    line-height: 1.05;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .rc-upsellVar{
+    font-size: 12px;
+    color: rgba(0,0,0,.55);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+  .rc-upsellPriceRow{
+    display:flex;
+    align-items:baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .rc-upsellPrice{
+    font-size: 13px;
+    font-weight: 1000;
+    color: #111;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+  .rc-upsellOld{
+    font-size: 12px;
+    font-weight: 900;
+    color: rgba(0,0,0,.45);
+    text-decoration: line-through;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+  .rc-upsellSale{
+    font-size: 12px;
+    font-weight: 1000;
+    color: var(--rc-red);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  }
+  .rc-upsellBtn{
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 14px;
+    border: 0;
+    background: #000;
+    color:#fff;
+    cursor:pointer;
+    font-size: 12px;
+    font-weight: 1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .rc-upsellPlus{ font-size: 16px; line-height: 1; transform: translateY(-.5px); }
+
+  .rc-totalRight{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+  }
+
+  .rc-retail{
+    font-size: 14px;
+    font-weight: 900;
+    color: rgba(0,0,0,.45);
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgba(0,0,0,.35);
+  }
+
+  /* =========================================================
+     DESKTOP ONLY: RIGHT-SIDE DRAWER (MOBILE UNTOUCHED)
+     - comes in from the right
+     - vertically centered
+     - width = 20% of viewport, min 100px
+     ========================================================= */
+  /* =========================================================
+   DESKTOP ONLY: RIGHT-SIDE FULL-HEIGHT DRAWER (MOBILE UNTOUCHED)
+   - full vertical height (100vh)
+   - pinned to right side
+   - width = 20% viewport, min 100px
+   ========================================================= */
+@media (min-width: 750px){
+  /* Make the wrapper fill the screen so the sheet can be full height */
+  #rcCartDevSheetWrap{
+    position: absolute;
+    inset: 0;                 /* top/right/bottom/left = 0 */
+    display: flex;
+    justify-content: flex-end;/* right side */
+    align-items: stretch;     /* full height */
+    padding: 0;               /* flush like a drawer */
+    box-sizing: border-box;
+  }
+
+  /* Drawer container: full height, right side, 20% width */
+  #rcCartDevSheet{
+    width: var(--rc-desktopw);     /* 20vw */
+    min-width: 700px; /* 100px */
+    max-width: var(--rc-maxw);     /* keep your safety max */
+    height: 100vh;                /* FULL vertical space */
+    max-height: 100vh;
+
+    /* Drawer look */
+    border-radius: 0;             /* square edges like typical drawers */;
+    box-shadow: -20px 0 60px rgba(0,0,0,.28);
+  }
+
+  /* Desktop fixes so mobile-first widths don't overflow the narrower drawer */
+  .rc-shipBar{ width: 100%; }
+  .rc-name{ max-width: 100%; }
+
+.rc-handle{ display:none;}
+
+.rc-meta {
+min-width: 100%;}
+
+.rc-backorder-line{
+width:60%;
+margin-top:6px;
+font-size:12px;
+font-weight:950;
+color:#3D6E2E;
+line-height:1.25;
+text-transform:uppercase;
+letter-spacing:.04em;}
+}
+
+</style>
+
+<div id="rcCartDevRoot" aria-hidden="true">
+  <div id="rcCartDevSheetWrap">
+    <div id="rcCartDevSheet" role="dialog" aria-label="Your bag">
+      <div class="rc-handle"></div>
+
+      <div class="rc-header">
+        <div class="rc-title rc-ucfont">Your Bag</div>
+        <button class="rc-trackBtn" type="button" id="rcTrackBtn" aria-label="Track order">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 12a8 8 0 1 1-2.34-5.66"/>
+            <path d="M20 4v6h-6"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="rc-ship">
+        <div class="rc-shipText rc-ucfont" id="rcShipText">Loading shipping…</div>
+        <div class="rc-shipBar" aria-hidden="true">
+          <div class="rc-shipBarFill" id="rcShipFill"></div>
+        </div>
+      </div>
+
+      <div class="rc-body">
+        <div id="rcDevItems"><div class="rc-empty">Loading…</div></div>
+
+        <div class="rc-discount" id="rcDiscountBox">
+          <button class="rc-discountHead" type="button" id="rcDiscountToggle" aria-expanded="false">
+            <span class="rc-ucfont">Have a discount code?</span>
+            <svg class="rc-chevron" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+
+          <div class="rc-discountBody" id="rcDiscountBody">
+            <input class="rc-discountInput" id="rcDiscountInput" type="text" placeholder="Enter code" autocomplete="off" />
+            <button class="rc-discountApply rc-ucfont" id="rcDiscountApplyBtn" type="button">Apply</button>
+            <div class="rc-discountHint" id="rcDiscountHint"></div>
+          </div>
+        </div>
+
+        <div id="rcUpsellWrap" class="rc-upsellWrap" style="display:none;">
+          <div class="rc-upsellTitle rc-ucfont">
+            <span>Add a little extra</span>
+            <span class="rc-upsellHint">Swipe →</span>
+          </div>
+          <div id="rcUpsellRow" class="rc-upsellRow"></div>
+        </div>
+      </div>
+
+      <div class="rc-footer">
+        <div class="rc-subrow">
+          <span class="rc-ucfont">Total</span>
+          <div class="rc-totalRight">
+            <s id="rcDevRetail" class="rc-retail" style="display:none;">$0.00</s>
+            <strong id="rcDevSubtotal">$0.00</strong>
+          </div>
+        </div>
+
+        <a class="rc-checkout rc-ucfont" href="/checkout">Check out</a>
+        <div class="rc-small" id="rcStatus"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const rootEl = document.getElementById('rcCartDevRoot');
+  const sheetEl = document.getElementById('rcCartDevSheet');
+
+  /* Dynamic backorder map — fetched from Liquid via Section Rendering API */
+  let _boMap = {};
+  async function refreshBackorderMap() {
+    try {
+      const r = await fetch('/?section_id=api-cart-backorder-map', { credentials: 'same-origin' });
+      if (!r.ok) return;
+      const html = await r.text();
+      const m = html.match(/<div[^>]*data-api-content[^>]*>([\s\S]*?)<\/div>/);
+      if (m && m[1]) {
+        const json = '{' + m[1].trim() + '}';
+        _boMap = JSON.parse(json);
+      }
+    } catch(e) { /* silent */ }
+  }
+  function isBackorder(variantId) {
+    return !!_boMap[String(variantId)];
+  }
+
+  const itemsEl = document.getElementById('rcDevItems');
+  const subtotalEl = document.getElementById('rcDevSubtotal');
+  const retailEl = document.getElementById('rcDevRetail');
+
+  const statusEl = document.getElementById('rcStatus');
+  const shipTextEl = document.getElementById('rcShipText');
+  const shipFillEl = document.getElementById('rcShipFill');
+  const trackBtn = document.getElementById('rcTrackBtn');
+
+  const upsellWrap = document.getElementById('rcUpsellWrap');
+  const upsellRow = document.getElementById('rcUpsellRow');
+
+  const discountBox = document.getElementById('rcDiscountBox');
+  const discountToggle = document.getElementById('rcDiscountToggle');
+  const discountInput = document.getElementById('rcDiscountInput');
+  const discountApplyBtn = document.getElementById('rcDiscountApplyBtn');
+  const discountHint = document.getElementById('rcDiscountHint');
+
+  const DEAL_THRESHOLD_CENTS = 4500;
+  const FREE_SHIP_THRESHOLD_CENTS = 12500;
+
+  const UPSELL_COLLECTION_HANDLE = 'golf-posters';
+  const UPSELL_LIMIT = 24;
+
+  const variantCache = new Map();
+  const collectionCache = new Map();
+
+  let discountOpen = false;
+
+  const SS_OPEN_KEY = 'rc_cart_should_open';
+  const SS_RETURN_KEY = 'rc_cart_return_url';
+  const SS_CODE_KEY = 'rc_cart_last_discount_code';
+
+  function money(cents){
+    const n = (cents || 0) / 100;
+    return n.toLocaleString(undefined, { style:'currency', currency:'USD' });
+  }
+  function esc(str){
+    return String(str || '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+      .replace(/'/g,'&#039;');
+  }
+  function normalizeCents(v){
+    if(v == null) return 0;
+    if(typeof v === 'string'){
+      const s = v.trim();
+      if(!s) return 0;
+      if(s.includes('.')){
+        const n = Number(s);
+        return Number.isFinite(n) ? Math.round(n * 100) : 0;
+      }
+      const n = Number(s);
+      if(!Number.isFinite(n)) return 0;
+      v = n;
+    }
+    const n = Number(v);
+    if(!Number.isFinite(n)) return 0;
+    if(n > 0 && n < 1000) return Math.round(n * 100);
+    return Math.round(n);
+  }
+
+  function setStatus(msg){ statusEl.textContent = msg || ''; }
+  function setLoading(on){
+    if(on) sheetEl.classList.add('rc-loading');
+    else sheetEl.classList.remove('rc-loading');
+  }
+
+  function openCart(){
+    rootEl.classList.add('isOpen');
+    rootEl.setAttribute('aria-hidden','false');
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function closeCart(){
+    rootEl.classList.remove('isOpen');
+    rootEl.setAttribute('aria-hidden','true');
+    document.documentElement.style.overflow = '';
+  }
+
+  // click backdrop to close (not the sheet)
+  rootEl.addEventListener('click', (e) => {
+    if(e.target === rootEl) closeCart();
+  });
+
+  async function getCart(){
+    const r = await fetch('/cart.js', { credentials:'same-origin', cache:'no-store' });
+    if(!r.ok) throw new Error('cart fetch failed');
+    return r.json();
+  }
+  async function changeLine(line, quantity){
+    const r = await fetch('/cart/change.js', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      credentials:'same-origin',
+      body: JSON.stringify({ line, quantity: Math.max(0, quantity) })
+    });
+    if(!r.ok) throw new Error('cart change failed');
+    return r.json();
+  }
+  async function addToCartFromForm(form){
+    const fd = new FormData(form);
+    if(!fd.get('quantity')) fd.set('quantity', '1');
+    const r = await fetch('/cart/add.js', { method:'POST', credentials:'same-origin', body: fd });
+    if(!r.ok) throw new Error('add failed');
+    return r.json();
+  }
+  async function addToCartByVariantId(variantId, quantity){
+    const r = await fetch('/cart/add.js', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      credentials:'same-origin',
+      body: JSON.stringify({ id: variantId, quantity: quantity || 1 })
+    });
+    if(!r.ok) throw new Error('add failed');
+    return r.json();
+  }
+
+  function fetchVariantPricing(variantId){
+    const key = String(variantId || '');
+    if(!key) return Promise.resolve({ compare_at_price: 0, price: 0 });
+    if(variantCache.has(key)) return variantCache.get(key);
+
+    const p = fetch(`/variants/${encodeURIComponent(key)}.js`, { credentials:'same-origin' })
+      .then(r => r.ok ? r.json() : null)
+      .then(v => ({
+        compare_at_price: normalizeCents(v?.compare_at_price || 0),
+        price: normalizeCents(v?.price || 0)
+      }))
+      .catch(() => ({ compare_at_price: 0, price: 0 }));
+
+    variantCache.set(key, p);
+    return p;
+  }
+
+  async function fetchCollectionProducts(handle){
+    const key = String(handle || '');
+    if(!key) return [];
+    if(collectionCache.has(key)) return collectionCache.get(key);
+
+    const p = fetch(`/collections/${encodeURIComponent(key)}/products.json?limit=${UPSELL_LIMIT}`, { credentials:'same-origin' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => Array.isArray(data?.products) ? data.products : [])
+      .catch(() => []);
+
+    collectionCache.set(key, p);
+    return p;
+  }
+
+  function priceHtmlWithBase(base, final){
+    if(final === 0){
+      if(base > 0){
+        return `<div class="rc-priceWrap">
+                  <span class="rc-freeTag rc-ucfont">FREE</span>
+                  <span class="rc-priceOld">${money(base)}</span>
+                </div>`;
+      }
+      return `<div class="rc-priceWrap"><span class="rc-freeTag rc-ucfont">FREE</span></div>`;
+    }
+    const isDeal = (base > 0 && final < base && final < DEAL_THRESHOLD_CENTS);
+    if(isDeal){
+      return `<div class="rc-priceWrap">
+                <span class="rc-priceOld">${money(base)}</span>
+                <span class="rc-priceNew isDeal">${money(final)}</span>
+              </div>`;
+    }
+    return `<div class="rc-priceWrap"><span class="rc-priceNew">${money(final)}</span></div>`;
+  }
+
+  function updateFreeShipUI(totalCents){
+    const total = Number(totalCents || 0);
+    const remaining = Math.max(0, FREE_SHIP_THRESHOLD_CENTS - total);
+    const pct = Math.max(0, Math.min(100, (total / FREE_SHIP_THRESHOLD_CENTS) * 100));
+    shipFillEl.style.width = pct + '%';
+    shipTextEl.textContent = (remaining === 0)
+      ? 'YOU QUALIFY FOR FREE SHIPPING'
+      : `YOU ARE ${money(remaining)} AWAY FROM FREE SHIPPING`;
+  }
+
+  function qtySelectHtml(line, qty){
+    const q = Number(qty || 1);
+    const max = Math.max(10, q + 6);
+    let opts = '';
+    for(let i=1;i<=max;i++){
+      opts += `<option value="${i}" ${i===q ? 'selected' : ''}>${i}</option>`;
+    }
+    return `
+      <div class="rc-qtyWrap">
+        <div class="rc-qtyLabel rc-ucfont">Qty:</div>
+        <select class="rc-qtySelect" data-qtyselect="${line}">
+          ${opts}
+        </select>
+      </div>
+    `;
+  }
+
+  function trashButtonHtml(line){
+    return `
+      <button type="button" class="rc-trashBtn" data-trash="${line}" aria-label="Remove item">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 6h18"/>
+          <path d="M8 6V4h8v2"/>
+          <path d="M6 6l1 16h10l1-16"/>
+          <path d="M10 11v7"/>
+          <path d="M14 11v7"/>
+        </svg>
+      </button>
+    `;
+  }
+
+  function hasHideTag(product){
+    const tags = product?.tags;
+    if(!tags) return false;
+    if(typeof tags === 'string'){
+      return tags.split(',').map(t => t.trim().toLowerCase()).includes('hide');
+    }
+    if(Array.isArray(tags)){
+      return tags.map(t => String(t).trim().toLowerCase()).includes('hide');
+    }
+    return false;
+  }
+
+  function pickUpsellVariant(product){
+    if(!product || !Array.isArray(product.variants)) return null;
+    return product.variants.find(v => v && v.available) || null;
+  }
+
+  function getProductImage(product){
+    const img = (product?.images && product.images[0] && product.images[0].src) ? product.images[0].src : '';
+    return img || '';
+  }
+
+  function upsellPriceRow(variant){
+    const price = normalizeCents(variant?.price || 0);
+    const compare = normalizeCents(variant?.compare_at_price || 0);
+
+    if(compare > price && price > 0){
+      const pct = Math.round(((compare - price) / compare) * 100);
+      return `
+        <div class="rc-upsellPriceRow">
+          <span class="rc-upsellOld">${money(compare)}</span>
+          <span class="rc-upsellPrice rc-upsellSale">${money(price)}</span>
+          <span class="rc-upsellSale">-${pct}%</span>
+        </div>
+      `;
+    }
+    return `
+      <div class="rc-upsellPriceRow">
+        <span class="rc-upsellPrice">${money(price)}</span>
+      </div>
+    `;
+  }
+
+  function productUrl(product){
+    const h = product?.handle ? String(product.handle) : '';
+    return h ? `/products/${encodeURIComponent(h)}` : '#';
+  }
+
+  async function renderUpsells(cart){
+    try{
+      if(!upsellWrap || !upsellRow) return;
+
+      if(!cart?.items?.length){
+        upsellWrap.style.display = 'none';
+        upsellRow.innerHTML = '';
+        return;
+      }
+
+      const productsRaw = await fetchCollectionProducts(UPSELL_COLLECTION_HANDLE);
+      const products = (productsRaw || []).filter(p => !hasHideTag(p));
+
+      const inCartProductIds = new Set((cart.items || []).map(i => String(i.product_id)));
+
+      const candidates = products
+        .filter(p => !inCartProductIds.has(String(p.id)))
+        .map(p => {
+          const v = pickUpsellVariant(p);
+          if(!v || !v.id) return null;
+          return { product: p, variant: v };
+        })
+        .filter(Boolean)
+        .slice(0, 12);
+
+      if(!candidates.length){
+        upsellWrap.style.display = 'none';
+        upsellRow.innerHTML = '';
+        return;
+      }
+
+      upsellWrap.style.display = 'block';
+      upsellRow.innerHTML = candidates.map(({product, variant}) => {
+        const img = getProductImage(product);
+        const vTitleRaw = variant?.title ? String(variant.title) : '';
+        const vColor = vTitleRaw.includes('/')
+          ? vTitleRaw.split('/')[0].trim()
+          : vTitleRaw;
+
+        const url = productUrl(product);
+
+        return `
+          <div class="rc-upsellCard">
+            <div class="rc-upsellImg">${img ? `<img src="${img}" alt="">` : ''}</div>
+            <div class="rc-upsellMeta">
+              <div class="rc-upsellName rc-ucfont">${esc(product.title)}</div>
+              <div class="rc-upsellVar">${esc(vColor)}</div>
+
+              ${upsellPriceRow(variant)}
+            </div>
+            <a class="rc-upsellBtn rc-ucfont" href="${url}">
+              <span class="rc-upsellPlus">+</span> add
+            </a>
+          </div>
+        `;
+      }).join('');
+    } catch(e){
+      upsellWrap.style.display = 'none';
+      upsellRow.innerHTML = '';
+    }
+  }
+
+  function setDiscountOpen(open){
+    discountOpen = !!open;
+    if(discountOpen){
+      discountBox.classList.add('isOpen');
+      discountToggle.setAttribute('aria-expanded','true');
+    } else {
+      discountBox.classList.remove('isOpen');
+      discountToggle.setAttribute('aria-expanded','false');
+    }
+  }
+
+  function applyPromoCode(code){
+    const c = String(code || '').trim();
+    if(!c){
+      discountHint.textContent = 'Enter a code first.';
+      return;
+    }
+
+    const returnUrl = window.location.pathname + window.location.search + window.location.hash;
+
+    sessionStorage.setItem(SS_OPEN_KEY, '1');
+    sessionStorage.setItem(SS_RETURN_KEY, returnUrl);
+    sessionStorage.setItem(SS_CODE_KEY, c.toUpperCase());
+
+    window.location.href = `/discount/${encodeURIComponent(c)}?redirect=${encodeURIComponent(returnUrl)}`;
+  }
+
+  function restoreAfterDiscountRedirect(){
+    const shouldOpen = sessionStorage.getItem(SS_OPEN_KEY) === '1';
+    if(shouldOpen){
+      sessionStorage.removeItem(SS_OPEN_KEY);
+      const last = (sessionStorage.getItem(SS_CODE_KEY) || '').trim();
+      if(last){
+        setStatus(`Code applied: ${last.toUpperCase()}`);
+        openCart();
+      }
+    }
+  }
+
+  async function render(){
+    itemsEl.innerHTML = '<div class="rc-empty">Loading…</div>';
+    setStatus('');
+    setLoading(true);
+
+    try{
+      const [cart] = await Promise.all([getCart(), refreshBackorderMap()]);
+      const total = cart.total_price || 0;
+
+      subtotalEl.textContent = money(total);
+      updateFreeShipUI(total);
+
+      // ----- Retail total (compare-at sum) -----
+      let retailTotal = 0;
+
+      // We'll compute it properly once we have variant pricing below.
+      // For now, hide until we finish calculating.
+      if(retailEl){
+        retailEl.style.display = 'none';
+        retailEl.textContent = '';
+      }
+
+      if(!cart.items || cart.items.length === 0){
+        itemsEl.innerHTML = '<div class="rc-empty">Your bag is empty.</div>';
+        if(upsellWrap){ upsellWrap.style.display = 'none'; }
+        setDiscountOpen(discountOpen);
+        setLoading(false);
+        return;
+      }
+
+      const variantPricingArr = await Promise.all(cart.items.map(it => fetchVariantPricing(it.variant_id)));
+
+      // Calculate retail total using compare_at when available (per-unit), otherwise fallback base per-unit
+      retailTotal = cart.items.reduce((sum, item, idx) => {
+        const vp = variantPricingArr[idx] || { compare_at_price: 0, price: 0 };
+
+        // Choose "retail" per unit:
+        // - prefer compare_at_price if set
+        // - else fallback to vp.price
+        // - else fallback to item.price
+        const retailUnit =
+          (vp.compare_at_price > 0 ? vp.compare_at_price :
+           (vp.price > 0 ? vp.price : normalizeCents(item.price || 0)));
+
+        const qty = Math.max(1, Number(item.quantity || 1));
+        return sum + (retailUnit * qty);
+      }, 0);
+
+      // Show retail only if it's meaningfully higher than actual total
+      if(retailEl){
+        if(retailTotal > total){
+          retailEl.textContent = money(retailTotal);
+          retailEl.style.display = 'inline';
+        } else {
+          retailEl.style.display = 'none';
+          retailEl.textContent = '';
+        }
+      }
+
+      itemsEl.innerHTML = cart.items.map((item, idx) => {
+        const line = idx + 1;
+        const vp = variantPricingArr[idx] || { compare_at_price: 0, price: 0 };
+        const base = (vp.compare_at_price > 0 ? vp.compare_at_price : (vp.price > 0 ? vp.price : normalizeCents(item.price || 0)));
+        const final = normalizeCents(item.final_price ?? item.price ?? 0);
+
+        return `
+          <div class="rc-item" data-line="${line}">
+            <div class="rc-thumb">${item.image ? `<img src="${item.image}" alt="">` : ''}</div>
+            <div class="rc-meta">
+              <div class="rc-topline">
+                <div class="rc-name rc-ucfont">${esc(item.product_title)}</div>
+                ${trashButtonHtml(line)}
+              </div>
+              <div class="rc-variant">${esc(item.variant_title)}</div>
+              ${isBackorder(item.variant_id)
+                ? '<div class="rc-backorder-line">This item is currently on back order and may take 4\u20138 weeks to arrive.</div>'
+                : ''}
+              <div class="rc-row2">
+                ${priceHtmlWithBase(base, final)}
+                ${qtySelectHtml(line, item.quantity || 1)}
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      setDiscountOpen(discountOpen);
+      await renderUpsells(cart);
+      setLoading(false);
+    } catch(e){
+      console.log('[RC CART DEV] render error', e);
+      itemsEl.innerHTML = '<div class="rc-empty">Couldn’t load cart. Check console.</div>';
+      subtotalEl.textContent = money(0);
+      updateFreeShipUI(0);
+      setStatus('Cart failed to load.');
+      if(upsellWrap){ upsellWrap.style.display = 'none'; }
+      setDiscountOpen(discountOpen);
+      setLoading(false);
+    }
+  }
+
+  // qty change
+  itemsEl.addEventListener('change', async (e) => {
+    const sel = e.target.closest('[data-qtyselect]');
+    if(!sel) return;
+    try{
+      setLoading(true);
+      const line = parseInt(sel.getAttribute('data-qtyselect'), 10);
+      const qty = parseInt(sel.value, 10);
+      await changeLine(line, qty);
+      await render();
+    } catch(err){
+      console.log('[RC CART DEV] qty change error', err);
+      setStatus('Update failed.');
+      setLoading(false);
+    }
+  });
+
+  // trash
+  itemsEl.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-trash]');
+    if(!btn) return;
+    try{
+      setLoading(true);
+      const line = parseInt(btn.getAttribute('data-trash'), 10);
+      await changeLine(line, 0);
+      await render();
+    } catch(err){
+      console.log('[RC CART DEV] trash error', err);
+      setStatus('Remove failed.');
+      setLoading(false);
+    }
+  });
+
+  // promo dropdown toggle
+  discountToggle.addEventListener('click', () => {
+    setDiscountOpen(!discountOpen);
+    if(!discountOpen) return;
+    setTimeout(() => discountInput && discountInput.focus(), 0);
+  });
+
+  // promo apply
+  discountApplyBtn.addEventListener('click', () => applyPromoCode(discountInput.value));
+  discountInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      applyPromoCode(discountInput.value);
+    }
+  });
+
+  trackBtn.addEventListener('click', function(){
+    setStatus('Tracking coming next…');
+  });
+
+  // restore state after discount redirect
+  restoreAfterDiscountRedirect();
+
+  // start closed
+  setDiscountOpen(false);
+  closeCart();
+
+  // expose a tiny API
+  window.RC_CART = {
+    open: async () => { openCart(); await render(); },
+    close: () => closeCart(),
+    refresh: async () => { await render(); }
+  };
+
+  // initial render so it’s ready when opened
+  render();
+
+  /* =========================================================
+     INTERCEPT CART REDIRECTS + ATC BUTTONS (CAPTURE PHASE)
+     ========================================================= */
+
+  function matchesCartLink(el){
+    if(!el) return false;
+    const a = el.closest && el.closest('a');
+    if(!a) return false;
+
+    const href = (a.getAttribute('href') || '').trim();
+    const cls = (a.className || '');
+    const hasToggle = a.hasAttribute('data-cart-toggle') || a.closest('[data-cart-toggle]');
+
+    // exact targets you showed + broad safety net
+    if(cls.includes('navlink--cart') || hasToggle) return true;
+    if(href === '/cart' || href === 'cart' || href.startsWith('/cart?') || href.startsWith('cart?')) return true;
+
+    return false;
+  }
+
+  function matchesATCButton(el){
+    if(!el) return false;
+    const btn = el.closest && el.closest('button');
+    if(!btn) return false;
+
+    const id = (btn.id || '').trim();
+    if(id === 'rc-inline-atc' || id === 'stickyAddBtn') return true;
+
+    // safety net: common theme add-to-cart buttons
+    const name = (btn.getAttribute('name') || '').toLowerCase();
+    const type = (btn.getAttribute('type') || '').toLowerCase();
+    if(name === 'add' || name.includes('add')) return true;
+    if(type === 'submit' && btn.closest('form[action*="/cart/add"]')) return true;
+
+    return false;
+  }
+
+  async function handleATCClick(target){
+    // Prefer the nearest product form so variant selection is respected
+    const btn = target.closest('button');
+    const form = btn && btn.closest('form');
+
+    try{
+      setStatus('Adding…');
+
+      if(form && (form.getAttribute('action') || '').toLowerCase().includes('/cart/add')){
+        await addToCartFromForm(form);
+      } else {
+        // fallback: try to find a selected variant id on the page
+        const idInput =
+          document.querySelector('form[action*="/cart/add"] [name="id"]') ||
+          document.querySelector('[name="id"]');
+
+        const variantId = idInput ? Number(idInput.value) : 0;
+        if(!variantId) throw new Error('No variant id found for ATC fallback.');
+        await addToCartByVariantId(variantId, 1);
+      }
+
+      setStatus('Added to bag.');
+      await window.RC_CART.open();
+    } catch(e){
+      console.error('[RC CART] ATC intercept failed', e);
+      setStatus('Add to cart failed.');
+      // if something breaks, allow user to continue normal flow
+      // (you can delete this line if you never want fallback)
+      // window.location.href = '/cart';
+    }
+  }
+
+  // CAPTURE: beats theme listeners
+  document.addEventListener('click', function(e){
+    const t = e.target;
+
+    // 1) Cart icon/link -> open popup
+    if(matchesCartLink(t)){
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      window.RC_CART.open();
+      return;
+    }
+
+    // 2) ATC buttons -> add to cart then open popup
+    if(matchesATCButton(t)){
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      handleATCClick(t);
+      return;
+    }
+  }, true); // <- capture phase
+})();
+</script>
+
+<style>
+  /* =========================
+     BRUTE FORCE: KEEP DISCOUNT INPUT VISIBLE
+     ========================= */
+  #rcDiscountBody { display: block !important; }
+  #rcDiscountBox:not(.isOpen) #rcDiscountBody { display: none !important; }
+
+  #rcDiscountInput,
+  #rcDiscountBody .rc-discountInput{
+    display: block !important;
+    width: 100% !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    padding: 0 12px !important;
+    margin: 0 0 10px 0 !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+
+    position: relative !important;
+    z-index: 999999 !important;
+
+    -webkit-appearance: none !important;
+    appearance: none !important;
+
+    border-radius: 12px !important;
+    border: 1px solid var(--rc-border) !important;
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  /* Extra safety: some themes target all inputs inside drawers/modals */
+  #rcCartDevSheet input[type="text"]{
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    height: 44px !important;
+    min-height: 44px !important;
+  }
+</style>
+
+<script>
+(function(){
+  // Rebuild the input + rebind handlers if theme removes/hides it
+  function ensureDiscountUI(){
+    const body = document.getElementById('rcDiscountBody');
+    const btn  = document.getElementById('rcDiscountApplyBtn');
+    const hint = document.getElementById('rcDiscountHint');
+
+    if(!body || !btn) return;
+
+    let input = document.getElementById('rcDiscountInput');
+
+    // If removed, recreate it (insert before apply button)
+    if(!input){
+      input = document.createElement('input');
+      input.className = 'rc-discountInput';
+      input.id = 'rcDiscountInput';
+      input.type = 'text';
+      input.placeholder = 'Enter code';
+      input.autocomplete = 'off';
+      body.insertBefore(input, btn);
+    }
+
+    // Smash any inline styles that might hide it
+    input.style.display = 'block';
+    input.style.opacity = '1';
+    input.style.visibility = 'visible';
+    input.style.pointerEvents = 'auto';
+    input.style.height = '44px';
+    input.style.minHeight = '44px';
+
+    // Prevent double-binding
+    if(input.dataset.rcBound === '1') return;
+    input.dataset.rcBound = '1';
+
+    // We reuse your existing apply logic if present
+    // (your main script defines window.RC_CART + uses /discount/ redirect)
+    function apply(){
+      const code = (input.value || '').trim();
+      if(!code){
+        if(hint) hint.textContent = 'Enter a code first.';
+        return;
+      }
+
+      // If your main script exposes apply behavior, use it.
+      // Otherwise fallback to Shopify's /discount/ redirect.
+      if(typeof window.RC_APPLY_DISCOUNT === 'function'){
+        window.RC_APPLY_DISCOUNT(code);
+        return;
+      }
+
+      const returnUrl = window.location.pathname + window.location.search + window.location.hash;
+      sessionStorage.setItem('rc_cart_should_open', '1');
+      sessionStorage.setItem('rc_cart_return_url', returnUrl);
+      sessionStorage.setItem('rc_cart_last_discount_code', code.toUpperCase());
+
+      window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(returnUrl);
+    }
+
+    btn.addEventListener('click', apply, true);
+    input.addEventListener('keydown', (e) => {
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        apply();
+      }
+    }, true);
+  }
+
+  // Run immediately + after a short delay (some themes run after initial render)
+  ensureDiscountUI();
+  setTimeout(ensureDiscountUI, 200);
+  setTimeout(ensureDiscountUI, 800);
+
+  // Observe for theme scripts removing/changing the discount block
+  const root = document.getElementById('rcCartDevSheet') || document.body;
+  const obs = new MutationObserver(() => ensureDiscountUI());
+  obs.observe(root, { childList: true, subtree: true });
+
+  // Also re-ensure whenever cart is opened via your API
+  const _open = window.RC_CART && window.RC_CART.open;
+  if(window.RC_CART && typeof _open === 'function'){
+    window.RC_CART.open = async function(){
+      const r = await _open.apply(this, arguments);
+      ensureDiscountUI();
+      return r;
+    };
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // Keys you already use (match your existing names)
+  const SS_OPEN_KEY  = 'rc_cart_should_open';
+  const SS_CODE_KEY  = 'rc_cart_last_discount_code';
+
+  function norm(s){ return (s || '').toString().trim().toUpperCase(); }
+
+  function getStatusEl(){
+    return document.getElementById('rcStatus');
+  }
+
+  function setPromoStatus(code){
+    const el = getStatusEl();
+    if(!el) return;
+    const c = norm(code);
+    if(!c) { el.textContent = ''; return; }
+    el.textContent = `Promo code: ${c}`;
+  }
+
+  // HARD open fallback (in case window.RC_CART.open isn't available)
+  function openCartFallback(){
+    const root  = document.getElementById('rcCartDevRoot');
+    if(root){
+      root.style.display = 'block';
+      root.style.opacity = '1';
+      root.style.pointerEvents = 'auto';
+      root.setAttribute('aria-hidden','false');
+      document.documentElement.style.overflow = 'hidden';
+    }
+  }
+
+  function openCart(){
+    // Prefer your exposed API if you have it
+    if(window.RC_CART && typeof window.RC_CART.open === 'function'){
+      window.RC_CART.open();
+      return;
+    }
+    openCartFallback();
+  }
+
+  // 1) Monkey-patch your discount apply so it sets the "reopen" flag
+  // If your brute-force discount box patch is using window.RC_APPLY_DISCOUNT, we attach it.
+  // If not, we still intercept clicks/Enter on your discount UI.
+  function applyDiscountAndReturn(rawCode){
+    const code = (rawCode || '').toString().trim();
+    if(!code) return;
+
+    // Store intent to reopen + show code after reload
+    sessionStorage.setItem(SS_OPEN_KEY, '1');
+    sessionStorage.setItem(SS_CODE_KEY, norm(code));
+
+    const returnUrl = window.location.pathname + window.location.search + window.location.hash;
+    window.location.href =
+      '/discount/' + encodeURIComponent(code) +
+      '?redirect=' + encodeURIComponent(returnUrl);
+  }
+
+  // Expose for other scripts (optional, but makes everything consistent)
+  window.RC_APPLY_DISCOUNT = applyDiscountAndReturn;
+
+  // 2) After redirect back, reopen cart and show promo code under checkout
+  function restoreAfterDiscountRedirect(){
+    const shouldOpen = sessionStorage.getItem(SS_OPEN_KEY) === '1';
+    const code = sessionStorage.getItem(SS_CODE_KEY) || '';
+
+    if(shouldOpen){
+      sessionStorage.removeItem(SS_OPEN_KEY);
+
+      // open cart again after the new page loads + DOM exists
+      // slight delay helps if theme scripts render late
+      setTimeout(() => {
+        openCart();
+        setPromoStatus(code);
+      }, 120);
+    } else {
+      // If they refresh later and you still want it visible, keep this:
+      // setPromoStatus(code);
+      // If you ONLY want it right after apply, leave it off.
+    }
+  }
+
+  // Run on load
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', restoreAfterDiscountRedirect);
+  } else {
+    restoreAfterDiscountRedirect();
+  }
+
+  // 3) Ensure your discount input/button uses this apply logic (even if theme re-renders)
+  function wireDiscountUI(){
+    const input = document.getElementById('rcDiscountInput');
+    const btn   = document.getElementById('rcDiscountApplyBtn');
+    if(!input || !btn) return;
+
+    if(btn.dataset.rcApplyBound !== '1'){
+      btn.dataset.rcApplyBound = '1';
+      btn.addEventListener('click', () => applyDiscountAndReturn(input.value), true);
+    }
+
+    if(input.dataset.rcApplyBound !== '1'){
+      input.dataset.rcApplyBound = '1';
+      input.addEventListener('keydown', (e) => {
+        if(e.key === 'Enter'){
+          e.preventDefault();
+          applyDiscountAndReturn(input.value);
+        }
+      }, true);
+    }
+  }
+
+  wireDiscountUI();
+
+  // Re-wire if the theme nukes/rebuilds the discount UI
+  const sheet = document.getElementById('rcCartDevSheet') || document.body;
+  const obs = new MutationObserver(() => wireDiscountUI());
+  obs.observe(sheet, { childList:true, subtree:true });
+
+})();
+</script>
+
+<script>
+(function () {
+  // ====== STORAGE KEYS ======
+  const SS_OPEN_KEY = "rc_cart_should_open";
+  const SS_CODE_KEY = "rc_cart_last_discount_code";
+
+  const norm = (s) => (s || "").toString().trim().toUpperCase();
+
+  // ====== OPEN CART (works even if you don't have a global open()) ======
+  function openCartNow() {
+    // If you already exposed an API, use it
+    if (window.RC_CART && typeof window.RC_CART.open === "function") {
+      window.RC_CART.open();
+      return true;
+    }
+
+    // Otherwise brute-force open the root
+    const root = document.getElementById("rcCartDevRoot");
+    if (!root) return false;
+
+    root.style.display = "block";
+    root.style.opacity = "1";
+    root.style.pointerEvents = "auto";
+    root.setAttribute("aria-hidden", "false");
+
+    document.documentElement.style.overflow = "hidden";
+    return true;
+  }
+
+  // ====== SHOW APPLIED DISCOUNTS (REAL from cart.js) ======
+  async function showAppliedDiscounts() {
+    const statusEl = document.getElementById("rcStatus");
+    if (!statusEl) return;
+
+    try {
+      const r = await fetch("/cart.js", { credentials: "same-origin", cache: "no-store" });
+      if (!r.ok) throw new Error("cart.js failed");
+      const cart = await r.json();
+
+      const codes = [];
+      if (Array.isArray(cart.discount_codes)) {
+        cart.discount_codes.forEach(d => {
+          const c = d && d.code ? String(d.code) : "";
+          if (c) codes.push(norm(c));
+        });
+      }
+
+      // Some discounts show up as cart_level_discount_applications instead
+      if (!codes.length && Array.isArray(cart.cart_level_discount_applications)) {
+        cart.cart_level_discount_applications.forEach(d => {
+          const t = d && d.title ? String(d.title) : "";
+          if (t) codes.push(t);
+        });
+      }
+
+      if (codes.length) {
+        statusEl.textContent = `Promo code applied: ${codes.join(", ")}`;
+      } else {
+        statusEl.textContent = "No promo code applied.";
+      }
+    } catch (e) {
+      console.log("[RC DISCOUNT] Could not read applied discounts:", e);
+    }
+  }
+
+  // ====== APPLY DISCOUNT (Shopify standard) ======
+  function applyDiscount(codeRaw) {
+    const code = (codeRaw || "").toString().trim();
+    const hint = document.getElementById("rcDiscountHint");
+
+    if (!code) {
+      if (hint) hint.textContent = "Enter a code first.";
+      return;
+    }
+
+    sessionStorage.setItem(SS_OPEN_KEY, "1");
+    sessionStorage.setItem(SS_CODE_KEY, norm(code));
+
+    const returnUrl = window.location.pathname + window.location.search + window.location.hash;
+    window.location.href =
+      "/discount/" + encodeURIComponent(code) +
+      "?redirect=" + encodeURIComponent(returnUrl);
+  }
+
+  // ====== INTERCEPT YOUR DISCOUNT UI (capture phase = beats existing handlers) ======
+  function wireDiscountUI() {
+    const input = document.getElementById("rcDiscountInput");
+    const btn = document.getElementById("rcDiscountApplyBtn");
+    if (!input || !btn) return false;
+
+    if (!btn.dataset.rcPatched) {
+      btn.dataset.rcPatched = "1";
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        applyDiscount(input.value);
+      }, true);
+    }
+
+    if (!input.dataset.rcPatched) {
+      input.dataset.rcPatched = "1";
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          applyDiscount(input.value);
+        }
+      }, true);
+    }
+
+    return true;
+  }
+
+  // keep trying in case your drawer UI renders late or gets re-rendered
+  (function retryWire() {
+    let tries = 0;
+    const t = setInterval(() => {
+      tries++;
+      wireDiscountUI();
+      if (tries > 80) clearInterval(t);
+    }, 150);
+  })();
+
+  // ====== AFTER REDIRECT: REOPEN CART + SHOW APPLIED DISCOUNTS ======
+  function restoreOpenAfterDiscount() {
+    const shouldOpen = sessionStorage.getItem(SS_OPEN_KEY) === "1";
+    if (!shouldOpen) return;
+
+    sessionStorage.removeItem(SS_OPEN_KEY);
+
+    // Poll until your popup cart exists, then open it
+    let tries = 0;
+    const timer = setInterval(async () => {
+      tries++;
+
+      const opened = openCartNow();
+      if (opened) {
+        clearInterval(timer);
+
+        // Give your cart render() a beat, then read discounts
+        setTimeout(() => { showAppliedDiscounts(); }, 250);
+      }
+
+      if (tries > 80) clearInterval(timer);
+    }, 150);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", restoreOpenAfterDiscount);
+  } else {
+    restoreOpenAfterDiscount();
+  }
+})();
+</script>
+
+<script>
+(function(){
+  // New key dedicated to "cart was open" persistence
+  const SS_WAS_OPEN_KEY = 'rc_cart_was_open';
+
+  function isCartOpen(){
+    const root = document.getElementById('rcCartDevRoot');
+    return !!(root && root.classList.contains('isOpen'));
+  }
+
+  function setWasOpen(on){
+    try{
+      if(on) sessionStorage.setItem(SS_WAS_OPEN_KEY, '1');
+      else sessionStorage.removeItem(SS_WAS_OPEN_KEY);
+    }catch(e){}
+  }
+
+  function reopenIfNeeded(){
+    let shouldReopen = false;
+    try{
+      shouldReopen = sessionStorage.getItem(SS_WAS_OPEN_KEY) === '1';
+    }catch(e){}
+
+    if(!shouldReopen) return;
+
+    // Wait for your main script to define RC_CART, then open.
+    let tries = 0;
+    const t = setInterval(() => {
+      tries++;
+
+      // If user already has it open, we're good.
+      if(isCartOpen()){
+        clearInterval(t);
+        return;
+      }
+
+      if(window.RC_CART && typeof window.RC_CART.open === 'function'){
+        clearInterval(t);
+        // open() also re-renders, so this is the cleanest path
+        window.RC_CART.open();
+      }
+
+      if(tries > 80) clearInterval(t);
+    }, 120);
+  }
+
+  function patchRC(){
+    if(!window.RC_CART) return false;
+
+    // Patch open: whenever cart opens, remember it
+    if(window.RC_CART.open && !window.RC_CART.open.__rc_patched){
+      const _open = window.RC_CART.open;
+      function patchedOpen(){
+        setWasOpen(true);
+        return _open.apply(this, arguments);
+      }
+      patchedOpen.__rc_patched = true;
+      window.RC_CART.open = patchedOpen;
+    }
+
+    // Patch close: whenever user closes, forget it
+    if(window.RC_CART.close && !window.RC_CART.close.__rc_patched){
+      const _close = window.RC_CART.close;
+      function patchedClose(){
+        setWasOpen(false);
+        return _close.apply(this, arguments);
+      }
+      patchedClose.__rc_patched = true;
+      window.RC_CART.close = patchedClose;
+    }
+
+    return true;
+  }
+
+  // 1) Save state right before a refresh/navigation happens
+  window.addEventListener('beforeunload', () => {
+    // If it's open at refresh time, keep it sticky
+    setWasOpen(isCartOpen());
+  });
+
+  // 2) Also update state if something else opens/closes it without using RC_CART API
+  // (rare, but this makes it bulletproof)
+  const root = document.getElementById('rcCartDevRoot');
+  if(root && window.MutationObserver){
+    const obs = new MutationObserver(() => {
+      setWasOpen(isCartOpen());
+    });
+    obs.observe(root, { attributes:true, attributeFilter:['class'] });
+  }
+
+  // 3) Patch RC_CART when it exists (your code defines it after load)
+  (function waitForRC(){
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries++;
+      if(patchRC()){
+        clearInterval(timer);
+      }
+      if(tries > 120) clearInterval(timer);
+    }, 100);
+  })();
+
+  // 4) Reopen after refresh if it was open
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', reopenIfNeeded);
+  } else {
+    reopenIfNeeded();
+  }
+})();
+</script>
+
+<style>
+  /* Drag UX */
+  #rcCartDevSheet{
+    will-change: transform;
+    touch-action: none; /* we’ll only start drag from handle/header, so it’s safe */
+  }
+  #rcCartDevSheet.rc-dragging{
+    transition: none !important;
+  }
+</style>
+
+<style>
+  @media (max-width: 749px){
+    #rcCartDevSheet{
+      height: min(80vh, 760px);
+    }
+  }
+</style>
+
+<script>
+(function () {
+  var THRESHOLD_PCT = 0.30; // 30% of viewport height
+
+  function clamp(n, min, max) {
+    if (n < min) return min;
+    if (n > max) return max;
+    return n;
+  }
+
+  function isOpen(root) {
+    return !!(root && root.classList && root.classList.contains("isOpen"));
+  }
+
+  function getY(evt) {
+    if (evt && evt.touches && evt.touches.length) return evt.touches[0].clientY;
+    if (evt && evt.changedTouches && evt.changedTouches.length) return evt.changedTouches[0].clientY;
+    return evt && typeof evt.clientY === "number" ? evt.clientY : 0;
+  }
+
+  function setup() {
+    var root = document.getElementById("rcCartDevRoot");
+    var sheet = document.getElementById("rcCartDevSheet");
+    var handle = document.querySelector("#rcCartDevSheet .rc-handle");
+
+    if (!root || !sheet || !handle) return false;
+
+    var dragging = false;
+    var startY = 0;
+    var currentY = 0;
+
+    function setTranslate(y) {
+      sheet.style.transform = "translateY(" + y + "px)";
+    }
+
+    function resetSheet() {
+      sheet.classList.remove("rc-dragging");
+      sheet.style.transition = "";
+      sheet.style.transform = "";
+    }
+
+    function closeCart() {
+      resetSheet();
+      if (window.RC_CART && typeof window.RC_CART.close === "function") {
+        window.RC_CART.close();
+      } else {
+        // fallback close
+        root.classList.remove("isOpen");
+        root.setAttribute("aria-hidden", "true");
+        document.documentElement.style.overflow = "";
+      }
+    }
+
+    function onDown(e) {
+      if (!isOpen(root)) return;
+
+      // Only left click for mouse
+      if (e.type === "mousedown" && e.button !== 0) return;
+
+      dragging = true;
+      startY = getY(e);
+      currentY = 0;
+
+      sheet.classList.add("rc-dragging");
+      sheet.style.transition = "none";
+
+      if (e.preventDefault) e.preventDefault();
+      if (e.stopPropagation) e.stopPropagation();
+    }
+
+    function onMove(e) {
+      if (!dragging) return;
+
+      var dy = getY(e) - startY;
+      if (dy < 0) dy = 0;
+
+      currentY = clamp(dy, 0, (window.innerHeight || 800));
+      setTranslate(currentY);
+
+      if (e.preventDefault) e.preventDefault();
+      if (e.stopPropagation) e.stopPropagation();
+    }
+
+    function onUp(e) {
+      if (!dragging) return;
+      dragging = false;
+
+      var h = window.innerHeight || 800;
+      var thresholdPx = h * THRESHOLD_PCT;
+
+      if (currentY >= thresholdPx) {
+        closeCart();
+        return;
+      }
+
+      // snap back
+      sheet.classList.remove("rc-dragging");
+      sheet.style.transition = "transform .18s ease";
+      setTranslate(0);
+
+      setTimeout(function () {
+        resetSheet();
+      }, 220);
+
+      if (e && e.preventDefault) e.preventDefault();
+      if (e && e.stopPropagation) e.stopPropagation();
+    }
+
+    // Start drag only on handle
+    handle.addEventListener("mousedown", onDown, false);
+    handle.addEventListener("touchstart", onDown, false);
+
+    // Move + end anywhere
+    window.addEventListener("mousemove", onMove, false);
+    window.addEventListener("touchmove", onMove, false);
+
+    window.addEventListener("mouseup", onUp, false);
+    window.addEventListener("touchend", onUp, false);
+    window.addEventListener("touchcancel", onUp, false);
+
+    // If cart closes another way, don’t leave it translated
+    if (window.MutationObserver) {
+      var obs = new MutationObserver(function () {
+        if (!isOpen(root)) resetSheet();
+      });
+      obs.observe(root, { attributes: true, attributeFilter: ["class"] });
+    }
+
+    return true;
+  }
+
+  // Retry until your cart markup exists
+  var tries = 0;
+  var timer = setInterval(function () {
+    tries++;
+    if (setup()) {
+      clearInterval(timer);
+      return;
+    }
+    if (tries > 120) clearInterval(timer);
+  }, 100);
+})();
+</script>
+
+<script>
+(function(){
+  const root = document.getElementById('rcCartDevRoot');
+  const sheet = document.getElementById('rcCartDevSheet');
+
+  if(!root || !sheet) return;
+
+  root.addEventListener('click', function(e){
+    // If click is NOT inside the cart sheet, close it
+    if(!sheet.contains(e.target)){
+      if(window.RC_CART && typeof window.RC_CART.close === 'function'){
+        window.RC_CART.close();
+      } else {
+        // Fallback close
+        root.classList.remove('isOpen');
+        root.setAttribute('aria-hidden','true');
+        document.documentElement.style.overflow = '';
+      }
+    }
+  });
+})();
+</script>

@@ -1,0 +1,348 @@
+<!-- /sections/section-wf-poster-details.liquid -->
+{%- comment -%}
+  Below-the-fold poster block: "The print" (quality + specs) -> trust strip -> offer band.
+  Sits between the product accordion and the reviews. Styling is fixed/identical on every
+  poster; the per-poster bits (close-up image, headline, copy, offer link) are section settings.
+{%- endcomment -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+{%- style -%}
+  #WfPosterDetails--{{ section.id }} {
+    --PT: {{ section.settings.padding_top }}px;
+    --PB: {{ section.settings.padding_bottom }}px;
+    --accent: {{ section.settings.accent_color | default: '#3D6E2E' }};
+  }
+{%- endstyle -%}
+
+<style>
+  #WfPosterDetails--{{ section.id }} {
+    padding-top: var(--PT);
+    padding-bottom: var(--PB);
+    background: {{ section.settings.bg_color | default: '#FBFBFB' }};
+    font-family: 'Montserrat', sans-serif;
+    color: #0A0A0A;
+  }
+  #WfPosterDetails--{{ section.id }} .wfpd__inner { max-width: 3000px; margin: 0 auto; padding: 0 20px; }
+  #WfPosterDetails--{{ section.id }} .wfpd__eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+  #WfPosterDetails--{{ section.id }} h2.wfpd__h { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.12; margin: 0 0 12px; }
+  #WfPosterDetails--{{ section.id }} .wfpd__lead { font-size: 14px; font-weight: 500; color: #333; line-height: 1.6; margin: 0 0 20px; }
+
+  #WfPosterDetails--{{ section.id }} .wfpd__quality { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: center; }
+  #WfPosterDetails--{{ section.id }} .wfpd__media { aspect-ratio: 2/3; background: #ececec; border-radius: 10px; overflow: hidden; border: 1px solid #DDD; }
+  #WfPosterDetails--{{ section.id }} .wfpd__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #WfPosterDetails--{{ section.id }} .wfpd__media-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #9a9a9a; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  #WfPosterDetails--{{ section.id }} .wfpd__specs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  #WfPosterDetails--{{ section.id }} .wfpd__spec .ic { width: 26px; height: 26px; color: var(--accent); margin-bottom: 7px; }
+  #WfPosterDetails--{{ section.id }} .wfpd__spec .k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #666; }
+  #WfPosterDetails--{{ section.id }} .wfpd__spec .v { font-size: 14px; font-weight: 600; color: #0A0A0A; line-height: 1.35; margin-top: 2px; }
+
+  #WfPosterDetails--{{ section.id }} .wfpd__trust { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 30px 0; padding: 20px; background: #ffffff; border: 1px solid #E0E0E0; border-radius: 12px; }
+  #WfPosterDetails--{{ section.id }} .wfpd__trust-item { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; }
+  #WfPosterDetails--{{ section.id }} .wfpd__trust-item .ic { width: 22px; height: 22px; color: var(--accent); flex-shrink: 0; }
+
+  #WfPosterDetails--{{ section.id }} .wfpd__offer { background: var(--accent); color: #fff; border-radius: 14px; padding: 26px 22px; display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; }
+  #WfPosterDetails--{{ section.id }} .wfpd__wall { display: flex; gap: 10px; justify-content: center; }
+  #WfPosterDetails--{{ section.id }} .wfpd__wall .p { flex: 1; aspect-ratio: 2/3; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); border-radius: 6px; overflow: hidden; display: block; }
+  #WfPosterDetails--{{ section.id }} .wfpd__wall .p img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #WfPosterDetails--{{ section.id }} .wfpd__wall .p:nth-child(2) { transform: translateY(-8px); }
+  #WfPosterDetails--{{ section.id }} .wfpd__offer h2.wfpd__h { color: #fff; }
+  #WfPosterDetails--{{ section.id }} .wfpd__offer p { font-size: 14px; font-weight: 500; line-height: 1.55; margin: 0 0 18px; opacity: 0.95; }
+  #WfPosterDetails--{{ section.id }} .wfpd__story-media img { width: 100%; border-radius: 10px; display: block; }
+  #WfPosterDetails--{{ section.id }} .wfpd__offer--story p { margin-bottom: 0; }
+  #WfPosterDetails--{{ section.id }} .wfpd__btn { display: inline-block; background: #fff; color: var(--accent); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 14px 26px; border-radius: 8px; text-decoration: none; transition: opacity 0.15s ease; }
+  #WfPosterDetails--{{ section.id }} .wfpd__btn:hover { opacity: 0.88; }
+
+  @media (min-width: 750px) {
+    #WfPosterDetails--{{ section.id }} h2.wfpd__h { font-size: 26px; }
+    #WfPosterDetails--{{ section.id }} .wfpd__inner { padding: 0 60px; }
+    #WfPosterDetails--{{ section.id }} .wfpd__quality { grid-template-columns: 0.85fr 1fr; gap: 40px; }
+    #WfPosterDetails--{{ section.id }} .wfpd__media { aspect-ratio: 2/3; }
+    #WfPosterDetails--{{ section.id }} .wfpd__specs { gap: 22px; }
+    #WfPosterDetails--{{ section.id }} .wfpd__trust { grid-template-columns: repeat(4, 1fr); }
+    #WfPosterDetails--{{ section.id }} .wfpd__offer { grid-template-columns: 0.9fr 1.1fr; padding: 36px 40px; gap: 36px; }
+  }
+</style>
+
+<section id="WfPosterDetails--{{ section.id }}" data-section-type="wf-poster-details">
+  <div class="wfpd__inner">
+
+    {%- comment -%}
+      1 · The print (quality + specs).
+      Close-up image priority: manual setting > selected-color "up close" alt >
+      any "up close" alt > selected-color match > featured image. This avoids the
+      white-background hero shot and pulls the no-background detail shot when present.
+    {%- endcomment -%}
+    {%- liquid
+      assign sel_color = ''
+      for opt in product.options_with_values
+        assign nm = opt.name | downcase
+        if nm contains 'color' or nm contains 'colour'
+          assign sel_color = opt.selected_value | default: opt.values.first
+        endif
+      endfor
+      assign sel_color_d = sel_color | downcase
+      assign chosen = section.settings.close_image
+      assign tee_on_body = sel_color_d | append: '-1'
+      if chosen == blank and template.suffix == 'graphic-tee-2'
+        for img in product.images
+          assign a = img.alt | downcase
+          if a == tee_on_body
+            assign chosen = img
+            break
+          endif
+        endfor
+      endif
+      if chosen == blank
+        for img in product.images
+          assign a = img.alt | downcase
+          if sel_color_d != '' and a contains sel_color_d and a contains 'close'
+            assign chosen = img
+            break
+          endif
+        endfor
+      endif
+      if chosen == blank
+        for img in product.images
+          assign a = img.alt | downcase
+          if a contains 'close'
+            assign chosen = img
+            break
+          endif
+        endfor
+      endif
+      if chosen == blank and sel_color_d != ''
+        for img in product.images
+          assign a = img.alt | downcase
+          if a contains sel_color_d
+            assign chosen = img
+            break
+          endif
+        endfor
+      endif
+      if chosen == blank
+        assign chosen = product.featured_image
+      endif
+    -%}
+    <div class="wfpd__quality">
+      <div class="wfpd__media">
+        {%- if chosen != blank -%}
+          <img src="{{ chosen | image_url: width: 900 }}" alt="{{ chosen.alt | default: product.title | escape }}" loading="lazy">
+        {%- else -%}
+          <div class="wfpd__media-ph">print close-up</div>
+        {%- endif -%}
+      </div>
+      <div class="wfpd__qbody">
+        <h2 class="wfpd__h">{{ section.settings.quality_heading | default: 'Built to live on your wall' | escape }}</h2>
+        <p class="wfpd__lead">{{ section.settings.quality_body | default: 'Every poster is printed to order on thick 170gsm semi-gloss paper, so the color comes out sharp and true to what you see here. It holds up for years instead of fading or curling. Hang it above your desk, in your room, or in your home gym. A small thing that makes a space feel like yours.' | escape }}</p>
+        <div class="wfpd__specs">
+        {%- if template.suffix == 'graphic-tee-2' -%}
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="1"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/></svg><div class="k">Fabric</div><div class="v">100% cotton</div></div>
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg><div class="k">Weight</div><div class="v">250gsm · 7.4oz</div></div>
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/><rect x="7" y="7" width="10" height="10"/></svg><div class="k">Fit</div><div class="v">Unisex · relaxed</div></div>
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg><div class="k">Care</div><div class="v">Machine wash cold</div></div>
+        {%- else -%}
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="1"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/></svg><div class="k">Paper</div><div class="v">Semi-glossy · 170gsm</div></div>
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/></svg><div class="k">Sizes</div><div class="v">12×18, 16×24, 24×36 in</div></div>
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="1"/><rect x="7" y="7" width="10" height="10"/></svg><div class="k">Frame-ready</div><div class="v">Fits standard frames</div></div>
+          <div class="wfpd__spec"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg><div class="k">Made to order</div><div class="v">Printed just for you</div></div>
+        {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    {%- comment -%} 2 · Trust strip {%- endcomment -%}
+    <div class="wfpd__trust">
+      <div class="wfpd__trust-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="6" width="15" height="11" rx="1"/><path d="M16 9h4l3 3v5h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg>Free shipping $125+</div>
+      <div class="wfpd__trust-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.4 8-8 10-4.6-2-8-5-8-10V6z"/><polyline points="9 12 11 14 15 10"/></svg>Securely packaged</div>
+      <div class="wfpd__trust-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>Made to order</div>
+      <div class="wfpd__trust-item"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Delivered in 5 to 8 days</div>
+    </div>
+
+    {%- comment -%} 3 · Offer band {%- endcomment -%}
+    <div class="wfpd__offer{% if template.suffix == 'graphic-tee-2' %} wfpd__offer--story{% endif %}">
+      {%- if template.suffix == 'graphic-tee-2' -%}
+      <div class="wfpd__story-media">
+        {%- assign story_img = nil -%}
+        {%- for img in product.images -%}{%- assign ia = img.alt | downcase -%}{%- if ia contains '-4' -%}{%- assign story_img = img -%}{%- break -%}{%- endif -%}{%- endfor -%}
+        {%- unless story_img -%}{%- assign story_img = product.featured_image -%}{%- endunless -%}
+        {%- if story_img -%}<img src="{{ story_img | image_url: width: 800 }}" alt="{{ product.title | escape }} print detail" width="440" height="440" loading="lazy">{%- endif -%}
+      </div>
+      <div class="wfpd__story-text">
+        <p class="wfpd__eyebrow" style="color:rgba(255,255,255,0.82)">{{ section.settings.offer_eyebrow | default: 'The story behind the print' | escape }}</p>
+        <h2 class="wfpd__h">{{ section.settings.offer_heading | default: 'Hand-drawn, start to finish' | escape }}</h2>
+        <p>{{ section.settings.offer_body | default: 'The front is hand-drawn, not a stock graphic.' | escape }}</p>
+      </div>
+      {%- else -%}
+      {%- liquid
+        assign wall_col = collections['golf-posters']
+        if section.settings.wall_collection != blank
+          assign wall_col = section.settings.wall_collection
+        endif
+      -%}
+      <div class="wfpd__wall">
+        {%- assign wall_n = 0 -%}
+        {%- for wp in wall_col.products limit: 8 -%}
+          {%- if wp.handle != product.handle and wall_n < 3 -%}
+            <a class="p" href="{{ wp.url }}" title="{{ wp.title | escape }}">{%- if wp.featured_image != blank -%}<img src="{{ wp.featured_image | image_url: width: 400 }}" alt="{{ wp.title | escape }}" width="200" height="300">{%- endif -%}</a>
+            {%- assign wall_n = wall_n | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if wall_n == 0 -%}<div class="p"></div><div class="p"></div><div class="p"></div>{%- endif -%}
+      </div>
+      <div>
+        <p class="wfpd__eyebrow" style="color:rgba(255,255,255,0.82)">{{ section.settings.offer_eyebrow | default: 'Build your wall' | escape }}</p>
+        <h2 class="wfpd__h">{{ section.settings.offer_heading | default: 'Three look better than one' | escape }}</h2>
+        <p>{{ section.settings.offer_body | default: 'Posters look better in groups. Add two more and do your whole wall in one order.' | escape }}</p>
+        <a href="{{ section.settings.offer_cta_link | default: '/collections/golf-posters' }}" class="wfpd__btn">{{ section.settings.offer_cta_text | default: 'Shop all posters' | escape }} →</a>
+      </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+
+  {%- comment -%} color -> image map; the close-up swaps to match the selected color swatch in the buy box {%- endcomment -%}
+  <script type="application/json" data-wfpd-colorimgs>{"_":""
+    {%- for img in product.images -%}{%- if img.alt != blank -%},{{ img.alt | downcase | json }}:{{ img | image_url: width: 900 | json }}{%- endif -%}{%- endfor -%}
+  }</script>
+  <script>
+  (function () {
+    var sec = document.getElementById('WfPosterDetails--{{ section.id }}');
+    if (!sec) return;
+    var mediaImg = sec.querySelector('.wfpd__media img');
+    if (!mediaImg) return;
+    var cimgs = {};
+    try { cimgs = JSON.parse(sec.querySelector('[data-wfpd-colorimgs]').textContent); } catch (e) { return; }
+    function colorImg(color) {
+      var c = (color || '').toLowerCase().trim();
+      if (!c) return '';
+      // Prefer the dedicated up-close detail image for this color (matches the default).
+      for (var k in cimgs) { if (k !== '_' && k.indexOf(c) > -1 && k.indexOf('upclose') > -1) return cimgs[k]; }
+      // Fallback: any image whose alt names this color.
+      for (var k2 in cimgs) { if (k2 !== '_' && k2.indexOf(c) > -1) return cimgs[k2]; }
+      return '';
+    }
+    document.querySelectorAll('.bp-pair__swatch').forEach(function (sw) {
+      sw.addEventListener('click', function () {
+        var url = colorImg(sw.getAttribute('data-color'));
+        if (url) mediaImg.src = url;
+      });
+    });
+  })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "WF Poster Details",
+  "settings": [
+    {
+      "type": "header",
+      "content": "The print (quality block)"
+    },
+    {
+      "type": "image_picker",
+      "id": "close_image",
+      "label": "Print close-up image",
+      "info": "Per poster. Falls back to the product's featured image if empty."
+    },
+    {
+      "type": "text",
+      "id": "quality_heading",
+      "label": "Heading",
+      "default": "Built to live on your wall"
+    },
+    {
+      "type": "textarea",
+      "id": "quality_body",
+      "label": "Body",
+      "default": "Every poster is printed to order on thick 170gsm semi-gloss paper, so the color comes out sharp and true to what you see here. It holds up for years instead of fading or curling. Hang it above your desk, in your room, or in your home gym. A small thing that makes a space feel like yours."
+    },
+    {
+      "type": "header",
+      "content": "Offer band"
+    },
+    {
+      "type": "paragraph",
+      "content": "Heads up: the offer copy is a live promise to shoppers. Only advertise free shipping / buy-3 once the matching discount + shipping rule exist in Shopify, and keep it consistent with the $125 free-shipping line above."
+    },
+    {
+      "type": "text",
+      "id": "offer_eyebrow",
+      "label": "Eyebrow",
+      "default": "Build your wall"
+    },
+    {
+      "type": "text",
+      "id": "offer_heading",
+      "label": "Heading",
+      "default": "Three look better than one"
+    },
+    {
+      "type": "textarea",
+      "id": "offer_body",
+      "label": "Body",
+      "default": "Posters look better in groups. Add two more and do your whole wall in one order."
+    },
+    {
+      "type": "text",
+      "id": "offer_cta_text",
+      "label": "Button text",
+      "default": "Shop all posters"
+    },
+    {
+      "type": "url",
+      "id": "offer_cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "collection",
+      "id": "wall_collection",
+      "label": "Build-your-wall thumbnails",
+      "info": "Pulls up to 3 product images for the offer band. Defaults to the Golf Posters collection."
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#3D6E2E"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#FBFBFB"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "WF Poster Details"
+    }
+  ]
+}
+{% endschema %}
