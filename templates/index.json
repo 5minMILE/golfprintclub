@@ -22,7 +22,7 @@
         "slide_2": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/1x1_5.png",
+            "image": "shopify://shop_images/hf_20260701_024620_452c026c-2077-4339-b17f-a2dc50d2f2e6.png",
             "alt_text": "Golf Print Club poster on the wall"
           }
         }
@@ -73,118 +73,22 @@
       "settings": {
         "products_per_tab": 8,
         "padding_top": 0,
-        "padding_bottom": 0
+        "padding_bottom": 24
       }
     },
-    "ugc_grid": {
-      "type": "section-ugc-grid",
-      "blocks": {
-        "u1": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        },
-        "u2": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        },
-        "u3": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        },
-        "u4": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        },
-        "u5": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        },
-        "u6": {
-          "type": "image",
-          "settings": {
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "u1",
-        "u2",
-        "u3",
-        "u4",
-        "u5",
-        "u6"
-      ],
+    "bundle_banner": {
+      "type": "section-wf-lifestyle-banner",
       "settings": {
-        "heading": "On The Wall",
-        "subtitle": "Hand-printed posters in real rooms. Tag @golfprintclub to be featured.",
-        "padding_top": 0,
-        "padding_bottom": 0
+        "promo_text": "Buy 2 Shorts, Get 1 Free",
+        "heading": "Buy Two Posters, Get One Free",
+        "button_text": "Build Your Bundle",
+        "button_link": "shopify://pages/buy-2-get-1-free"
       }
     },
-    "quality_education": {
-      "type": "section-product-education",
-      "blocks": {
-        "feat_paper": {
-          "type": "feature",
-          "settings": {
-            "title": "Museum-Grade Paper",
-            "description": "200gsm matte stock with archival pigment ink. Heavy enough not to curl, archival enough to not fade in sunlight. The same press that prints for galleries."
-          }
-        },
-        "feat_made": {
-          "type": "feature",
-          "settings": {
-            "title": "Made in the US, To Order",
-            "description": "Each poster is printed in a US shop the moment you order. Nothing sits in a warehouse, nothing gets dropshipped overseas. Production takes 2 to 3 days, then ships."
-          }
-        },
-        "feat_sizes": {
-          "type": "feature",
-          "settings": {
-            "title": "Standard Sizes, Any Frame",
-            "description": "12x18, 16x24, and 24x36. Any frame from Amazon, IKEA, or Target fits perfectly. No oddball sizing that locks you into a custom shop."
-          }
-        },
-        "feat_promise": {
-          "type": "feature",
-          "settings": {
-            "title": "Arrives Damaged? We Reprint.",
-            "description": "If it shows up bent, faded, or off, email us within 14 days. We reprint and reship at our cost, no questions asked. Every reply comes from a real person."
-          }
-        }
-      },
-      "block_order": [
-        "feat_paper",
-        "feat_made",
-        "feat_sizes",
-        "feat_promise"
-      ],
+    "poster_wheel": {
+      "type": "section-wf-poster-wheel",
       "settings": {
-        "heading": "Why Golf Print Club",
-        "padding_top": 0,
-        "padding_bottom": 40
-      }
-    },
-    "guarantee": {
-      "type": "section-guarantee",
-      "settings": {
-        "heading": "The Print Promise",
-        "description": "Every poster is made to order on archival paper in the US, then shipped rolled in a protective tube with tracking. If anything's wrong on arrival, we reprint and reship for free. No restocking fees, no runaround.",
-        "badge_1": "Made in USA",
-        "badge_2": "Archival Paper",
-        "badge_3": "Real Humans",
-        "padding_top": 20,
-        "padding_bottom": 40
+        "collection": "golf-posters"
       }
     },
     "faq": {
@@ -248,9 +152,8 @@
   "order": [
     "hero",
     "collection_tabs",
-    "ugc_grid",
-    "quality_education",
-    "guarantee",
+    "bundle_banner",
+    "poster_wheel",
     "faq"
   ]
 }
