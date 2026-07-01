@@ -64,13 +64,6 @@
             "collection": "golf-posters"
           }
         },
-        "tab_all": {
-          "type": "tab",
-          "settings": {
-            "label": "Iconic",
-            "collection": "golf-posters"
-          }
-        },
         "tab_EKhiMK": {
           "type": "tab",
           "settings": {
@@ -84,15 +77,22 @@
             "label": "Motivational",
             "collection": "golf-posters"
           }
+        },
+        "tab_all": {
+          "type": "tab",
+          "settings": {
+            "label": "All Posters",
+            "collection": "golf-posters"
+          }
         }
       },
       "block_order": [
         "tab_new",
         "tab_best",
         "tab_GHNRd3",
-        "tab_all",
         "tab_EKhiMK",
-        "tab_bz7M9p"
+        "tab_bz7M9p",
+        "tab_all"
       ],
       "settings": {
         "products_per_tab": 8,
@@ -150,7 +150,7 @@
       ],
       "settings": {
         "heading": "On The Wall",
-        "subtitle": "Hand-printed posters in real rooms. Tag @golfprintclub to be featured.",
+        "subtitle": "Our golf posters in real rooms. <br>Tag @golfprintclub to be featured.",
         "padding_top": 0,
         "padding_bottom": 0
       }
