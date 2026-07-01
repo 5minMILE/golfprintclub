@@ -100,6 +100,102 @@
         "padding_bottom": 0
       }
     },
+    "section_slideshow_t9kUi8": {
+      "type": "section-slideshow",
+      "blocks": {
+        "image_AE3Nzq": {
+          "type": "image",
+          "settings": {
+            "overlay_opacity": 0,
+            "overlay_color": "#000",
+            "show_overlay_text": false,
+            "title": "Image slide",
+            "heading_size": 11,
+            "description": "Tell your brand's story through images.",
+            "text_size": 5,
+            "flex_align_desktop": "align--middle-center-desktop",
+            "flex_align_mobile": "align--bottom-left-mobile",
+            "bg_color": "",
+            "color": "#FFFFFF",
+            "first_button_text": "View products",
+            "first_button_link": "",
+            "first_button_type": "btn--primary",
+            "first_button_size": "",
+            "first_button_style": "btn--solid",
+            "first_button_show_arrow": false,
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_type": "btn--white",
+            "second_button_size": "",
+            "second_button_style": "btn--solid",
+            "second_button_show_arrow": false
+          }
+        }
+      },
+      "block_order": [
+        "image_AE3Nzq"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "height": "screen-height-two-thirds",
+        "mobile_height": "screen-height-one-half--mobile",
+        "width": "wrapper--full",
+        "transition": "slide",
+        "show_arrows": false,
+        "autoplay": false,
+        "autoplay_speed": 8,
+        "padding_top": 0,
+        "padding_bottom": 2
+      }
+    },
+    "section_slideshow_3rAPcq": {
+      "type": "section-slideshow",
+      "blocks": {
+        "image_Fgc6TF": {
+          "type": "image",
+          "settings": {
+            "overlay_opacity": 0,
+            "overlay_color": "#000",
+            "show_overlay_text": false,
+            "title": "Image slide",
+            "heading_size": 11,
+            "description": "Tell your brand's story through images.",
+            "text_size": 5,
+            "flex_align_desktop": "align--middle-center-desktop",
+            "flex_align_mobile": "align--bottom-left-mobile",
+            "bg_color": "",
+            "color": "#FFFFFF",
+            "first_button_text": "View products",
+            "first_button_link": "",
+            "first_button_type": "btn--primary",
+            "first_button_size": "",
+            "first_button_style": "btn--solid",
+            "first_button_show_arrow": false,
+            "second_button_text": "",
+            "second_button_link": "",
+            "second_button_type": "btn--white",
+            "second_button_size": "",
+            "second_button_style": "btn--solid",
+            "second_button_show_arrow": false
+          }
+        }
+      },
+      "block_order": [
+        "image_Fgc6TF"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "height": "screen-height-two-thirds",
+        "mobile_height": "screen-height-one-half--mobile",
+        "width": "wrapper--full",
+        "transition": "slide",
+        "show_arrows": false,
+        "autoplay": false,
+        "autoplay_speed": 8,
+        "padding_top": 0,
+        "padding_bottom": 2
+      }
+    },
     "ugc_grid": {
       "type": "section-ugc-grid",
       "blocks": {
@@ -153,62 +249,6 @@
         "subtitle": "Our golf posters in real rooms. <br>Tag @golfprintclub to be featured.",
         "padding_top": 0,
         "padding_bottom": 0
-      }
-    },
-    "quality_education": {
-      "type": "section-product-education",
-      "blocks": {
-        "feat_paper": {
-          "type": "feature",
-          "settings": {
-            "title": "Museum-Grade Paper",
-            "description": "200gsm matte stock with archival pigment ink. Heavy enough not to curl, archival enough to not fade in sunlight. The same press that prints for galleries."
-          }
-        },
-        "feat_made": {
-          "type": "feature",
-          "settings": {
-            "title": "Made in the US, To Order",
-            "description": "Each poster is printed in a US shop the moment you order. Nothing sits in a warehouse, nothing gets dropshipped overseas. Production takes 2 to 3 days, then ships."
-          }
-        },
-        "feat_sizes": {
-          "type": "feature",
-          "settings": {
-            "title": "Standard Sizes, Any Frame",
-            "description": "12x18, 16x24, and 24x36. Any frame from Amazon, IKEA, or Target fits perfectly. No oddball sizing that locks you into a custom shop."
-          }
-        },
-        "feat_promise": {
-          "type": "feature",
-          "settings": {
-            "title": "Arrives Damaged? We Reprint.",
-            "description": "If it shows up bent, faded, or off, email us within 14 days. We reprint and reship at our cost, no questions asked. Every reply comes from a real person."
-          }
-        }
-      },
-      "block_order": [
-        "feat_paper",
-        "feat_made",
-        "feat_sizes",
-        "feat_promise"
-      ],
-      "settings": {
-        "heading": "Why Golf Print Club",
-        "padding_top": 0,
-        "padding_bottom": 40
-      }
-    },
-    "guarantee": {
-      "type": "section-guarantee",
-      "settings": {
-        "heading": "The Print Promise",
-        "description": "Every poster is made to order on archival paper in the US, then shipped rolled in a protective tube with tracking. If anything's wrong on arrival, we reprint and reship for free. No restocking fees, no runaround.",
-        "badge_1": "Made in USA",
-        "badge_2": "Archival Paper",
-        "badge_3": "Real Humans",
-        "padding_top": 20,
-        "padding_bottom": 40
       }
     },
     "faq": {
@@ -272,9 +312,9 @@
   "order": [
     "hero",
     "collection_tabs",
+    "section_slideshow_t9kUi8",
+    "section_slideshow_3rAPcq",
     "ugc_grid",
-    "quality_education",
-    "guarantee",
     "faq"
   ]
 }
