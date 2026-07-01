@@ -12,24 +12,24 @@
     "hero": {
       "type": "section-wf-hero",
       "blocks": {
-        "slide_1": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/hf_20260630_200533_076a571f-ca37-442a-af5f-ffc3152a6745.png",
-            "alt_text": "Golf Print Club poster mockup"
-          }
-        },
         "slide_2": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/hf_20260701_024620_452c026c-2077-4339-b17f-a2dc50d2f2e6.png",
             "alt_text": "Golf Print Club poster on the wall"
           }
+        },
+        "slide_1": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/hf_20260630_200533_076a571f-ca37-442a-af5f-ffc3152a6745.png",
+            "alt_text": "Golf Print Club poster mockup"
+          }
         }
       },
       "block_order": [
-        "slide_1",
-        "slide_2"
+        "slide_2",
+        "slide_1"
       ],
       "settings": {
         "heading": "#1 wall art for golfers",
