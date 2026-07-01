@@ -43,32 +43,56 @@
     "collection_tabs": {
       "type": "section-wf-collection-tabs",
       "blocks": {
-        "tab_best": {
-          "type": "tab",
-          "settings": {
-            "label": "Best Sellers",
-            "collection": "golf-posters"
-          }
-        },
         "tab_new": {
           "type": "tab",
           "settings": {
-            "label": "New Arrivals",
+            "label": "Newest",
+            "collection": "golf-posters"
+          }
+        },
+        "tab_best": {
+          "type": "tab",
+          "settings": {
+            "label": "Best Selling",
+            "collection": "golf-posters"
+          }
+        },
+        "tab_GHNRd3": {
+          "type": "tab",
+          "settings": {
+            "label": "Courses",
             "collection": "golf-posters"
           }
         },
         "tab_all": {
           "type": "tab",
           "settings": {
-            "label": "All Posters",
+            "label": "Iconic",
+            "collection": "golf-posters"
+          }
+        },
+        "tab_EKhiMK": {
+          "type": "tab",
+          "settings": {
+            "label": "Aesthetic",
+            "collection": "golf-posters"
+          }
+        },
+        "tab_bz7M9p": {
+          "type": "tab",
+          "settings": {
+            "label": "Motivational",
             "collection": "golf-posters"
           }
         }
       },
       "block_order": [
-        "tab_best",
         "tab_new",
-        "tab_all"
+        "tab_best",
+        "tab_GHNRd3",
+        "tab_all",
+        "tab_EKhiMK",
+        "tab_bz7M9p"
       ],
       "settings": {
         "products_per_tab": 8,
