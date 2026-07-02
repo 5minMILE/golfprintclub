@@ -47,7 +47,7 @@
           "type": "tab",
           "settings": {
             "label": "Newest",
-            "collection": "golf-posters"
+            "collection": "frontpage"
           }
         },
         "tab_best": {
@@ -116,7 +116,7 @@
             "flex_align_desktop": "align--middle-center-desktop",
             "flex_align_mobile": "align--bottom-left-mobile",
             "bg_color": "",
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "first_button_text": "View products",
             "first_button_link": "",
             "first_button_type": "btn--primary",
@@ -164,7 +164,7 @@
             "flex_align_desktop": "align--middle-center-desktop",
             "flex_align_mobile": "align--bottom-left-mobile",
             "bg_color": "",
-            "color": "#FFFFFF",
+            "color": "#ffffff",
             "first_button_text": "View products",
             "first_button_link": "",
             "first_button_type": "btn--primary",
