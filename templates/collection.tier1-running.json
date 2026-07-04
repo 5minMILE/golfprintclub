@@ -65,6 +65,15 @@
     "section_wf_category_cards": {
       "type": "section-wf-category-cards",
       "blocks": {
+        "cat_3": {
+          "type": "category",
+          "settings": {
+            "collection": "course-posters",
+            "image": "shopify://shop_images/puttingpainting.png",
+            "label": "",
+            "link": ""
+          }
+        },
         "cat_1": {
           "type": "category",
           "settings": {
@@ -82,20 +91,12 @@
             "label": "",
             "link": ""
           }
-        },
-        "cat_3": {
-          "type": "category",
-          "settings": {
-            "collection": "course-posters",
-            "label": "",
-            "link": ""
-          }
         }
       },
       "block_order": [
+        "cat_3",
         "cat_1",
-        "cat_2",
-        "cat_3"
+        "cat_2"
       ],
       "settings": {
         "heading": "Shop by Category",
