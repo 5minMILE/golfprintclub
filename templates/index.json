@@ -47,14 +47,14 @@
           "type": "tab",
           "settings": {
             "label": "Newest",
-            "collection": "frontpage"
+            "collection": "newest-release"
           }
         },
         "tab_best": {
           "type": "tab",
           "settings": {
             "label": "Best Selling",
-            "collection": "golf-posters"
+            "collection": "best-selling"
           }
         },
         "tab_GHNRd3": {
