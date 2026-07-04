@@ -135,6 +135,7 @@
       "block_order": [
         "image_AE3Nzq"
       ],
+      "disabled": true,
       "name": "Slideshow",
       "settings": {
         "height": "screen-height-two-thirds",
@@ -183,6 +184,7 @@
       "block_order": [
         "image_Fgc6TF"
       ],
+      "disabled": true,
       "name": "Slideshow",
       "settings": {
         "height": "screen-height-two-thirds",
