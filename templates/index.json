@@ -75,13 +75,6 @@
           "type": "tab",
           "settings": {
             "label": "Motivational",
-            "collection": "motivational-posters"
-          }
-        },
-        "tab_all": {
-          "type": "tab",
-          "settings": {
-            "label": "All Posters",
             "collection": "golf-posters"
           }
         }
@@ -91,8 +84,7 @@
         "tab_best",
         "tab_GHNRd3",
         "tab_EKhiMK",
-        "tab_bz7M9p",
-        "tab_all"
+        "tab_bz7M9p"
       ],
       "settings": {
         "products_per_tab": 8,
