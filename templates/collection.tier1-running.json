@@ -69,6 +69,7 @@
           "type": "category",
           "settings": {
             "collection": "aesthetic-posters",
+            "image": "shopify://shop_images/moon_shot.png",
             "label": "",
             "link": ""
           }
@@ -88,21 +89,12 @@
             "label": "",
             "link": ""
           }
-        },
-        "cat_4": {
-          "type": "category",
-          "settings": {
-            "collection": "golf-shirts",
-            "label": "Shirts",
-            "link": ""
-          }
         }
       },
       "block_order": [
         "cat_1",
         "cat_2",
-        "cat_3",
-        "cat_4"
+        "cat_3"
       ],
       "settings": {
         "heading": "Shop by Category",
