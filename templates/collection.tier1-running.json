@@ -68,26 +68,24 @@
         "cat_1": {
           "type": "category",
           "settings": {
-            "collection": "golf-half-tights",
-            "image": "shopify://shop_images/hf_20260217_014415_5b1c0901-dc73-4c13-8e12-0317781a0e3f.png",
-            "label": "Golf Posters",
+            "collection": "aesthetic-posters",
+            "label": "",
             "link": ""
           }
         },
         "cat_2": {
           "type": "category",
           "settings": {
-            "collection": "golf-split-shorts",
-            "image": "shopify://shop_images/hf_20260217_191715_d48793f4-6b56-4b77-8496-95695d5469a6.png",
-            "label": "Golf Posters",
+            "collection": "motivational-posters",
+            "label": "",
             "link": ""
           }
         },
         "cat_3": {
           "type": "category",
           "settings": {
-            "collection": "golf posters",
-            "label": "Golf Posters",
+            "collection": "course-posters",
+            "label": "",
             "link": ""
           }
         },
@@ -95,7 +93,6 @@
           "type": "category",
           "settings": {
             "collection": "golf-shirts",
-            "image": "shopify://shop_images/5_adc2ac9c-8afe-4edf-a4dd-2b89ba32625c.png",
             "label": "Shirts",
             "link": ""
           }
@@ -137,98 +134,84 @@
         "image_1": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/632585646_17859639432601348_3474770829607654148_n.jpg",
             "link": "https://www.instagram.com/p/DUv9lFDidXc/?img_index=1"
           }
         },
         "image_2": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/524818814_18106362844535585_2447912840450345253_n.jpg",
             "link": "https://www.instagram.com/p/DMqMK6Du33-/?img_index=1"
           }
         },
         "image_3": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/503735122_18511322599039015_3666960999311518927_n.jpg",
             "link": ""
           }
         },
         "image_4": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/516930590_18410267086108023_3725682745817435305_n_1.jpg",
             "link": "https://www.instagram.com/p/DL6Px5aNCXY/?img_index=1"
           }
         },
         "image_5": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/504009426_18117847219463680_5514507617342105007_n.jpg",
             "link": ""
           }
         },
         "image_6": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/503966030_18282332050283941_7514746080078156195_n.jpg",
             "link": ""
           }
         },
         "image_7": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/fadskfajslk.png",
             "link": "https://www.instagram.com/p/DHRjlk1OkT1/?img_index=9"
           }
         },
         "image_8": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/637169320_18378784243092323_6236954335751447272_n.jpg",
             "link": "https://www.instagram.com/p/DEvBEi_p3Ox/"
           }
         },
         "image_9": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/464266574_1083295279899579_3316657288761329016_n.jpg",
             "link": "https://www.instagram.com/p/DBcyLdINA27/?img_index=4"
           }
         },
         "image_10": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/455361551_18458646640043865_8072700849282627754_n.jpg",
             "link": ""
           }
         },
         "image_11": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/449864297_1410827302952970_4707072703736157958_n.jpg",
             "link": ""
           }
         },
         "image_12": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/468622921_18047049329034700_6423825552992512565_n.jpg",
             "link": ""
           }
         },
         "image_13": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/448550419_1580862609150624_6834496539829711421_n_1.jpg",
             "link": ""
           }
         },
         "image_14": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/448436388_1129045088307566_4576531640461077986_n_1.jpg",
             "link": ""
           }
         }
@@ -304,6 +287,8 @@
         "review_count": "115",
         "cta_text": "See All Reviews",
         "cta_link": "shopify://pages/reviews",
+        "min_rating": 4,
+        "max_reviews": 16,
         "padding_top": 0,
         "padding_bottom": 20
       }
