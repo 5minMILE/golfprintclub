@@ -61,14 +61,14 @@
           "type": "tab",
           "settings": {
             "label": "Courses",
-            "collection": "golf-posters"
+            "collection": "course-posters"
           }
         },
         "tab_EKhiMK": {
           "type": "tab",
           "settings": {
             "label": "Aesthetic",
-            "collection": "aesthetic-posters"
+            "collection": "golf-posters"
           }
         },
         "tab_bz7M9p": {
