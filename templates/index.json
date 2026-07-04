@@ -225,18 +225,21 @@
         "u4": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hf_20260704_161741_3aa5120c-0d8f-4e9b-852f-1a6589f2528f.png",
             "link": ""
           }
         },
         "u5": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hf_20260704_162050_a603e95b-248d-4563-93a1-210c9b9fd456.png",
             "link": ""
           }
         },
         "u6": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hf_20260704_162126_6536f41a-39e4-4e20-b277-6ac559bdac32.png",
             "link": ""
           }
         }
