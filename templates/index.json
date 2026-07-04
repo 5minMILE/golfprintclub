@@ -204,12 +204,14 @@
         "u1": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hf_20260704_160714_7abf63c8-fabe-483a-b73a-52101dfe6b87_1.png",
             "link": ""
           }
         },
         "u2": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/hf_20260704_160724_d6c60ac9-1fb5-4722-8606-a4dadc8e9b27.png",
             "link": ""
           }
         },
@@ -248,7 +250,7 @@
       ],
       "settings": {
         "heading": "On The Wall",
-        "subtitle": "Our golf posters in real rooms. <br>Tag @golfprintclub to be featured.",
+        "subtitle": "Our golf posters in real rooms. Tag @golfprintclub to be featured.",
         "padding_top": 0,
         "padding_bottom": 0
       }
