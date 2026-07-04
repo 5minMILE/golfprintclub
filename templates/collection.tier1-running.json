@@ -27,34 +27,10 @@
             "label": "Golf Posters",
             "link": "/collections/golf-half-tights"
           }
-        },
-        "pill_2": {
-          "type": "pill",
-          "settings": {
-            "label": "Golf Posters",
-            "link": "/collections/golf-split-shorts"
-          }
-        },
-        "pill_3": {
-          "type": "pill",
-          "settings": {
-            "label": "Golf Posters",
-            "link": "/collections/golf posters"
-          }
-        },
-        "pill_4": {
-          "type": "pill",
-          "settings": {
-            "label": "Shirts",
-            "link": "/collections/golf-shirts"
-          }
         }
       },
       "block_order": [
-        "pill_1",
-        "pill_2",
-        "pill_3",
-        "pill_4"
+        "pill_1"
       ],
       "settings": {
         "use_solid_bg": false,
