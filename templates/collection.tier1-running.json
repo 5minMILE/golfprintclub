@@ -78,6 +78,7 @@
           "type": "category",
           "settings": {
             "collection": "motivational-posters",
+            "image": "shopify://shop_images/earn_it_1-downscale.png",
             "label": "",
             "link": ""
           }
