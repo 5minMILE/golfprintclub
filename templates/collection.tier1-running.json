@@ -202,6 +202,7 @@
         "image_13",
         "image_14"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Real Golfers. Real Gear.",
         "subtitle": "Tag @_golfprintclub to get featured",
@@ -251,6 +252,7 @@
         "review_3",
         "review_4"
       ],
+      "disabled": true,
       "settings": {
         "heading": "See What Others Are Saying",
         "rating": "4.87",
@@ -265,6 +267,7 @@
     },
     "section_trust_signals": {
       "type": "section-trust-signals",
+      "disabled": true,
       "settings": {
         "title_1": "Free Shipping",
         "desc_1": "On US orders over $125",
