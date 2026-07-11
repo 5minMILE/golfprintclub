@@ -674,11 +674,9 @@ window.addEventListener('load', function() { window.scrollTo(0,0); });
     var sizeBtns = document.querySelectorAll('.bp-sizes__grid .bp-sizes__btn');
 
     sizeBtns.forEach(function (b) {
-      var s = b.getAttribute('data-size');
       var clone = b.cloneNode(true);
       clone.addEventListener('click', function () {
-        var orig = document.querySelector('.bp-sizes__grid .bp-sizes__btn[data-size="' + s + '"]');
-        if (orig) orig.click();
+        b.click();
         syncSticky();
       });
       sizesEl.appendChild(clone);
