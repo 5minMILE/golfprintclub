@@ -560,7 +560,7 @@ window.addEventListener('load', function() { window.scrollTo(0,0); });
         -%}
         {%- assign sz_price = '' -%}
         {%- for v in bp_product.variants -%}{%- if v.option2 == sz or v.option1 == sz -%}{%- assign sz_price = v.price -%}{%- break -%}{%- endif -%}{%- endfor -%}
-        <button class="bp-sizes__btn" type="button" data-size="{{ sz }}">
+        <button class="bp-sizes__btn" type="button" data-size="{{ sz | escape }}">
           <span class="bp-sizes__btn-size">{{ sz_label }}</span>
           {%- if sz_price != '' and template.suffix contains 'poster' -%}<span class="bp-sizes__btn-price">{{ sz_price | money_without_currency | replace: ',', '' | remove: '.00' | prepend: '$' }}</span>{%- endif -%}
         </button>
