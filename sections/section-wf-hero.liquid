@@ -144,9 +144,14 @@
   #WfHero--{{ section.id }} .wf-hero__btn:hover { background: #1B5E20; }
 
   @media (min-width: 750px) {
-    #WfHero--{{ section.id }} .wf-hero__heading { font-size: 42px; }
-    #WfHero--{{ section.id }} .wf-hero__subtitle { font-size: 15px; }
-    #WfHero--{{ section.id }} .wf-hero__copy { padding: 40px 24px 56px; }
+    #WfHero--{{ section.id }} .wf-hero__stage {
+      aspect-ratio: auto;
+      height: calc(70vh - 100px);
+      min-height: 320px;
+    }
+    #WfHero--{{ section.id }} .wf-hero__heading { font-size: 20px; }
+    #WfHero--{{ section.id }} .wf-hero__subtitle { font-size: 14px; }
+    #WfHero--{{ section.id }} .wf-hero__copy { padding: 24px 24px 40px; }
   }
   @media (prefers-reduced-motion: reduce) {
     #WfHero--{{ section.id }} .wf-hero__slide { transition: none; }

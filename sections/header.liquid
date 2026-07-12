@@ -192,6 +192,49 @@
   {%- endunless -%}
 {%- endstyle -%}
 
+<style>
+  /* --- Toolbar (announcement strip): solid accent green, centered text --- */
+  .toolbar {
+    background: #2E7D32 !important;
+    background-color: #2E7D32 !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    backdrop-filter: none !important;
+  }
+  .toolbar, .toolbar * { color: #ffffff !important; }
+  .toolbar a { color: #ffffff !important; text-decoration: none; }
+  .toolbar__inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .toolbar__text,
+  .toolbar__text__frame,
+  .announcement__text,
+  .announcement__scale {
+    text-align: center !important;
+    justify-content: center !important;
+  }
+  .toolbar__utilities.desktop { display: none !important; }
+
+  /* --- Main header: white background, fixed 100px on desktop --- */
+  @media (min-width: 990px) {
+    .theme__header {
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+    }
+    .theme__header .header,
+    .theme__header .header__inner,
+    .theme__header .header__wrapper {
+      height: 100px !important;
+      min-height: 100px !important;
+      background: #ffffff !important;
+    }
+    .theme__header::before,
+    .theme__header::after { display: none !important; }
+  }
+</style>
+
 {%- capture toolbar -%}
   {%- comment -%} Header Toolbar block {%- endcomment -%}
 
