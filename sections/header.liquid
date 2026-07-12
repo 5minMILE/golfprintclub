@@ -323,6 +323,20 @@
       align-items: center !important;
       padding: 6px !important;
     }
+    /* SVG icons: theme defaults to white stroke (for dark headers). Force black on white. */
+    .theme__header .header__desktop .header__desktop__button svg {
+      color: #0a0a0a !important;
+      stroke: #0a0a0a !important;
+    }
+    .theme__header .header__desktop .header__desktop__button svg path,
+    .theme__header .header__desktop .header__desktop__button svg circle,
+    .theme__header .header__desktop .header__desktop__button svg line,
+    .theme__header .header__desktop .header__desktop__button svg rect,
+    .theme__header .header__desktop .header__desktop__button svg g {
+      stroke: #0a0a0a !important;
+    }
+    /* Cart count number badge stays readable */
+    .theme__header .header__cart__status { color: #0a0a0a !important; }
 
     /* Right-side icons always visible */
     .theme__header .header__desktop__buttons--icons { display: flex !important; }
