@@ -260,13 +260,9 @@
   }
   .theme__header::before,
   .theme__header::after { display: none !important; }
-  /* Push page content down by header height so it isn't hidden under the fixed header */
+  /* No top padding — content flows edge to edge under the fixed header */
   body.template-index .main-content,
-  body:not(.template-index) .main-content { padding-top: 130px !important; }
-  @media (max-width: 989px) {
-    body.template-index .main-content,
-    body:not(.template-index) .main-content { padding-top: 100px !important; }
-  }
+  body:not(.template-index) .main-content { padding-top: 0 !important; }
 
   @media (min-width: 990px) {
     .theme__header .header__desktop,
@@ -275,8 +271,8 @@
       background-color: #ffffff !important;
     }
     .theme__header .header__desktop__upper {
-      min-height: 100px !important;
-      height: 100px !important;
+      min-height: 70px !important;
+      height: 70px !important;
       display: flex !important;
       align-items: center !important;
       padding: 0 40px !important;
@@ -363,26 +359,31 @@
       align-items: center !important;
       padding: 6px !important;
     }
-    /* SVG icons: theme defaults to white stroke (for dark headers). Force black on white. */
+    /* SVG icons: green accent to match nav */
     .theme__header .header__desktop .header__desktop__button svg {
-      color: #0a0a0a !important;
-      stroke: #0a0a0a !important;
+      color: #2E7D32 !important;
+      stroke: #2E7D32 !important;
+      stroke-width: 1.8 !important;
     }
     .theme__header .header__desktop .header__desktop__button svg path,
     .theme__header .header__desktop .header__desktop__button svg circle,
     .theme__header .header__desktop .header__desktop__button svg line,
     .theme__header .header__desktop .header__desktop__button svg rect,
     .theme__header .header__desktop .header__desktop__button svg g {
-      stroke: #0a0a0a !important;
+      stroke: #2E7D32 !important;
     }
-    /* Cart count number badge stays readable */
-    .theme__header .header__cart__status { color: #0a0a0a !important; }
+    .theme__header .header__desktop .header__desktop__button:hover svg,
+    .theme__header .header__desktop .header__desktop__button:hover svg * {
+      stroke: #1B5E20 !important;
+    }
+    /* Cart count number badge in green */
+    .theme__header .header__cart__status { color: #2E7D32 !important; font-weight: 800 !important; }
 
     /* Right-side icons always visible */
     .theme__header .header__desktop__buttons--icons { display: flex !important; }
     .theme__header .header__desktop__buttons--icons > .header__desktop__button { display: inline-flex !important; }
 
-    /* Nav: black on white, NO blue strip, NO borders, NO backgrounds --- */
+    /* Nav: green on white, NO blue strip, NO borders, NO backgrounds --- */
     .theme__header .header__menu,
     .theme__header .header__menu * {
       background: transparent !important;
@@ -394,14 +395,16 @@
     .theme__header .header__desktop .navlink,
     .theme__header .header__desktop .navtext,
     .theme__header .header__desktop a {
-      color: #0a0a0a !important;
+      color: #2E7D32 !important;
       text-decoration: none !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.06em !important;
     }
     .theme__header .header__desktop .navlink:hover,
     .theme__header .header__desktop .navlink:focus,
     .theme__header .header__desktop a:hover,
     .theme__header .header__desktop a:focus {
-      color: #2E7D32 !important;
+      color: #1B5E20 !important;
       background: transparent !important;
       outline: none !important;
       text-decoration: none !important;
