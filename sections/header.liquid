@@ -217,21 +217,32 @@
   }
   .toolbar__utilities.desktop { display: none !important; }
 
-  /* --- Main header: white background, fixed 100px on desktop --- */
+  /* --- Main header: solid white background, fixed 100px on desktop --- */
+  .theme__header {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  .theme__header::before,
+  .theme__header::after { display: none !important; }
+
   @media (min-width: 990px) {
-    .theme__header {
+    .theme__header .header__desktop,
+    .theme__header .header__desktop__upper {
       background: #ffffff !important;
       background-color: #ffffff !important;
     }
-    .theme__header .header,
-    .theme__header .header__inner,
-    .theme__header .header__wrapper {
-      height: 100px !important;
+    .theme__header .header__desktop__upper {
       min-height: 100px !important;
-      background: #ffffff !important;
+      height: 100px !important;
+      display: flex !important;
+      align-items: center !important;
     }
-    .theme__header::before,
-    .theme__header::after { display: none !important; }
+    /* Ensure right-side icons (account + cart + search) always show */
+    .theme__header .header__desktop__buttons--icons { display: flex !important; }
+    .theme__header .header__desktop__buttons--icons > .header__desktop__button { display: inline-flex !important; }
+    /* Nav in center bar in black on white */
+    .theme__header .header__desktop .navlink,
+    .theme__header .header__desktop .navtext { color: #0a0a0a !important; }
   }
 </style>
 
