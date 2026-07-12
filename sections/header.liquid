@@ -230,6 +230,23 @@
   .toolbar__text p { margin: 0 !important; text-align: center !important; }
   .toolbar__utilities.desktop { display: none !important; }
 
+  /* Kill the ticker's scroll + hide cloned/comparator slides -- show only ONE centered instance */
+  .toolbar__inner ticker-bar .toolbar__text__frame,
+  .toolbar__inner ticker-bar .toolbar__text__ticker,
+  .toolbar__inner ticker-bar .announcement__scale {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+  .toolbar__inner ticker-bar [data-clone],
+  .toolbar__inner ticker-bar .ticker__comparitor {
+    display: none !important;
+  }
+
   /* --- Main header: solid white background, fixed 100px on desktop --- */
   .theme__header {
     background: #ffffff !important;
@@ -263,16 +280,40 @@
     .theme__header .header__desktop__bar__c { justify-content: center !important; }
     .theme__header .header__desktop__bar__r { justify-content: flex-end !important; }
 
+    /* Override theme's global rule that hides .header__logo at 763px+ */
+    .theme__header .header__desktop .header__logo {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      min-height: unset !important;
+    }
     /* Logo big enough to actually see */
+    .theme__header .header__logo__link {
+      display: block !important;
+      width: auto !important;
+      max-width: none !important;
+    }
     .theme__header .header__logo__link .logo__img {
       width: auto !important;
       max-height: 60px !important;
+      display: block !important;
     }
     .theme__header .header__logo__link .logo__img img {
       width: auto !important;
       height: auto !important;
       max-height: 60px !important;
       display: block !important;
+    }
+    /* Search icon must render at the same size as Account and Cart */
+    .theme__header .header__desktop .navlink--search,
+    .theme__header .header__desktop .header__desktop__button > header-search-popdown,
+    .theme__header .header__desktop .header__desktop__button > header-search-popdown > details {
+      display: inline-flex !important;
+    }
+    .theme__header .header__desktop .header__desktop__button > header-search-popdown > details > summary {
+      display: inline-flex !important;
+      align-items: center !important;
+      padding: 6px !important;
     }
 
     /* Right-side icons always visible */
