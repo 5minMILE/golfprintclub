@@ -247,13 +247,26 @@
     display: none !important;
   }
 
-  /* --- Main header: solid white background, fixed 100px on desktop --- */
+  /* --- Main header: fixed to top, solid white, always visible on scroll --- */
   .theme__header {
     background: #ffffff !important;
     background-color: #ffffff !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 2300 !important;
   }
   .theme__header::before,
   .theme__header::after { display: none !important; }
+  /* Push page content down by header height so it isn't hidden under the fixed header */
+  body.template-index .main-content,
+  body:not(.template-index) .main-content { padding-top: 130px !important; }
+  @media (max-width: 989px) {
+    body.template-index .main-content,
+    body:not(.template-index) .main-content { padding-top: 100px !important; }
+  }
 
   @media (min-width: 990px) {
     .theme__header .header__desktop,
@@ -266,19 +279,46 @@
       height: 100px !important;
       display: flex !important;
       align-items: center !important;
-      padding: 0 24px !important;
+      padding: 0 40px !important;
+      position: relative !important;
     }
-    /* Nail down the 3-column layout: [nav left] [logo center] [icons right] */
-    .theme__header .header__desktop__upper > .header__desktop__bar__l,
-    .theme__header .header__desktop__upper > .header__desktop__bar__c,
-    .theme__header .header__desktop__upper > .header__desktop__bar__r {
-      flex: 1 1 0 !important;
+    /* Nav (menu) flush left */
+    .theme__header .header__desktop__bar__c {
       display: flex !important;
       align-items: center !important;
+      justify-content: flex-start !important;
+      flex: 1 1 0 !important;
+      order: 1 !important;
+      padding: 0 !important;
+      margin: 0 !important;
     }
-    .theme__header .header__desktop__bar__l { justify-content: flex-start !important; }
-    .theme__header .header__desktop__bar__c { justify-content: center !important; }
-    .theme__header .header__desktop__bar__r { justify-content: flex-end !important; }
+    .theme__header .header__desktop__bar__c .header__menu { padding-left: 0 !important; margin-left: 0 !important; }
+    /* Buttons (icons) flush right */
+    .theme__header .header__desktop__bar__r {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      flex: 1 1 0 !important;
+      order: 3 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    /* Logo dead center via absolute positioning (bulletproof against sibling widths) */
+    .theme__header .header__desktop__bar__l {
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: auto !important;
+      flex: 0 0 auto !important;
+      order: 2 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      z-index: 2 !important;
+    }
 
     /* Override theme's global rule that hides .header__logo at 763px+ */
     .theme__header .header__desktop .header__logo {
