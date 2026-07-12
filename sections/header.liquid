@@ -285,24 +285,32 @@
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
-      min-height: unset !important;
-    }
-    /* Logo big enough to actually see */
-    .theme__header .header__logo__link {
-      display: block !important;
+      min-height: 60px !important;
       width: auto !important;
-      max-width: none !important;
     }
-    .theme__header .header__logo__link .logo__img {
-      width: auto !important;
-      max-height: 60px !important;
-      display: block !important;
+    /* Logo: give the link an explicit width so aspect-ratio containers can compute */
+    .theme__header .header__desktop .header__logo__link {
+      display: inline-flex !important;
+      align-items: center !important;
+      width: 220px !important;
+      max-width: 100% !important;
     }
-    .theme__header .header__logo__link .logo__img img {
-      width: auto !important;
+    .theme__header .header__desktop .header__logo__link .logo__img {
+      width: 100% !important;
       height: auto !important;
+      aspect-ratio: 5 / 1 !important;
       max-height: 60px !important;
       display: block !important;
+      position: relative !important;
+    }
+    .theme__header .header__desktop .header__logo__link .logo__img img {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: 60px !important;
+      display: block !important;
+      object-fit: contain !important;
+      position: absolute !important;
+      inset: 0 !important;
     }
     /* Search icon must render at the same size as Account and Cart */
     .theme__header .header__desktop .navlink--search,
