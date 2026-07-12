@@ -203,18 +203,31 @@
   }
   .toolbar, .toolbar * { color: #ffffff !important; }
   .toolbar a { color: #ffffff !important; text-decoration: none; }
+  .toolbar .wrapper--full-padded { width: 100% !important; }
   .toolbar__inner {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+    width: 100% !important;
   }
-  .toolbar__text,
-  .toolbar__text__frame,
-  .announcement__text,
-  .announcement__scale {
-    text-align: center !important;
+  .toolbar__inner > ticker-bar,
+  .toolbar__inner > .toolbar__text {
+    flex: 1 1 auto !important;
+    display: flex !important;
     justify-content: center !important;
   }
+  ticker-bar.toolbar__text .toolbar__text__frame,
+  .toolbar__text__frame { width: 100% !important; text-align: center !important; }
+  .toolbar__text__ticker,
+  .announcement__scale,
+  .announcement__text {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .toolbar__text { text-align: center !important; }
+  .toolbar__text p { margin: 0 !important; text-align: center !important; }
   .toolbar__utilities.desktop { display: none !important; }
 
   /* --- Main header: solid white background, fixed 100px on desktop --- */
@@ -236,13 +249,61 @@
       height: 100px !important;
       display: flex !important;
       align-items: center !important;
+      padding: 0 24px !important;
     }
-    /* Ensure right-side icons (account + cart + search) always show */
+    /* Nail down the 3-column layout: [nav left] [logo center] [icons right] */
+    .theme__header .header__desktop__upper > .header__desktop__bar__l,
+    .theme__header .header__desktop__upper > .header__desktop__bar__c,
+    .theme__header .header__desktop__upper > .header__desktop__bar__r {
+      flex: 1 1 0 !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+    .theme__header .header__desktop__bar__l { justify-content: flex-start !important; }
+    .theme__header .header__desktop__bar__c { justify-content: center !important; }
+    .theme__header .header__desktop__bar__r { justify-content: flex-end !important; }
+
+    /* Logo big enough to actually see */
+    .theme__header .header__logo__link .logo__img {
+      width: auto !important;
+      max-height: 60px !important;
+    }
+    .theme__header .header__logo__link .logo__img img {
+      width: auto !important;
+      height: auto !important;
+      max-height: 60px !important;
+      display: block !important;
+    }
+
+    /* Right-side icons always visible */
     .theme__header .header__desktop__buttons--icons { display: flex !important; }
     .theme__header .header__desktop__buttons--icons > .header__desktop__button { display: inline-flex !important; }
-    /* Nav in center bar in black on white */
+
+    /* Nav: black on white, NO blue strip, NO borders, NO backgrounds --- */
+    .theme__header .header__menu,
+    .theme__header .header__menu * {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
     .theme__header .header__desktop .navlink,
-    .theme__header .header__desktop .navtext { color: #0a0a0a !important; }
+    .theme__header .header__desktop .navtext,
+    .theme__header .header__desktop a {
+      color: #0a0a0a !important;
+      text-decoration: none !important;
+    }
+    .theme__header .header__desktop .navlink:hover,
+    .theme__header .header__desktop .navlink:focus,
+    .theme__header .header__desktop a:hover,
+    .theme__header .header__desktop a:focus {
+      color: #2E7D32 !important;
+      background: transparent !important;
+      outline: none !important;
+      text-decoration: none !important;
+    }
+    .theme__header .navlink:focus-visible { outline: none !important; }
   }
 </style>
 
